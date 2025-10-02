@@ -1,3 +1,9 @@
-.card.login {
-  width: 24rem;
+h2,
+label {
+  color: #585858;
+}
+
+.card {
+  padding: 2rem;
+  background-color: #e6edf3;
 }
