@@ -3,80 +3,13 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-12 text-center">
-            <div class="jumbotron bg-light p-5 rounded shadow">
+            <div class="p-5 rounded shadow bg-dark text-white">
                 <h1 class="display-3">
                     <i class="bi bi-lightbulb"></i> Bem-vindo ao FlashWise
                 </h1>
-                <p class="lead mt-3">Sistema inteligente de estudo com flashcards</p>
-                <hr class="my-4">
-                <p>Organize seus estudos, crie decks personalizados e aprenda de forma eficiente!</p>
-                
-                <?php if ($user): ?>
-                    <div class="mt-4">
-                        <h4 class="mb-3">Olá, <strong><?= htmlspecialchars($user->name) ?></strong>!</h4>
-                        
-                        <?php if ($user->isAdmin()): ?>
-                            <div class="d-flex gap-3 justify-content-center mt-3">
-                                <a href="/decks" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-stack"></i> Meus Decks
-                                </a>
-                                <a href="/admin" class="btn btn-danger btn-lg">
-                                    <i class="bi bi-gear-fill"></i> Administração
-                                </a>
-                                <a href="/logout" class="btn btn-secondary btn-lg">
-                                    <i class="bi bi-box-arrow-right"></i> Sair
-                                </a>
-                            </div>
-                        <?php else: ?>
-                            <div class="d-flex gap-3 justify-content-center mt-3">
-                                <a href="/decks" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-stack"></i> Meus Decks
-                                </a>
-                                <a href="/logout" class="btn btn-secondary btn-lg">
-                                    <i class="bi bi-box-arrow-right"></i> Sair
-                                </a>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                <?php else: ?>
-                    <div class="mt-4">
-                        <a href="/login" class="btn btn-primary btn-lg">
-                            <i class="bi bi-box-arrow-in-right"></i> Fazer Login
-                        </a>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row mt-5">
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body text-center">
-                    <i class="bi bi-card-text" style="font-size: 3rem; color: #0d6efd;"></i>
-                    <h5 class="card-title mt-3">Crie Flashcards</h5>
-                    <p class="card-text">Organize seu conteúdo em cards práticos e eficientes</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body text-center">
-                    <i class="bi bi-graph-up" style="font-size: 3rem; color: #198754;"></i>
-                    <h5 class="card-title mt-3">Acompanhe seu Progresso</h5>
-                    <p class="card-text">Visualize estatísticas e melhore seu desempenho</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body text-center">
-                    <i class="bi bi-trophy" style="font-size: 3rem; color: #ffc107;"></i>
-                    <h5 class="card-title mt-3">Alcance seus Objetivos</h5>
-                    <p class="card-text">Estude de forma consistente e conquiste seus objetivos</p>
-                </div>
+                <p class="lead mt-3 text-secondary">Sistema inteligente de estudo com flashcards</p>
+                <hr class="my-4 border-secondary">
+                <p class="text-secondary">Organize seus estudos, crie decks personalizados e aprenda de forma eficiente!</p>
             </div>
         </div>
     </div>

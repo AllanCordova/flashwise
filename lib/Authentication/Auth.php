@@ -6,19 +6,19 @@ use App\Models\User;
 
 class Auth
 {
-    public static function login($user): void
+    public static function login(User $user): void
     {
         $_SESSION['user']['id'] = $user->id;
     }
 
     public static function user(): ?User
     {
-        if (isset($_SESSION['user']['id'])) {
-            $id = $_SESSION['user']['id'];
-            return User::findById($id);
+        if (!isset($_SESSION['user']['id'])) {
+            return null;
         }
 
-        return null;
+        $id = $_SESSION['user']['id'];
+        return User::findById($id);
     }
 
     public static function check(): bool

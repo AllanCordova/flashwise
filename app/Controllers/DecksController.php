@@ -8,15 +8,16 @@ use Lib\FlashMessage;
 
 class DecksController extends Controller
 {
-    public function index()
+    public function index(): void
     {
         if (!Auth::check()) {
             FlashMessage::danger('Você precisa estar logado para acessar esta página.');
-            return $this->redirectTo('/login');
+            $this->redirectTo('/login');
+            return;
         }
 
         $user = Auth::user();
-        
+
         $this->render('decks/index', [
             'user' => $user
         ]);

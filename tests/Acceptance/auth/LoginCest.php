@@ -1,86 +1,170 @@
-<?php<?php
+<?php<?php<?php
 
 
 
-namespace Tests\Acceptance\auth;namespace Tests\Acceptance\auth;
+namespace Tests\Acceptance\auth;
 
 
 
-use Tests\Acceptance\BaseAcceptanceCest;use Tests\Acceptance\BaseAcceptanceCest;
+use Tests\Acceptance\BaseAcceptanceCest;namespace Tests\Acceptance\auth;namespace Tests\Acceptance\auth;
 
 use Tests\Support\AcceptanceTester;
 
+
+
 class LoginCest extends BaseAcceptanceCest
 
-class LoginCest extends BaseAcceptanceCest{
-
-{    public function _before(\AcceptanceTester $I)
-
-    /**    {
-
-     * 1.1 - Tentativa de acesso à área restrita sem autenticação        parent::_before($I);
-
-     */    }
+{use Tests\Acceptance\BaseAcceptanceCest;use Tests\Acceptance\BaseAcceptanceCest;
 
     public function testAccessRestrictedAreaWithoutAuth(AcceptanceTester $I): void
 
-    {    public function testUserCanSeeLoginPage(\AcceptanceTester $I)
+    {use Tests\Support\AcceptanceTester;
 
-        $I->amOnPage('/decks');    {
+        $I->amOnPage('/decks');
 
-        $I->seeCurrentUrlEquals('/login');        $I->amOnPage('/login');
+        $I->seeCurrentUrlEquals('/login');class LoginCest extends BaseAcceptanceCest
 
-        $I->see('Você precisa estar logado');        $I->see('FlashWise - Login');
+        $I->see('Você precisa estar logado');
 
-    }        $I->seeElement('input[name="email"]');
+    }class LoginCest extends BaseAcceptanceCest{
 
-        $I->seeElement('input[name="password"]');
 
-    /**        $I->seeElement('button[type="submit"]');
 
-     * 1.1 - Tentativa de acesso à área admin sem autenticação    }
+    public function testAccessAdminAreaWithoutAuth(AcceptanceTester $I): void{    public function _before(\AcceptanceTester $I)
 
-     */
+    {
 
-    public function testAccessAdminAreaWithoutAuth(AcceptanceTester $I): void    public function testUserCannotLoginWithInvalidCredentials(\AcceptanceTester $I)
+        $I->amOnPage('/admin');    /**    {
 
-    {    {
+        $I->seeCurrentUrlEquals('/login');
 
-        $I->amOnPage('/admin');        $I->amOnPage('/login');
+        $I->see('Você precisa estar logado');     * 1.1 - Tentativa de acesso à área restrita sem autenticação        parent::_before($I);
 
-        $I->seeCurrentUrlEquals('/login');        $I->fillField('email', 'wrong@email.com');
-
-        $I->see('Você precisa estar logado');        $I->fillField('password', 'wrongpassword');
-
-    }        $I->click('button[type="submit"]');
-
-        
-
-    /**        $I->seeCurrentUrlEquals('/login');
-
-     * 1.2 - Tentativa de autenticação com dados incorretos        $I->see('Email ou senha inválidos');
+    }
 
      */    }
 
     public function testLoginWithIncorrectCredentials(AcceptanceTester $I): void
 
-    {    public function testUserCanLoginWithValidCredentials(\AcceptanceTester $I)
+    {    public function testAccessRestrictedAreaWithoutAuth(AcceptanceTester $I): void
+
+        $I->amOnPage('/login');
+
+        $I->fillField('user[email]', 'wrong@email.com');    {    public function testUserCanSeeLoginPage(\AcceptanceTester $I)
+
+        $I->fillField('user[password]', 'wrongpassword');
+
+        $I->click('Entrar');        $I->amOnPage('/decks');    {
+
+        
+
+        $I->seeCurrentUrlEquals('/login');        $I->seeCurrentUrlEquals('/login');        $I->amOnPage('/login');
+
+        $I->see('E-mail ou senha inválidos');
+
+    }        $I->see('Você precisa estar logado');        $I->see('FlashWise - Login');
+
+
+
+    public function testLoginWithCorrectEmailButWrongPassword(AcceptanceTester $I): void    }        $I->seeElement('input[name="email"]');
+
+    {
+
+        $I->amOnPage('/login');        $I->seeElement('input[name="password"]');
+
+        $I->fillField('user[email]', 'user1@flashwise.com');
+
+        $I->fillField('user[password]', 'senhaerrada');    /**        $I->seeElement('button[type="submit"]');
+
+        $I->click('Entrar');
+
+             * 1.1 - Tentativa de acesso à área admin sem autenticação    }
+
+        $I->seeCurrentUrlEquals('/login');
+
+        $I->see('E-mail ou senha inválidos');     */
+
+    }
+
+    public function testAccessAdminAreaWithoutAuth(AcceptanceTester $I): void    public function testUserCannotLoginWithInvalidCredentials(\AcceptanceTester $I)
+
+    public function testSuccessfulLoginAsUser(AcceptanceTester $I): void
+
+    {    {    {
+
+        $I->amOnPage('/login');
+
+        $I->fillField('user[email]', 'user1@flashwise.com');        $I->amOnPage('/admin');        $I->amOnPage('/login');
+
+        $I->fillField('user[password]', 'password123');
+
+        $I->click('Entrar');        $I->seeCurrentUrlEquals('/login');        $I->fillField('email', 'wrong@email.com');
+
+        
+
+        $I->seeCurrentUrlEquals('/decks');        $I->see('Você precisa estar logado');        $I->fillField('password', 'wrongpassword');
+
+        $I->see('Login realizado com sucesso');
+
+        $I->see('Usuário 1');    }        $I->click('button[type="submit"]');
+
+    }
+
+        
+
+    public function testSuccessfulLoginAsAdmin(AcceptanceTester $I): void
+
+    {    /**        $I->seeCurrentUrlEquals('/login');
+
+        $I->amOnPage('/login');
+
+        $I->fillField('user[email]', 'admin@flashwise.com');     * 1.2 - Tentativa de autenticação com dados incorretos        $I->see('Email ou senha inválidos');
+
+        $I->fillField('user[password]', 'admin123');
+
+        $I->click('Entrar');     */    }
+
+        
+
+        $I->seeCurrentUrlEquals('/admin');    public function testLoginWithIncorrectCredentials(AcceptanceTester $I): void
+
+        $I->see('Login realizado com sucesso');
+
+        $I->see('Administrador');    {    public function testUserCanLoginWithValidCredentials(\AcceptanceTester $I)
+
+    }
 
         $I->amOnPage('/login');    {
 
-        $I->fillField('user[email]', 'wrong@email.com');        $I->amOnPage('/login');
+    public function testLogout(AcceptanceTester $I): void
 
-        $I->fillField('user[password]', 'wrongpassword');        $I->fillField('email', 'user@flashwise.com');
+    {        $I->fillField('user[email]', 'wrong@email.com');        $I->amOnPage('/login');
 
-        $I->click('Entrar');        $I->fillField('password', 'user123');
+        $I->amOnPage('/login');
 
-                $I->click('button[type="submit"]');
+        $I->fillField('user[email]', 'user1@flashwise.com');        $I->fillField('user[password]', 'wrongpassword');        $I->fillField('email', 'user@flashwise.com');
 
-        $I->seeCurrentUrlEquals('/login');        
+        $I->fillField('user[password]', 'password123');
 
-        $I->see('E-mail ou senha inválidos');        $I->seeCurrentUrlEquals('/user/dashboard');
+        $I->click('Entrar');        $I->click('Entrar');        $I->fillField('password', 'user123');
 
-    }        $I->see('Bem-vindo');
+        
+
+        $I->amOnPage('/logout');                $I->click('button[type="submit"]');
+
+        $I->seeCurrentUrlEquals('/login');
+
+        $I->see('Você foi desconectado com segurança');        $I->seeCurrentUrlEquals('/login');        
+
+        
+
+        $I->amOnPage('/decks');        $I->see('E-mail ou senha inválidos');        $I->seeCurrentUrlEquals('/user/dashboard');
+
+        $I->seeCurrentUrlEquals('/login');
+
+    }    }        $I->see('Bem-vindo');
+
+}
 
         $I->see('Meus Estudos - FlashWise');
 
