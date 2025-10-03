@@ -11,11 +11,14 @@ use Core\Database\ActiveRecord\Model;
  * @property string $email
  * @property string $encrypted_password
  * @property string $avatar_name
+ * @property string $role
+ * @property string $created_at
+ * @property string $updated_at
  */
 class User extends Model
 {
     protected static string $table = 'users';
-    protected static array $columns = ['name', 'email', 'encrypted_password', 'avatar_name'];
+    protected static array $columns = ['name', 'email', 'encrypted_password', 'avatar_name', 'role'];
 
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
@@ -44,6 +47,16 @@ class User extends Model
     public static function findByEmail(string $email): User | null
     {
         return User::findBy(['email' => $email]);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
     }
 
     public function __set(string $property, mixed $value): void

@@ -59,4 +59,64 @@ class AuthTest extends TestCase
 
         $this->assertFalse(Auth::check());
     }
+
+    /**
+     * 3.2 - Teste de login armazena ID correto na sessão
+     */
+    public function test_login_stores_user_id_in_session(): void
+    {
+        Auth::login($this->user);
+
+        $this->assertArrayHasKey('user', $_SESSION);
+        $this->assertArrayHasKey('id', $_SESSION['user']);
+        $this->assertEquals($this->user->id, $_SESSION['user']['id']);
+    }
+
+    /**
+     * 3.2 - Teste de check quando não logado
+     */
+    public function test_check_returns_false_when_not_logged_in(): void
+    {
+        $this->assertFalse(Auth::check());
+    }
+
+    /**
+     * 3.2 - Teste de user() retorna null quando não logado
+     */
+    public function test_user_returns_null_when_not_logged_in(): void
+    {
+        $this->assertNull(Auth::user());
+    }
+
+    /**
+     * 3.2 - Teste de logout remove dados da sessão
+     */
+    public function test_logout_removes_user_from_session(): void
+    {
+        Auth::login($this->user);
+        $this->assertTrue(Auth::check());
+
+        Auth::logout();
+        
+        $this->assertFalse(isset($_SESSION['user']['id']));
+        $this->assertFalse(Auth::check());
+    }
+
+    /**
+     * 3.2 - Teste de múltiplos logins/logouts
+     */
+    public function test_multiple_login_logout_cycles(): void
+    {
+        // Primeiro ciclo
+        Auth::login($this->user);
+        $this->assertTrue(Auth::check());
+        Auth::logout();
+        $this->assertFalse(Auth::check());
+
+        // Segundo ciclo
+        Auth::login($this->user);
+        $this->assertTrue(Auth::check());
+        Auth::logout();
+        $this->assertFalse(Auth::check());
+    }
 }

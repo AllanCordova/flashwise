@@ -24,7 +24,12 @@ class AuthController extends Controller
             Auth::login($user);
             FlashMessage::success('Login realizado com sucesso! Bem-vindo(a), ' . htmlspecialchars($user->name) . '!');
 
-            return $this->redirectTo('/');
+            // Redireciona baseado no papel do usuário
+            if ($user->isAdmin()) {
+                return $this->redirectTo('/admin');
+            } else {
+                return $this->redirectTo('/decks');
+            }
         } else {
             FlashMessage::danger('E-mail ou senha inválidos. Por favor, tente novamente.');
 

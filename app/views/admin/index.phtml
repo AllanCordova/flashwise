@@ -1,0 +1,86 @@
+<link href="/assets/css/application.css" rel="stylesheet">
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-lg">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="mb-0">
+                        <i class="bi bi-gear-fill"></i> Painel do Administrador
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <h4 class="alert-heading">
+                            <i class="bi bi-shield-lock"></i> Área Restrita - Olá, <?= htmlspecialchars($user->name) ?>!
+                        </h4>
+                        <p class="mb-0">
+                            Esta é a página do administrador. Aqui você terá acesso a funcionalidades avançadas de gerenciamento do sistema.
+                        </p>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-3 mb-3">
+                            <div class="card border-danger h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-people-fill" style="font-size: 3rem; color: #dc3545;"></i>
+                                    <h5 class="card-title mt-3">Usuários</h5>
+                                    <p class="card-text text-muted">Gerenciar usuários</p>
+                                    <button class="btn btn-danger btn-sm" disabled>Em breve</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="card border-primary h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-stack" style="font-size: 3rem; color: #0d6efd;"></i>
+                                    <h5 class="card-title mt-3">Decks</h5>
+                                    <p class="card-text text-muted">Gerenciar todos os decks</p>
+                                    <button class="btn btn-primary btn-sm" disabled>Em breve</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="card border-success h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-bar-chart-fill" style="font-size: 3rem; color: #198754;"></i>
+                                    <h5 class="card-title mt-3">Relatórios</h5>
+                                    <p class="card-text text-muted">Visualizar estatísticas</p>
+                                    <button class="btn btn-success btn-sm" disabled>Em breve</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="card border-info h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-gear" style="font-size: 3rem; color: #0dcaf0;"></i>
+                                    <h5 class="card-title mt-3">Configurações</h5>
+                                    <p class="card-text text-muted">Ajustes do sistema</p>
+                                    <button class="btn btn-info btn-sm" disabled>Em breve</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5><i class="bi bi-info-circle-fill"></i> Informações do Sistema</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><strong>Usuário logado:</strong> <?= htmlspecialchars($user->name) ?></li>
+                                        <li><strong>Email:</strong> <?= htmlspecialchars($user->email) ?></li>
+                                        <li><strong>Tipo de conta:</strong> <span class="badge bg-danger">Administrador</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
