@@ -13,13 +13,9 @@ class Router
     /** @var Route[] $routes */
     private array $routes = [];
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
-    private function __clone()
-    {
-    }
+    private function __clone() {}
 
     public static function getInstance(): Router
     {

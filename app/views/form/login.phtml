@@ -9,11 +9,11 @@
                 <form class="d-flex flex-column align-items-center gap-2" action="/login" method="POST">
                     <div>
                         <label class="form-label" for="email">Email:</label>
-                        <input class="form-control" type="email" id="email" name="email" required>
+                        <input class="form-control" type="email" id="email" name="user[email]" required>
                     </div>
                     <div>
                         <label class="form-label" for="password">Senha:</label>
-                        <input class="form-control" type="password" id="password" name="password" required>
+                        <input class="form-control" type="password" id="password" name="user[password]" required>
                     </div>
                     <div>
                         <button class="btn btn-success mt-2" type="submit">Entrar</button>
