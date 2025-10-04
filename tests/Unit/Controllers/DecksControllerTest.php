@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Controllers\Decks;
+namespace Tests\Unit\Controllers;
 
 use App\Controllers\DecksController;
 use App\Models\User;
