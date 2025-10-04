@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?= $title ?? 'Problem Track' ?></title>
+    <title><?= $title ?? 'FlashWise' ?></title>
     <link href="/assets/css/header.css" rel="stylesheet">
 </head>
 
@@ -13,21 +13,30 @@
     <header>
         <div class="d-flex justify-content-between p-3">
             <h2 class="nav-logo">
-                <a href="/">Flash Wishe</a>
+                <a href="/">FlashWise</a>
             </h2>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true" href="#">Disabled</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                </li>
+                <?php $currentUser = \Lib\Authentication\Auth::user(); ?>
+                <?php if ($currentUser): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/decks">Meus Decks</a>
+                    </li>
+                    <?php if ($currentUser->isAdmin()): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin">Admin</a>
+                        </li>
+                    <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Sair</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </header>
