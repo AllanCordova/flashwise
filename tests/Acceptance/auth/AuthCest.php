@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests\Acceptance;
+namespace Tests\Acceptance\auth;
 
 use App\Models\User;
+use Tests\Acceptance\BaseAcceptanceCest;
 use Tests\Support\AcceptanceTester;
 
 class AuthCest extends BaseAcceptanceCest
