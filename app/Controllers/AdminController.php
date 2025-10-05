@@ -10,12 +10,6 @@ class AdminController extends Controller
 {
     public function index(): void
     {
-        if (!Auth::check()) {
-            FlashMessage::danger('Você precisa estar logado para acessar esta página.');
-            $this->redirectTo('/login');
-            return;
-        }
-
         $user = Auth::user();
 
         if (!$user || !$user->isAdmin()) {

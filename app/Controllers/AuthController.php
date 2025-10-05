@@ -12,6 +12,11 @@ class AuthController extends Controller
 {
     public function new(): void
     {
+
+        if (Auth::check()) {
+            $this->redirectTo('/');
+        }
+
         $this->render('form/login');
     }
 

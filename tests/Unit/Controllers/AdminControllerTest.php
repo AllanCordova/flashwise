@@ -44,15 +44,14 @@ class AdminControllerTest extends ControllerTestCase
         parent::tearDown();
     }
 
-    public function test_index_should_redirect_guest_to_login(): void
+    public function test_index_should_redirect_guest_user(): void
     {
         $output = $this->get('index', AdminController::class);
         $messages = FlashMessage::get();
 
-        $this->assertStringContainsString('Location: /login', $output);
+        $this->assertStringContainsString('Location: /', $output);
         $this->assertArrayHasKey('danger', $messages);
-        $this->assertEquals('Você precisa estar logado para acessar esta página.', $messages['danger']);
-        $this->assertFalse(Auth::check());
+        $this->assertEquals('Acesso negado! Apenas administradores podem acessar esta área.', $messages['danger']);
     }
 
     public function test_index_should_redirect_non_admin_user(): void
@@ -72,6 +71,7 @@ class AdminControllerTest extends ControllerTestCase
     {
         Auth::login($this->admin);
         $this->assertTrue(Auth::check());
+        $this->assertTrue(Auth::user()->isAdmin());
 
         $output = $this->get('index', AdminController::class);
 

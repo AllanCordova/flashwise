@@ -7,11 +7,11 @@ namespace Tests\Unit\Controllers;
 use App\Controllers\AuthController;
 use App\Models\User;
 use Lib\Authentication\Auth;
+use Lib\FlashMessage;
 
 class AuthControllerTest extends ControllerTestCase
 {
     private User $user;
-    private User $admin;
 
     public function setUp(): void
     {
@@ -23,18 +23,8 @@ class AuthControllerTest extends ControllerTestCase
             'email' => 'user@test.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-            'role' => 'user'
         ]);
         $this->user->save();
-
-        $this->admin = new User([
-            'name' => 'Test Admin',
-            'email' => 'admin@test.com',
-            'password' => 'admin123',
-            'password_confirmation' => 'admin123',
-            'role' => 'admin'
-        ]);
-        $this->admin->save();
     }
 
     public function tearDown(): void
@@ -43,13 +33,24 @@ class AuthControllerTest extends ControllerTestCase
         parent::tearDown();
     }
 
-    public function test_new_renders_login_form(): void
+    public function test_new_should_render_login_form_for_guest(): void
     {
         $output = $this->get('new', AuthController::class);
-        $this->assertNotEmpty($output);
+
+        $this->assertStringNotContainsString('Location:', $output);
     }
 
-    public function test_create_with_valid_user_credentials(): void
+    public function test_new_should_redirect_logged_in_user_to_home(): void
+    {
+        Auth::login($this->user);
+        $this->assertTrue(Auth::check());
+
+        $output = $this->get('new', AuthController::class);
+
+        $this->assertStringContainsString('Location: /', $output);
+    }
+
+    public function test_create_should_login_with_valid_credentials(): void
     {
         $params = [
             'user' => [
@@ -58,51 +59,62 @@ class AuthControllerTest extends ControllerTestCase
             ]
         ];
 
-        $this->post('create', AuthController::class, $params);
+        $output = $this->post('create', AuthController::class, $params);
+        $messages = FlashMessage::get();
 
         $this->assertTrue(Auth::check());
         $this->assertEquals('user@test.com', Auth::user()->email);
+        $this->assertStringContainsString('Location: /', $output);
+        $this->assertArrayHasKey('success', $messages);
+        $this->assertStringContainsString('Login realizado com sucesso', $messages['success']);
     }
 
-    public function test_create_with_valid_admin_credentials(): void
-    {
-        $params = [
-            'user' => [
-                'email' => 'admin@test.com',
-                'password' => 'admin123'
-            ]
-        ];
-
-        $this->post('create', AuthController::class, $params);
-
-        $this->assertTrue(Auth::check());
-        $this->assertEquals('admin@test.com', Auth::user()->email);
-        $this->assertTrue(Auth::user()->isAdmin());
-    }
-
-    public function test_create_with_invalid_credentials(): void
+    public function test_create_should_fail_with_invalid_password(): void
     {
         $params = [
             'user' => [
                 'email' => 'user@test.com',
-                'password' => 'wrongpassword'
+                'password' => 'wrong-password'
             ]
         ];
 
-        $this->post('create', AuthController::class, $params);
+        $output = $this->post('create', AuthController::class, $params);
+        $messages = FlashMessage::get();
 
         $this->assertFalse(Auth::check());
+        $this->assertStringContainsString('Location: /login', $output);
+        $this->assertArrayHasKey('danger', $messages);
+        $this->assertEquals('E-mail ou senha inválidos. Por favor, tente novamente.', $messages['danger']);
     }
 
+    public function test_create_should_fail_with_non_existent_email(): void
+    {
+        $params = [
+            'user' => [
+                'email' => 'not.found@example.com',
+                'password' => 'any-password'
+            ]
+        ];
 
+        $output = $this->post('create', AuthController::class, $params);
+        $messages = FlashMessage::get();
 
-    public function test_destroy_logs_out_user(): void
+        $this->assertFalse(Auth::check());
+        $this->assertStringContainsString('Location: /login', $output);
+        $this->assertArrayHasKey('danger', $messages);
+    }
+
+    public function test_destroy_should_log_out_the_user(): void
     {
         Auth::login($this->user);
         $this->assertTrue(Auth::check());
 
-        $this->get('destroy', AuthController::class);
+        $output = $this->get('destroy', AuthController::class);
+        $messages = FlashMessage::get();
 
         $this->assertFalse(Auth::check());
+        $this->assertStringContainsString('Location: /login', $output);
+        $this->assertArrayHasKey('success', $messages);
+        $this->assertEquals('Você foi desconectado com segurança.', $messages['success']);
     }
 }
