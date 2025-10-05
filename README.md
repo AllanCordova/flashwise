@@ -12,8 +12,8 @@
 #### Clone Repository
 
 ```
-$ git clone git@github.com:SI-DABE/problem-track.git
-$ cd problem-track
+$ git clone https://github.com/AllanCordova/flashwise
+$ cd flashwise
 ```
 
 #### Define the env variables
@@ -99,5 +99,5 @@ curl -H "Accept: application/json" localhost/problems
 Neste caso precisa alterar o valor do PHPSESSID de acordo com a o id da sua sessão.
 
 ```shell
-curl -H "Accept: application/json" -b "PHPSESSID=5f55f364a48d87fb7ef9f18425a8ae88" localhost/problems
+curl -H "Accept: application/json" -b "PHPSESSID=5f55f364a48d87fb7ef9f18425a8ae88" localhost/decks
 ```
