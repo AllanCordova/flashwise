@@ -62,8 +62,8 @@ services:
       APP_ENV: testing
       DB_HOST: db
       DB_PORT: 3306
-      DB_DATABASE: problem_test
-      DB_USERNAME: root
+      DB_DATABASE: flash_wise_test
+      DB_USERNAME: "root"
       DB_PASSWORD: ""
 
 networks:

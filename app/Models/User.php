@@ -62,11 +62,6 @@ class User extends Model
         return $this->role === 'admin';
     }
 
-    public function isUser(): bool
-    {
-        return $this->role === 'user';
-    }
-
     public function __set(string $property, mixed $value): void
     {
         parent::__set($property, $value);

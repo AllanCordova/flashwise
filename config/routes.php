@@ -12,10 +12,16 @@ Route::get('/', [HomeController::class, 'index'])->name('root');
 // Autenticação
 Route::get('/login', [AuthController::class, 'new'])->name('login');
 Route::post('/login', [AuthController::class, 'create'])->name('login.create');
-Route::get('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-// Decks (acessível por usuários logados)
-Route::get('/decks', [DecksController::class, 'index'])->name('decks');
 
-// Administração (apenas administradores)
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+// rotas protegidas
+Route::middleware('auth')->group(function () {
+    // Autenticação
+    Route::get('/logout', [AuthController::class, 'destroy'])->name('logout');
+
+    // Decks
+    Route::get('/decks', [DecksController::class, 'index'])->name('decks');
+
+    // Administração
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+});

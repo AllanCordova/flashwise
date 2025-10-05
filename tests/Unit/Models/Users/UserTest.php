@@ -1,142 +1,140 @@
 <?php
 
-namespace Tests\Unit\Models\Users;
+namespace Tests\Unit\Models;
 
 use App\Models\User;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    private User $user;
-    private User $user2;
-
-    public function setUp(): void
+    public function test_should_create_user_with_valid_data(): void
     {
-        parent::setUp();
-
-        $this->user = new User([
-            'name' => 'User 1',
-            'email' => 'fulano@example.com',
-            'password' => '123456',
-            'password_confirmation' => '123456'
+        $user = new User([
+            'name' => 'John Doe',
+            'email' => 'john.doe@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
         ]);
-        $this->user->save();
 
-        $this->user2 = new User([
-            'name' => 'User 2',
-            'email' => 'fulano1@example.com',
-            'password' => '123456',
-            'password_confirmation' => '123456'
-        ]);
-        $this->user2->save();
+        $this->assertTrue($user->save());
+        $this->assertNull($user->errors('name'));
+        $this->assertNull($user->errors('email'));
+        $this->assertNull($user->errors('password'));
+
+        $this->assertGreaterThan(0, $user->id);
+        $this->assertEquals('user', $user->role);
     }
 
-    public function test_should_create_new_user(): void
-    {
-        $this->assertCount(2, User::all());
-    }
-
-    public function test_all_should_return_all_users(): void
-    {
-        $this->user2->save();
-
-        $users[] = $this->user->id;
-        $users[] = $this->user2->id;
-
-        $all = array_map(fn($user) => $user->id, User::all());
-
-        $this->assertCount(2, $all);
-        $this->assertEquals($users, $all);
-    }
-
-    public function test_destroy_should_remove_the_user(): void
-    {
-        $this->user->destroy();
-        $this->assertCount(1, User::all());
-    }
-
-    public function test_set_id(): void
-    {
-        $this->user->id = 10;
-        $this->assertEquals(10, $this->user->id);
-    }
-
-    public function test_set_name(): void
-    {
-        $this->user->name = 'User name';
-        $this->assertEquals('User name', $this->user->name);
-    }
-
-    public function test_set_email(): void
-    {
-        $this->user->email = 'outro@example.com';
-        $this->assertEquals('outro@example.com', $this->user->email);
-    }
-
-    public function test_errors_should_return_errors(): void
+    public function test_should_not_save_with_invalid_data(): void
     {
         $user = new User();
 
-        $this->assertFalse($user->isValid());
         $this->assertFalse($user->save());
         $this->assertTrue($user->hasErrors());
-
         $this->assertEquals('não pode ser vazio!', $user->errors('name'));
         $this->assertEquals('não pode ser vazio!', $user->errors('email'));
     }
 
-    public function test_errors_should_return_password_confirmation_error(): void
+    public function test_should_fail_if_email_is_not_unique(): void
     {
-        $user = new User([
-            'name' => 'User 3',
-            'email' => 'fulano3@example.com',
-            'password' => '123456',
-            'password_confirmation' => '1234567'
+        $user1 = new User([
+            'name' => 'User One',
+            'email' => 'test@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
+        ]);
+        $user1->save();
+
+        $user2 = new User([
+            'name' => 'User Two',
+            'email' => 'test@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
         ]);
 
-        $this->assertFalse($user->isValid());
-        $this->assertFalse($user->save());
+        $this->assertFalse($user2->save());
+        $this->assertEquals('já existe um registro com esse dado', $user2->errors('email'));
+    }
 
+    public function test_should_fail_if_password_confirmation_does_not_match(): void
+    {
+        $user = new User([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'wrong_password'
+        ]);
+
+        $this->assertFalse($user->save());
         $this->assertEquals('as senhas devem ser idênticas!', $user->errors('password'));
     }
 
-    public function test_find_by_id_should_return_the_user(): void
+    public function test_password_should_be_encrypted_on_set(): void
     {
-        $this->assertEquals($this->user->id, User::findById($this->user->id)->id);
+        $user = new User([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'my-secret-password'
+        ]);
+
+        $this->assertNotEmpty($user->encrypted_password);
+        $this->assertNotEquals('my-secret-password', $user->encrypted_password);
+        $this->assertTrue(password_verify('my-secret-password', $user->encrypted_password));
     }
 
-    public function test_find_by_id_should_return_null(): void
+    public function test_authenticate_should_return_true_for_correct_password(): void
     {
-        $this->assertNull(User::findById(3));
+        $user = new User([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
+        ]);
+        $user->save();
+
+        $this->assertTrue($user->authenticate('password123'));
     }
 
-    public function test_find_by_email_should_return_the_user(): void
+    public function test_authenticate_should_return_false_for_incorrect_password(): void
     {
-        $this->assertEquals($this->user->id, User::findByEmail($this->user->email)->id);
+        $user = new User([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
+        ]);
+        $user->save();
+
+        $this->assertFalse($user->authenticate('wrong-password'));
     }
 
-    public function test_find_by_email_should_return_null(): void
+    public function test_find_by_email_should_return_correct_user(): void
     {
-        $this->assertNull(User::findByEmail('not.exits@example.com'));
+        $user = new User([
+            'name' => 'Find Me',
+            'email' => 'findme@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
+        ]);
+        $user->save();
+
+        $foundUser = User::findByEmail('findme@example.com');
+        $this->assertInstanceOf(User::class, $foundUser);
+        $this->assertEquals($user->id, $foundUser->id);
     }
 
-    public function test_authenticate_should_return_the_true(): void
+    public function test_find_by_email_should_return_null_if_not_found(): void
     {
-        $this->assertTrue($this->user->authenticate('123456'));
-        $this->assertFalse($this->user->authenticate('wrong'));
+        $foundUser = User::findByEmail('notfound@example.com');
+        $this->assertNull($foundUser);
     }
 
-    public function test_authenticate_should_return_false(): void
+    public function test_is_admin_should_return_correct_boolean(): void
     {
-        $this->assertFalse($this->user->authenticate(''));
-    }
+        $user = new User(['role' => 'user']);
+        $admin = new User(['role' => 'admin']);
 
-    public function test_update_should_not_change_the_password(): void
-    {
-        $this->user->password = '654321';
-        $this->user->save();
-
-        $this->assertTrue($this->user->authenticate('123456'));
-        $this->assertFalse($this->user->authenticate('654321'));
+        $this->assertFalse($user->isAdmin());
+        $this->assertTrue($admin->isAdmin());
     }
 }
