@@ -27,4 +27,24 @@ class PrivatedCest extends BaseAcceptanceCest
         $I->seeCurrentUrlEquals('/decks');
         $I->see('Meus Decks');
     }
+
+    public function authenticatedUserIsRedirectedFromGuestOnlyRoutes(AcceptanceTester $I): void
+    {
+        $user = new User([
+            'name' => 'Test User',
+            'email' => 'user@test.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ]);
+        $user->save();
+
+        $I->amOnPage('/login');
+        $I->fillField('user[email]', 'user@test.com');
+        $I->fillField('user[password]', 'password123');
+        $I->click('Entrar');
+        $I->seeCurrentUrlEquals('/');
+
+        $I->amOnPage('/login');
+        $I->seeCurrentUrlEquals('/');
+    }
 }
