@@ -26,7 +26,7 @@ class User extends Model
         'role'
     ];
 
-    public ?string $role = 'user';
+    protected ?string $role = 'user';
 
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
