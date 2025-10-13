@@ -36,9 +36,8 @@ class DeckTest extends TestCase
         $result = $deck->save();
 
         $this->assertFalse($result);
-        $errors = $deck->errors();
-        $this->assertIsArray($errors);
-        $this->assertNotEmpty($errors);
+        $this->assertTrue($deck->hasErrors());
+        $this->assertEquals('não pode ser vazio!', $deck->errors('name'));
     }
 
     public function testDeckValidationRequiresDescription(): void
@@ -53,9 +52,8 @@ class DeckTest extends TestCase
         $result = $deck->save();
 
         $this->assertFalse($result);
-        $errors = $deck->errors();
-        $this->assertIsArray($errors);
-        $this->assertNotEmpty($errors);
+        $this->assertTrue($deck->hasErrors());
+        $this->assertEquals('não pode ser vazio!', $deck->errors('description'));
     }
 
     public function testDeckNameMustBeUnique(): void
@@ -77,9 +75,8 @@ class DeckTest extends TestCase
         $result = $deck2->save();
 
         $this->assertFalse($result);
-        $errors = $deck2->errors();
-        $this->assertIsArray($errors);
-        $this->assertNotEmpty($errors);
+        $this->assertTrue($deck2->hasErrors());
+        $this->assertNotNull($deck2->errors('name'));
     }
 
     public function testDeckCanBeFound(): void
