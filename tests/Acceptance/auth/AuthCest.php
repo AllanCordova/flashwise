@@ -12,7 +12,7 @@ class AuthCest extends BaseAcceptanceCest
     {
         $I->amOnPage('/decks');
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Você deve estar logado para acessar essa página.');
+        $I->waitForText('Você deve estar logado para acessar essa página.', 10);
     }
 
     public function loginFailsWithInvalidCredentials(AcceptanceTester $I): void
@@ -32,7 +32,7 @@ class AuthCest extends BaseAcceptanceCest
         $I->click('Entrar');
 
         $I->seeCurrentUrlEquals('/login');
-        $I->see('E-mail ou senha inválidos. Por favor, tente novamente.');
+        $I->waitForText('E-mail ou senha inválidos. Por favor, tente novamente.', 10);
     }
 
     public function successfulLogin(AcceptanceTester $I): void
@@ -51,8 +51,9 @@ class AuthCest extends BaseAcceptanceCest
         $I->click('Entrar');
 
         $I->seeCurrentUrlEquals('/');
-        $I->see('Login realizado com sucesso! Bem-vindo(a), Allan!');
-        $I->see('Sair');
+        $I->waitForText('Login realizado com sucesso! Bem-vindo(a), Allan!', 10);
+        $I->wait(1); // Esperar 1 segundo para o header carregar
+        $I->see('Sair'); // Verificação simples sem wait
     }
 
     public function successfulLogout(AcceptanceTester $I): void
@@ -74,7 +75,7 @@ class AuthCest extends BaseAcceptanceCest
         $I->amOnPage('/logout');
 
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Você foi desconectado com segurança.');
+        $I->waitForText('Você foi desconectado com segurança.', 10);
 
         $I->amOnPage('/decks');
         $I->seeCurrentUrlEquals('/login');

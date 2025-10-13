@@ -7,7 +7,8 @@ modules:
         host: selenium # This refers to the Selenium hub in Docker
         port: 4444 # Default port for Selenium Hub
         window_size: false
+        wait: 5
         capabilities:
           chromeOptions:
-            args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage"]
+            args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
     - \Tests\Support\Helper\LoginHelper

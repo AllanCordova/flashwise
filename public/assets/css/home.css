@@ -5,9 +5,9 @@
     padding: 4rem 2rem;
     text-align: center;
     border-radius: 12px;
-    margin: 0 auto;
-    max-width: 1200px;
-    width: 90%;
+    margin: 2rem auto;
+    max-width: 900px;
+    width: 100%;
     box-shadow: 0 10px 40px rgba(239, 71, 111, 0.3);
 }
 
@@ -15,11 +15,13 @@
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+    color: white !important;
+    display: block;
+    width: 100%;
+    text-align: center;
+    flex-wrap: wrap;
+    visibility: visible;
+    opacity: 1;
 }
 
 .home-hero .lead {

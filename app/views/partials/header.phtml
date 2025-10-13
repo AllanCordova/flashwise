@@ -1,41 +1,45 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <i class="bi bi-lightbulb-fill"></i> FlashWise
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <?php 
-                $currentUser = \Lib\Authentication\Auth::user();
-                $currentPath = $_SERVER['REQUEST_URI'] ?? '/';
-                ?>
-                <li class="nav-item">
-                    <a class="nav-link <?= $currentPath === '/' ? 'active' : '' ?>" href="/">Home</a>
-                </li>
-                <?php if ($currentUser): ?>
+<link href="/assets/css/header.css" rel="stylesheet">
+
+<header>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand nav-logo" href="/">
+                <i class="bi bi-lightbulb-fill"></i> FlashWise
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <?php 
+                    $currentUser = \Lib\Authentication\Auth::user();
+                    $currentPath = $_SERVER['REQUEST_URI'] ?? '/';
+                    ?>
                     <li class="nav-item">
-                        <a class="nav-link <?= str_starts_with($currentPath, '/decks') ? 'active' : '' ?>" href="/decks">Meus Decks</a>
+                        <a class="nav-link <?= $currentPath === '/' ? 'active' : '' ?>" href="/">Home</a>
                     </li>
-                    <?php if ($currentUser->isAdmin()): ?>
+                    <?php if ($currentUser): ?>
                         <li class="nav-item">
-                            <a class="nav-link <?= str_starts_with($currentPath, '/admin') ? 'active' : '' ?>" href="/admin">Admin</a>
+                            <a class="nav-link <?= str_starts_with($currentPath, '/decks') ? 'active' : '' ?>" href="/decks">Meus Decks</a>
+                        </li>
+                        <?php if ($currentUser->isAdmin()): ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?= str_starts_with($currentPath, '/admin') ? 'active' : '' ?>" href="/admin">Admin</a>
+                            </li>
+                        <?php endif; ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Sair</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?= str_starts_with($currentPath, '/register') ? 'active' : '' ?>" href="/register">Registrar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= str_starts_with($currentPath, '/login') ? 'active' : '' ?>" href="/login">Login</a>
                         </li>
                     <?php endif; ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Sair</a>
-                    </li>
-                <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?= str_starts_with($currentPath, '/register') ? 'active' : '' ?>" href="/register">Registrar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= str_starts_with($currentPath, '/login') ? 'active' : '' ?>" href="/login">Login</a>
-                    </li>
-                <?php endif; ?>
-            </ul>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>
