@@ -21,3 +21,5 @@ parameters:
     - '#PHPDoc tag @var with type Tests\\Support\\AcceptanceTester is not subtype of native type Codeception\\Module#'
     - message: '#Call to an undefined method Tests\\Support\\AcceptanceTester::(wait|waitForText|seeCurrentUrlEquals|executeJS|scrollTo|dontSee)\(\)#'
       path: tests/Acceptance/*
+    - message: '#Class Tests\\Support\\AcceptanceTester uses unknown trait Tests\\Support\\_generated\\AcceptanceTesterActions#'
+      path: tests/Support/AcceptanceTester.php
