@@ -52,13 +52,20 @@ jobs:
       
       - name: Verify test files
         run: |
-          echo "Checking PublicCest.php content:"
-          grep -n "waitForText" tests/Acceptance/access/PublicCest.php || echo "WARNING: waitForText not found!"
-          echo "Checking HomeIndexCest.php content:"
-          grep -n "waitForText" tests/Acceptance/home/HomeIndexCest.php || echo "WARNING: waitForText not found!"
+          echo "=== PublicCest.php ==="
+          cat tests/Acceptance/access/PublicCest.php
+          echo ""
+          echo "=== HomeIndexCest.php ==="
+          cat tests/Acceptance/home/HomeIndexCest.php
+          echo ""
+          echo "=== AuthCest.php (lines 70-80) ==="
+          sed -n '70,80p' tests/Acceptance/auth/AuthCest.php
+
+      - name: Down containers (clean start)
+        run: ./run down || true
 
       - name: Up containers
-        run: ./run up -d
+        run: ./run up -d --build
 
       - name: See containers
         run: ./run ps
