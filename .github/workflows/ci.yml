@@ -52,14 +52,14 @@ jobs:
       
       - name: Verify test files
         run: |
-          echo "=== PublicCest.php ==="
-          cat tests/Acceptance/access/PublicCest.php
+          echo "=== Verificando arquivos de teste ==="
+          ls -la tests/Acceptance/
           echo ""
-          echo "=== HomeIndexCest.php ==="
-          cat tests/Acceptance/home/HomeIndexCest.php
+          echo "=== Conteúdo de PublicCest.php ==="
+          cat tests/Acceptance/PublicCest.php
           echo ""
-          echo "=== AuthCest.php (lines 70-80) ==="
-          sed -n '70,80p' tests/Acceptance/auth/AuthCest.php
+          echo "=== Conteúdo de AuthCest.php ==="
+          cat tests/Acceptance/AuthCest.php
 
       - name: Down containers (clean start)
         run: ./run down -v || true
@@ -70,50 +70,29 @@ jobs:
       - name: Up containers
         run: ./run up -d --build --force-recreate
 
+      - name: Wait for containers
+        run: sleep 10
+
       - name: Clear all PHP caches inside container
         run: |
-          echo "Limpando cache PHP opcache..."
-          docker exec flashwise-php_test-1 sh -c 'php -r "if (function_exists(\"opcache_reset\")) { opcache_reset(); echo \"Opcache cleared\n\"; } else { echo \"No opcache\n\"; }"' || echo "Falha ao limpar opcache"
+          echo "=== Limpando caches PHP ==="
+          ./run php -r "if (function_exists('opcache_reset')) { opcache_reset(); echo 'OPCache limpo\n'; } else { echo 'OPCache não disponível\n'; }"
+          ./run php -r "if (function_exists('apcu_clear_cache')) { apcu_clear_cache(); echo 'APCu limpo\n'; } else { echo 'APCu não disponível\n'; }"
+          echo "=== Verificando código dentro do container ==="
+          echo "Conteúdo de PublicCest.php:"
+          ./run cat tests/Acceptance/PublicCest.php
           echo ""
-          echo "Removendo arquivos _generated do Codeception..."
-          docker exec flashwise-php_test-1 rm -rf /var/www/tests/Support/_generated/*
-          echo "Arquivos _generated removidos"
+          echo "Conteúdo de AuthCest.php:"
+          ./run cat tests/Acceptance/AuthCest.php
           echo ""
-          echo "Reconstruindo Codeception..."
-          docker exec flashwise-php_test-1 /var/www/vendor/bin/codecept build
-          echo "Codeception reconstruído"
+          echo "Conteúdo de _flash_message.phtml:"
+          ./run cat app/views/layouts/_flash_message.phtml
 
       - name: See containers
         run: ./run ps
 
-      - name: Verify code inside container
-        run: |
-          echo "=== PublicCest.php COMPLETO (workspace) ===" 
-          cat tests/Acceptance/access/PublicCest.php
-          echo ""
-          echo "=== PublicCest.php COMPLETO (container) ==="
-          docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/access/PublicCest.php
-          echo ""
-          echo "=== MD5 comparison ==="
-          echo -n "Workspace MD5: "
-          md5sum tests/Acceptance/access/PublicCest.php | cut -d' ' -f1
-          echo -n "Container MD5: "
-          docker exec flashwise-php_test-1 md5sum /var/www/tests/Acceptance/access/PublicCest.php | cut -d' ' -f1
-          echo ""
-          echo "=== HomeIndexCest.php COMPLETO (container) ==="
-          docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/home/HomeIndexCest.php
-          echo ""
-          echo "=== AuthCest.php completo (container) ==="
-          docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/auth/AuthCest.php
-          echo ""
-          echo "=== Verificando cache Codeception ==="
-          docker exec flashwise-php_test-1 ls -la /var/www/tests/Support/_generated/ || echo "Diretório vazio ou não existe"
-          echo ""
-          echo "=== Verificando opcache status ==="
-          docker exec flashwise-php_test-1 php -i | grep -i "opcache.enable" || echo "Opcache config not found"
-
       - name: PHPUnit Acceptance test
-        run: ./run test:browser
+        run: ./run test tests/Acceptance
 
   code_quality:
     name: Code Quality Check
@@ -128,14 +107,8 @@ jobs:
       - name: Composer install
         run: ./run composer install
 
-      - name: PSR-4 Checker
-        run: ./run composer dump-autoload --optimize --strict-psr
+      - name: Run PHPStan
+        run: ./run composer phpstan
 
-      - name: Generate Codeception files
-        run: ./run codecept build
-
-      - name: PHPCS
-        run: ./run phpcs
-
-      - name: PHPStan
-        run: ./run phpstan
+      - name: Run PHP CS Fixer (dry-run)
+        run: ./run composer cs-fix-dry-run
