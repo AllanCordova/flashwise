@@ -44,8 +44,18 @@ jobs:
       - name: Composer install
         run: ./run composer install
 
+      - name: Clean Codeception cache
+        run: rm -rf tests/Support/_generated/*
+
       - name: Generate Codeception files
         run: ./run codecept build
+      
+      - name: Verify test files
+        run: |
+          echo "Checking PublicCest.php content:"
+          grep -n "waitForText" tests/Acceptance/access/PublicCest.php || echo "WARNING: waitForText not found!"
+          echo "Checking HomeIndexCest.php content:"
+          grep -n "waitForText" tests/Acceptance/home/HomeIndexCest.php || echo "WARNING: waitForText not found!"
 
       - name: Up containers
         run: ./run up -d
