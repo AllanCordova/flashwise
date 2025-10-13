@@ -62,13 +62,24 @@ jobs:
           sed -n '70,80p' tests/Acceptance/auth/AuthCest.php
 
       - name: Down containers (clean start)
-        run: ./run down || true
+        run: ./run down -v || true
+
+      - name: Remove all Docker volumes
+        run: docker volume prune -f || true
 
       - name: Up containers
-        run: ./run up -d --build
+        run: ./run up -d --build --force-recreate
 
       - name: See containers
         run: ./run ps
+
+      - name: Verify code inside container
+        run: |
+          echo "=== Code inside php_test container ==="
+          docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/access/PublicCest.php | head -20
+          echo ""
+          echo "=== AuthCest lines 10-20 ==="
+          docker exec flashwise-php_test-1 sed -n '10,20p' /var/www/tests/Acceptance/auth/AuthCest.php
 
       - name: PHPUnit Acceptance test
         run: ./run test:browser
