@@ -1,0 +1,203 @@
+/* Deck Creation Form - Unique Design */
+.deck-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+}
+
+.deck-form-wrapper {
+    background: linear-gradient(135deg, #ef476f 0%, #d63a5c 100%);
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 10px 40px rgba(239, 71, 111, 0.3);
+}
+
+.deck-form-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.deck-form-header h2 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.deck-form-header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.deck-form {
+    background-color: #161b22;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.form-group-deck {
+    margin-bottom: 1.75rem;
+}
+
+.form-group-deck label {
+    display: block;
+    font-weight: 600;
+    color: #e6edf3;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-group-deck label i {
+    color: #ef476f;
+    font-size: 1.1rem;
+}
+
+.form-input-deck {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    background-color: #0d1117;
+    color: #e6edf3;
+}
+
+.form-input-deck:focus {
+    outline: none;
+    border-color: #ef476f;
+    background-color: #161b22;
+    box-shadow: 0 0 0 4px rgba(239, 71, 111, 0.1);
+}
+
+.form-input-deck::placeholder {
+    color: #6e7681;
+    font-weight: 300;
+}
+
+textarea.form-input-deck {
+    resize: vertical;
+    min-height: 120px;
+    font-family: 'Inter', sans-serif;
+}
+
+.char-counter {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #8b949e;
+    margin-top: 0.5rem;
+}
+
+.form-actions-deck {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-deck {
+    flex: 1;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-deck-primary {
+    background: linear-gradient(135deg, #ef476f 0%, #d63a5c 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(239, 71, 111, 0.3);
+}
+
+.btn-deck-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 71, 111, 0.4);
+}
+
+.btn-deck-primary:active {
+    transform: translateY(0);
+}
+
+.btn-deck-secondary {
+    background-color: #161b22;
+    color: #e6edf3;
+    border: 1px solid #30363d;
+}
+
+.btn-deck-secondary:hover {
+    background-color: #0d1117;
+}
+
+.form-tip {
+    background-color: #0d1117;
+    border-left: 4px solid #ef476f;
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+}
+
+.form-tip p {
+    margin: 0;
+    color: #8b949e;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.form-tip i {
+    color: #ef476f;
+    margin-right: 0.5rem;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.deck-form-wrapper {
+    animation: slideIn 0.4s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .deck-form-wrapper {
+        padding: 2rem 1.5rem;
+    }
+    
+    .deck-form {
+        padding: 2rem 1.5rem;
+    }
+    
+    .form-actions-deck {
+        flex-direction: column;
+    }
+    
+    .btn-deck {
+        width: 100%;
+    }
+}

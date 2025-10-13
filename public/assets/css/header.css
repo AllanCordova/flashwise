@@ -1,12 +1,37 @@
 header {
   background-color: #ef476f;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .nav-logo a {
   text-decoration: none;
   color: #e6edf3;
+  font-weight: 700;
+  font-size: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.2s ease;
+}
+
+.nav-logo a:hover {
+  color: #ffffff;
 }
 
 .nav-item a {
   color: #e6edf3;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-item a:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item a.active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.2);
 }

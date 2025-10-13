@@ -16,17 +16,20 @@
                 <a href="/">FlashWise</a>
             </h2>
             <ul class="nav justify-content-center">
+                <?php 
+                $currentUser = \Lib\Authentication\Auth::user();
+                $currentPath = $_SERVER['REQUEST_URI'] ?? '/';
+                ?>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link <?= $currentPath === '/' ? 'active' : '' ?>" href="/">Home</a>
                 </li>
-                <?php $currentUser = \Lib\Authentication\Auth::user(); ?>
                 <?php if ($currentUser): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/decks">Meus Decks</a>
+                        <a class="nav-link <?= str_starts_with($currentPath, '/decks') ? 'active' : '' ?>" href="/decks">Meus Decks</a>
                     </li>
                     <?php if ($currentUser->isAdmin()): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin">Admin</a>
+                            <a class="nav-link <?= str_starts_with($currentPath, '/admin') ? 'active' : '' ?>" href="/admin">Admin</a>
                         </li>
                     <?php endif; ?>
                     <li class="nav-item">
@@ -34,10 +37,10 @@
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">Registrar</a>
+                        <a class="nav-link <?= str_starts_with($currentPath, '/register') ? 'active' : '' ?>" href="/register">Registrar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link <?= str_starts_with($currentPath, '/login') ? 'active' : '' ?>" href="/login">Login</a>
                     </li>
                 <?php endif; ?>
             </ul>

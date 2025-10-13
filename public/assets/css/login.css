@@ -1,26 +1,79 @@
+/* Login/Register Forms */
+.auth-container {
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  width: 100%;
+  padding: 2rem;
+}
+
 .card {
-  border-radius: 15px;
+  border-radius: 12px;
   overflow: hidden;
+  border: 1px solid #30363d;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background-color: #161b22;
 }
 
 .card-header {
   border-bottom: none;
+  background: linear-gradient(135deg, #ef476f 0%, #d63a5c 100%);
+  padding: 2rem;
+}
+
+.card-header h2 {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card-header p {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+}
+
+.form-label {
+  color: #e6edf3;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  border: 2px solid #30363d;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #0d1117;
+  color: #e6edf3;
 }
 
 .form-control:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  border-color: #ef476f;
+  box-shadow: 0 0 0 4px rgba(239, 71, 111, 0.1);
+  background-color: #161b22;
 }
 
 .btn-primary {
   transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ef476f 0%, #d63a5c 100%);
+  border: none;
+  padding: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(239, 71, 111, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+  box-shadow: 0 6px 16px rgba(239, 71, 111, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .bg-light {
-  background-color: #f8f9fa !important;
+  background-color: #161b22 !important;
 }
