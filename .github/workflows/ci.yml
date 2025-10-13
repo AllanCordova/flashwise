@@ -59,11 +59,29 @@ jobs:
       - name: Up containers with fresh build
         run: ./run up -d --build --force-recreate
 
-      - name: Wait for all services to be ready
-        run: sleep 20
+      - name: Wait for web server to be ready
+        run: |
+          echo "Waiting for web server to be ready..."
+          timeout 60 bash -c 'until curl -f http://localhost:8080 2>/dev/null; do echo "Waiting..."; sleep 3; done' || echo "Web server not ready on localhost:8080"
+          echo "Web server is ready!"
+
+      - name: Wait for database to be ready
+        run: |
+          echo "Waiting for database to be ready..."
+          sleep 10
 
       - name: Check container status
         run: ./run ps
+
+      - name: Verify web server is accessible
+        run: |
+          echo "Testing web server connectivity..."
+          docker compose exec -T web curl -f http://localhost:8080 || echo "Web server not responding on port 8080"
+          docker compose exec -T web curl -f http://localhost:80 || echo "Web server not responding on port 80"
+          docker compose exec -T php_test curl -f http://web:8080 || echo "php_test cannot reach web:8080"
+
+      - name: Show nginx logs
+        run: docker compose logs web
 
       - name: Run Codeception Acceptance Tests
         run: ./run test:browser
