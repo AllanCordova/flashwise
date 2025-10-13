@@ -1,78 +1,80 @@
 <link href="/assets/css/application.css" rel="stylesheet">
 <link href="/assets/css/decks.css" rel="stylesheet">
 
-<div class="decks-container">
-    <div class="decks-header">
-        <div>
-            <h2><i class="bi bi-collection"></i> Meus Decks</h2>
-            <p class="text-secondary mb-0">Bem-vindo, <?= htmlspecialchars($user->name) ?>!</p>
-        </div>
-        <a href="/decks/create" class="create-deck-btn">
-            <i class="bi bi-plus-circle"></i> Criar Novo Deck
-        </a>
-    </div>
-
-    <?php if (!empty($decks)): ?>
-        <table class="decks-table">
-            <thead>
-                <tr>
-                    <th>Nome do Deck</th>
-                    <th style="text-align: center;">Novas</th>
-                    <th style="text-align: center;">Revisar</th>
-                    <th style="text-align: center;">Total</th>
-                    <th style="text-align: right;">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($decks as $deck): ?>
-                    <tr>
-                        <td>
-                            <div class="deck-name"><?= htmlspecialchars($deck->name) ?></div>
-                            <div class="deck-description"><?= htmlspecialchars($deck->description) ?></div>
-                        </td>
-                        <td style="text-align: center;">
-                            <div class="stat-item">
-                                <span class="stat-number stat-new">0</span>
-                            </div>
-                        </td>
-                        <td style="text-align: center;">
-                            <div class="stat-item">
-                                <span class="stat-number stat-due">0</span>
-                            </div>
-                        </td>
-                        <td style="text-align: center;">
-                            <div class="stat-item">
-                                <span class="stat-number stat-total">0</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="deck-actions">
-                                <button class="action-btn btn-study" onclick="alert('Função de estudo em desenvolvimento')">
-                                    <i class="bi bi-play-fill"></i> Estudar
-                                </button>
-                                <form
-                                    action="/decks/<?= $deck->id ?>/delete"
-                                    method="POST"
-                                    style="display: inline;"
-                                    onsubmit="return confirm('Tem certeza que deseja excluir este deck?');">
-                                    <button type="submit" class="action-btn btn-delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <div class="no-decks">
-            <i class="bi bi-inbox"></i>
-            <h3>Nenhum deck encontrado</h3>
-            <p>Comece criando seu primeiro deck de estudos!</p>
-            <a href="/decks/create" class="create-deck-btn" style="display: inline-block; margin-top: 1rem;">
-                <i class="bi bi-plus-circle"></i> Criar Primeiro Deck
+<div class="container py-4">
+    <div class="decks-container">
+        <div class="decks-header">
+            <div>
+                <h2><i class="bi bi-collection"></i> Meus Decks</h2>
+                <p class="text-secondary mb-0">Bem-vindo, <?= htmlspecialchars($user->name) ?>!</p>
+            </div>
+            <a href="/decks/create" class="create-deck-btn">
+                <i class="bi bi-plus-circle"></i> Criar Novo Deck
             </a>
         </div>
-    <?php endif; ?>
+
+        <?php if (!empty($decks)): ?>
+            <table class="decks-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Deck</th>
+                        <th style="text-align: center;">Novas</th>
+                        <th style="text-align: center;">Revisar</th>
+                        <th style="text-align: center;">Total</th>
+                        <th style="text-align: right;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($decks as $deck): ?>
+                        <tr>
+                            <td>
+                                <div class="deck-name"><?= htmlspecialchars($deck->name) ?></div>
+                                <div class="deck-description"><?= htmlspecialchars($deck->description) ?></div>
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="stat-item">
+                                    <span class="stat-number stat-new">0</span>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="stat-item">
+                                    <span class="stat-number stat-due">0</span>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="stat-item">
+                                    <span class="stat-number stat-total">0</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="deck-actions">
+                                    <button class="action-btn btn-study" onclick="alert('Função de estudo em desenvolvimento')">
+                                        <i class="bi bi-play-fill"></i> Estudar
+                                    </button>
+                                    <form
+                                        action="/decks/<?= $deck->id ?>/delete"
+                                        method="POST"
+                                        style="display: inline;"
+                                        onsubmit="return confirm('Tem certeza que deseja excluir este deck?');">
+                                        <button type="submit" class="action-btn btn-delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div class="no-decks">
+                <i class="bi bi-inbox"></i>
+                <h3>Nenhum deck encontrado</h3>
+                <p>Comece criando seu primeiro deck de estudos!</p>
+                <a href="/decks/create" class="create-deck-btn" style="display: inline-block; margin-top: 1rem;">
+                    <i class="bi bi-plus-circle"></i> Criar Primeiro Deck
+                </a>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>

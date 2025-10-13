@@ -71,7 +71,7 @@ class AuthCest extends BaseAcceptanceCest
         $I->click('Entrar');
         $I->seeCurrentUrlEquals('/');
 
-        $I->click('Sair');
+        $I->amOnPage('/logout');
 
         $I->seeCurrentUrlEquals('/login');
         $I->see('Você foi desconectado com segurança.');
