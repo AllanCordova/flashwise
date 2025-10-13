@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -16,23 +17,17 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <header>
-        <?php
-        require __DIR__ . '../../partials/header.phtml';
-        ?>
-    </header>
+    <?php require __DIR__ . '/../partials/header.phtml'; ?>
     
-    <?php require '_flash_message.phtml'; ?>
+    <div class="container mt-3">
+        <?php require __DIR__ . '/_flash_message.phtml'; ?>
+    </div>
     
     <main class="flex-grow-1 d-flex align-items-center justify-content-center">
         <?php require $view ?>
     </main>
     
-    <footer class="mt-auto">
-        <?php
-        require __DIR__ . '../../partials/footer.phtml';
-        ?>
-    </footer>
+    <?php require __DIR__ . '/../partials/footer.phtml'; ?>
 </body>
 
 </html>
