@@ -72,29 +72,45 @@ jobs:
 
       - name: Clear all PHP caches inside container
         run: |
-          docker exec flashwise-php_test-1 php -r "if (function_exists('opcache_reset')) opcache_reset();" || echo "No opcache"
+          echo "Limpando cache PHP opcache..."
+          docker exec flashwise-php_test-1 sh -c 'php -r "if (function_exists(\"opcache_reset\")) { opcache_reset(); echo \"Opcache cleared\n\"; } else { echo \"No opcache\n\"; }"' || echo "Falha ao limpar opcache"
+          echo ""
+          echo "Removendo arquivos _generated do Codeception..."
           docker exec flashwise-php_test-1 rm -rf /var/www/tests/Support/_generated/*
-          docker exec flashwise-php_test-1 ./vendor/bin/codecept build
+          echo "Arquivos _generated removidos"
+          echo ""
+          echo "Reconstruindo Codeception..."
+          docker exec flashwise-php_test-1 /var/www/vendor/bin/codecept build
+          echo "Codeception reconstruído"
 
       - name: See containers
         run: ./run ps
 
       - name: Verify code inside container
         run: |
-          echo "=== PublicCest.php completo ==="
+          echo "=== PublicCest.php COMPLETO (workspace) ===" 
+          cat tests/Acceptance/access/PublicCest.php
+          echo ""
+          echo "=== PublicCest.php COMPLETO (container) ==="
           docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/access/PublicCest.php
           echo ""
-          echo "=== HomeIndexCest.php completo ==="
+          echo "=== MD5 comparison ==="
+          echo -n "Workspace MD5: "
+          md5sum tests/Acceptance/access/PublicCest.php | cut -d' ' -f1
+          echo -n "Container MD5: "
+          docker exec flashwise-php_test-1 md5sum /var/www/tests/Acceptance/access/PublicCest.php | cut -d' ' -f1
+          echo ""
+          echo "=== HomeIndexCest.php COMPLETO (container) ==="
           docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/home/HomeIndexCest.php
           echo ""
-          echo "=== AuthCest.php linhas 10-60 ==="
-          docker exec flashwise-php_test-1 sed -n '10,60p' /var/www/tests/Acceptance/auth/AuthCest.php
+          echo "=== AuthCest.php completo (container) ==="
+          docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/auth/AuthCest.php
           echo ""
           echo "=== Verificando cache Codeception ==="
-          docker exec flashwise-php_test-1 ls -la /var/www/tests/Support/_generated/
+          docker exec flashwise-php_test-1 ls -la /var/www/tests/Support/_generated/ || echo "Diretório vazio ou não existe"
           echo ""
-          echo "=== Verificando se há opcache ==="
-          docker exec flashwise-php_test-1 php -i | grep opcache || echo "Opcache não habilitado"
+          echo "=== Verificando opcache status ==="
+          docker exec flashwise-php_test-1 php -i | grep -i "opcache.enable" || echo "Opcache config not found"
 
       - name: PHPUnit Acceptance test
         run: ./run test:browser
