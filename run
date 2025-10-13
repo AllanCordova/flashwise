@@ -54,6 +54,26 @@ function test:browser {
     docker compose run --rm php_test ./vendor/bin/codecept run acceptance ${TEST_PATH}
 }
 
+function test:decks {
+    echo "🧪 Running Deck CRUD tests..."
+    docker compose run --rm php_test ./vendor/bin/codecept run acceptance decks
+}
+
+function test:decks:model {
+    echo "🧪 Running Deck Model validation tests..."
+    docker compose run --rm php_test ./vendor/bin/codecept run acceptance decks/DecksModelCest
+}
+
+function test:decks:crud {
+    echo "🧪 Running Deck CRUD acceptance tests..."
+    docker compose run --rm php_test ./vendor/bin/codecept run acceptance decks/DecksCest
+}
+
+function test:all {
+    echo "🧪 Running all acceptance tests..."
+    docker compose run --rm php_test ./vendor/bin/codecept run acceptance
+}
+
 function phpcs {
     TEST_PATH="${@:-.}"
     docker compose run --rm php ./vendor/bin/phpcs ${TEST_PATH}

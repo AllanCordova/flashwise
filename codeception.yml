@@ -10,3 +10,20 @@ actor_suffix: Tester
 extensions:
   enabled:
     - Codeception\Extension\RunFailed
+
+suites:
+  acceptance:
+    actor: AcceptanceTester
+    path: Acceptance
+    modules:
+      enabled:
+        - WebDriver:
+            url: "http://web:8080"
+            browser: chrome
+            host: selenium
+            port: 4444
+            window_size: false
+            capabilities:
+              chromeOptions:
+                args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage"]
+        - \Tests\Support\Helper\LoginHelper

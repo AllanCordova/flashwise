@@ -21,5 +21,11 @@
     "codeception/module-phpbrowser": "*",
     "codeception/module-asserts": "*",
     "codeception/module-webdriver": "^4.0"
+  },
+  "scripts": {
+    "phpstan": "phpstan analyse --memory-limit=256M",
+    "cs-check": "phpcs",
+    "cs-fix": "phpcbf",
+    "cs-fix-dry-run": "phpcs --report=diff"
   }
 }

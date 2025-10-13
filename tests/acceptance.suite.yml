@@ -6,8 +6,10 @@ modules:
         browser: chrome
         host: selenium # This refers to the Selenium hub in Docker
         port: 4444 # Default port for Selenium Hub
-        window_size: false
+        window_size: 1920x1080
+        wait: 15 # Increased wait time for CI environment
         capabilities:
           chromeOptions:
-            args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage"]
+            args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
+          pageLoadStrategy: "normal" # Wait for page to fully load
     - \Tests\Support\Helper\LoginHelper

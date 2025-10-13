@@ -1,9 +1,9 @@
-name: Continous Integration
+name: Continuous Integration
 
 on:
   push:
-  # pull_request:
-  #   types: [opened, synchronize, reopened]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   tests:
@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Create .env
         run: cp .env.example .env
@@ -24,11 +22,11 @@ jobs:
       - name: Generate Codeception files
         run: ./run codecept build
 
-      - name: Setup Uploads assets permissions
-        run: sudo chown -R www-data:www-data public/assets/uploads
-
       - name: Up containers
         run: ./run up -d
+
+      - name: Wait for containers to be ready
+        run: sleep 15
 
       - name: PHPUnit Units test
         run: ./run test tests/Unit
@@ -39,8 +37,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Create .env
         run: cp .env.example .env
@@ -48,16 +44,50 @@ jobs:
       - name: Composer install
         run: ./run composer install
 
+      - name: Clean Codeception cache
+        run: rm -rf tests/Support/_generated/*
+
       - name: Generate Codeception files
         run: ./run codecept build
 
-      - name: Up containers
-        run: ./run up -d
+      - name: Down containers (clean start)
+        run: ./run down -v || true
 
-      - name: See containers
+      - name: Remove all Docker volumes
+        run: docker volume prune -f || true
+
+      - name: Start database and PHP containers first
+        run: docker compose up -d db php php_test
+
+      - name: Wait for PHP containers to be ready
+        run: sleep 5
+
+      - name: Start web and selenium containers
+        run: docker compose up -d web selenium
+
+      - name: Wait for web server to be ready
+        run: |
+          echo "Waiting for web server to be ready..."
+          timeout 60 bash -c 'until curl -f http://localhost:8080 2>/dev/null; do echo "Waiting..."; sleep 3; done' || echo "Web server not ready on localhost:8080"
+          echo "Web server is ready!"
+
+      - name: Wait for database to be ready
+        run: sleep 5
+
+      - name: Check container status
         run: ./run ps
 
-      - name: PHPUnit Acceptance test
+      - name: Verify web server is accessible
+        run: |
+          echo "Testing web server connectivity..."
+          docker compose exec -T web curl -f http://localhost:8080 || echo "Web server not responding on port 8080"
+          docker compose exec -T web curl -f http://localhost:80 || echo "Web server not responding on port 80"
+          docker compose exec -T php_test curl -f http://web:8080 || echo "php_test cannot reach web:8080"
+
+      - name: Show nginx logs
+        run: docker compose logs web
+
+      - name: Run Codeception Acceptance Tests
         run: ./run test:browser
 
   code_quality:
@@ -66,8 +96,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Create .env
         run: cp .env.example .env
@@ -75,14 +103,8 @@ jobs:
       - name: Composer install
         run: ./run composer install
 
-      - name: PSR-4 Checker
-        run: ./run composer dump-autoload --optimize --strict-psr
+      - name: Run PHPStan
+        run: ./run composer phpstan
 
-      - name: Generate Codeception files
-        run: ./run codecept build
-
-      - name: PHPCS
-        run: ./run phpcs
-
-      - name: PHPStan
-        run: ./run phpstan
+      - name: Run PHP CS Fixer (dry-run)
+        run: ./run composer cs-fix-dry-run

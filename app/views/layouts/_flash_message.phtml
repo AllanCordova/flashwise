@@ -1,6 +1,15 @@
 <?php foreach (\Lib\FlashMessage::get() as $type => $msg) : ?>
-    <div class="alert alert-<?= $type ?> alert-dismissible" role="alert">
-        <div><?= $msg ?></div>
+    <div class="alert alert-<?= $type ?> alert-dismissible show" role="alert">
+        <?php if ($type === 'success'): ?>
+            <i class="bi bi-check-circle-fill"></i>
+        <?php elseif ($type === 'danger'): ?>
+            <i class="bi bi-exclamation-triangle-fill"></i>
+        <?php elseif ($type === 'warning'): ?>
+            <i class="bi bi-exclamation-circle-fill"></i>
+        <?php else: ?>
+            <i class="bi bi-info-circle-fill"></i>
+        <?php endif; ?>
+        <span><?= $msg ?></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-<? endforeach; ?>
+<?php endforeach; ?>

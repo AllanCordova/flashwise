@@ -1,52 +1,80 @@
-<link href="/assets/css/login.css" rel="stylesheet">
+<link href="/assets/css/application.css" rel="stylesheet">
+<link href="/assets/css/deck-form.css" rel="stylesheet">
 
-<div class="container">
-    <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="col-lg-5 col-md-7 col-sm-9">
-            <div class="card shadow-lg border-0 bg-dark text-white">
-                <div class="card-header bg-dark text-white text-center py-4 border-0">
-                    <h2 class="mb-0">
-                        <i class="bi bi-box-arrow-in-right"></i> FlashWise
-                    </h2>
-                    <p class="mb-0 mt-2">Começe a criar seus decks</p>
-                </div>
-
-                <div class="card-body p-5">
-                    <form action="/decks/create" method="POST">
-                        <div class="mb-4">
-                            <label class="form-label fw-bold" for="name">
-                                <i class="bi bi-envelope"></i> Name
-                            </label>
-                            <input
-                                class="form-control form-control-lg bg-dark text-white border-secondary"
-                                type="text"
-                                id="name"
-                                name="deck[name]"
-                                placeholder="english"
-                                required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label fw-bold" for="description">
-                                <i class="bi bi-lock"></i> Description
-                            </label>
-                            <input
-                                class="form-control form-control-lg bg-dark text-white border-secondary"
-                                type="text"
-                                id="description"
-                                name="deck[description]"
-                                placeholder="sutdy to be verb!"
-                                required>
-                        </div>
-
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary btn-lg" type="submit">
-                                <i class="bi bi-box-arrow-in-right"></i> save
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="deck-form-container">
+    <div class="deck-form-wrapper">
+        <div class="deck-form-header">
+            <h2><i class="bi bi-collection"></i> Criar Novo Deck</h2>
+            <p>Organize seus estudos criando baralhos personalizados</p>
         </div>
+
+        <form action="/decks/create" method="POST" class="deck-form">
+            <div class="form-group-deck">
+                <label for="name">
+                    <i class="bi bi-card-heading"></i> Nome do Deck
+                </label>
+                <input
+                    class="form-input-deck"
+                    type="text"
+                    id="name"
+                    name="deck[name]"
+                    placeholder="Ex: Inglês - Verbos Irregulares"
+                    maxlength="100"
+                    required
+                    oninput="updateCharCount('name', 'nameCount', 100)">
+                <span class="char-counter"><span id="nameCount">0</span>/100</span>
+            </div>
+
+            <div class="form-group-deck">
+                <label for="description">
+                    <i class="bi bi-text-paragraph"></i> Descrição
+                </label>
+                <textarea
+                    class="form-input-deck"
+                    id="description"
+                    name="deck[description]"
+                    placeholder="Descreva o conteúdo e objetivo deste deck..."
+                    maxlength="500"
+                    required
+                    oninput="updateCharCount('description', 'descCount', 500)"></textarea>
+                <span class="char-counter"><span id="descCount">0</span>/500</span>
+            </div>
+
+            <div class="form-tip">
+                <p>
+                    <i class="bi bi-lightbulb"></i>
+                    <strong>Dica:</strong> Dê um nome claro e descritivo ao seu deck. Isso facilitará encontrá-lo depois!
+                </p>
+            </div>
+
+            <div class="form-actions-deck">
+                <a href="/decks" class="btn-deck btn-deck-secondary">
+                    <i class="bi bi-arrow-left"></i> Cancelar
+                </a>
+                <button type="submit" class="btn-deck btn-deck-primary">
+                    <i class="bi bi-check-circle"></i> Criar Deck
+                </button>
+            </div>
+        </form>
     </div>
 </div>
+
+<script>
+function updateCharCount(inputId, counterId, maxLength) {
+    const input = document.getElementById(inputId);
+    const counter = document.getElementById(counterId);
+    counter.textContent = input.value.length;
+    
+    if (input.value.length >= maxLength * 0.9) {
+        counter.style.color = '#dc3545';
+    } else {
+        counter.style.color = '#999';
+    }
+}
+
+// Initialize counters
+document.addEventListener('DOMContentLoaded', function() {
+    updateCharCount('name', 'nameCount', 100);
+    updateCharCount('description', 'descCount', 500);
+});
+</script>

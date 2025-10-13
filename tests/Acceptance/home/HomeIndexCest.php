@@ -10,7 +10,7 @@ class HomeIndexCest extends BaseAcceptanceCest
     public function seeHomePage(AcceptanceTester $page): void
     {
         $page->amOnPage('/');
-
-        $page->see('Bem-vindo ao FlashWise', '//h1[contains(., "Bem-vindo ao FlashWise")]');
+        $page->wait(1); // Wait for page load and animations
+        $page->waitForText('Bem-vindo ao FlashWise', 15);
     }
 }

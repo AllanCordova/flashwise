@@ -11,9 +11,11 @@ class PublicCest extends BaseAcceptanceCest
     public function anyUserCanAccessPublicRoutes(AcceptanceTester $I): void
     {
         $I->amOnPage('/');
-        $I->see('Bem-vindo ao FlashWise');
+        $I->wait(1); // Wait for page load and animations
+        $I->waitForText('Bem-vindo ao FlashWise', 15);
 
         $I->amOnPage('/login');
-        $I->see('Faça seu Login');
+        $I->wait(1); // Wait for page load and animations
+        $I->waitForText('Faça seu Login', 15);
     }
 }
