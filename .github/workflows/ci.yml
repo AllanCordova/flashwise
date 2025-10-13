@@ -1,4 +1,4 @@
-name: Continous Integration
+name: Continuous Integration
 
 on:
   push:
@@ -22,11 +22,11 @@ jobs:
       - name: Generate Codeception files
         run: ./run codecept build
 
-      - name: Setup Uploads assets permissions
-        run: sudo chown -R www-data:www-data public/assets/uploads
-
       - name: Up containers
         run: ./run up -d
+
+      - name: Wait for containers to be ready
+        run: sleep 15
 
       - name: PHPUnit Units test
         run: ./run test tests/Unit
@@ -49,17 +49,6 @@ jobs:
 
       - name: Generate Codeception files
         run: ./run codecept build
-      
-      - name: Verify test files
-        run: |
-          echo "=== Verificando arquivos de teste ==="
-          ls -la tests/Acceptance/
-          echo ""
-          echo "=== Conteúdo de PublicCest.php ==="
-          cat tests/Acceptance/PublicCest.php
-          echo ""
-          echo "=== Conteúdo de AuthCest.php ==="
-          cat tests/Acceptance/AuthCest.php
 
       - name: Down containers (clean start)
         run: ./run down -v || true
@@ -67,32 +56,17 @@ jobs:
       - name: Remove all Docker volumes
         run: docker volume prune -f || true
 
-      - name: Up containers
+      - name: Up containers with fresh build
         run: ./run up -d --build --force-recreate
 
-      - name: Wait for containers
-        run: sleep 10
+      - name: Wait for all services to be ready
+        run: sleep 20
 
-      - name: Clear all PHP caches inside container
-        run: |
-          echo "=== Limpando caches PHP ==="
-          ./run php -r "if (function_exists('opcache_reset')) { opcache_reset(); echo 'OPCache limpo\n'; } else { echo 'OPCache não disponível\n'; }"
-          ./run php -r "if (function_exists('apcu_clear_cache')) { apcu_clear_cache(); echo 'APCu limpo\n'; } else { echo 'APCu não disponível\n'; }"
-          echo "=== Verificando código dentro do container ==="
-          echo "Conteúdo de PublicCest.php:"
-          ./run cat tests/Acceptance/PublicCest.php
-          echo ""
-          echo "Conteúdo de AuthCest.php:"
-          ./run cat tests/Acceptance/AuthCest.php
-          echo ""
-          echo "Conteúdo de _flash_message.phtml:"
-          ./run cat app/views/layouts/_flash_message.phtml
-
-      - name: See containers
+      - name: Check container status
         run: ./run ps
 
-      - name: PHPUnit Acceptance test
-        run: ./run test tests/Acceptance
+      - name: Run Codeception Acceptance Tests
+        run: ./run test:browser
 
   code_quality:
     name: Code Quality Check
