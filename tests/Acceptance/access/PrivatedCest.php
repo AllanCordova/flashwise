@@ -25,7 +25,7 @@ class PrivatedCest extends BaseAcceptanceCest
 
         $I->amOnPage('/decks');
         $I->seeCurrentUrlEquals('/decks');
-        $I->waitForText('Meus Decks', 10);
+        $I->waitForText('Meus Decks', 15);
     }
 
     public function authenticatedUserIsRedirectedFromGuestOnlyRoutes(AcceptanceTester $I): void

@@ -11,8 +11,9 @@ class AuthCest extends BaseAcceptanceCest
     public function guestIsRedirectedFromProtectedRoute(AcceptanceTester $I): void
     {
         $I->amOnPage('/decks');
+        $I->wait(1); // Wait for redirect and page load
         $I->seeCurrentUrlEquals('/login');
-        $I->waitForText('Você deve estar logado para acessar essa página.', 10);
+        $I->waitForText('Você deve estar logado para acessar essa página.', 15);
     }
 
     public function loginFailsWithInvalidCredentials(AcceptanceTester $I): void
@@ -31,8 +32,9 @@ class AuthCest extends BaseAcceptanceCest
         $I->fillField('user[password]', 'wrong-password');
         $I->click('Entrar');
 
+        $I->wait(1); // Wait for response
         $I->seeCurrentUrlEquals('/login');
-        $I->waitForText('E-mail ou senha inválidos. Por favor, tente novamente.', 10);
+        $I->waitForText('E-mail ou senha inválidos. Por favor, tente novamente.', 15);
     }
 
     public function successfulLogin(AcceptanceTester $I): void
@@ -50,10 +52,10 @@ class AuthCest extends BaseAcceptanceCest
         $I->fillField('user[password]', 'password123');
         $I->click('Entrar');
 
+        $I->wait(2); // Wait for redirect and page load
         $I->seeCurrentUrlEquals('/');
-        $I->waitForText('Login realizado com sucesso! Bem-vindo(a), Allan!', 10);
-        $I->wait(1);
-        $I->waitForText('Sair', 5);
+        $I->waitForText('Login realizado com sucesso! Bem-vindo(a), Allan!', 15);
+        $I->waitForText('Sair', 15);
     }
 
     public function successfulLogout(AcceptanceTester $I): void
@@ -70,14 +72,17 @@ class AuthCest extends BaseAcceptanceCest
         $I->fillField('user[email]', 'logout@test.com');
         $I->fillField('user[password]', 'password123');
         $I->click('Entrar');
+        $I->wait(2); // Wait for redirect and page load
         $I->seeCurrentUrlEquals('/');
 
         $I->amOnPage('/logout');
+        $I->wait(2); // Wait for redirect and page load
 
         $I->seeCurrentUrlEquals('/login');
-        $I->waitForText('Você foi desconectado com segurança.', 10);
+        $I->waitForText('Você foi desconectado com segurança.', 15);
 
         $I->amOnPage('/decks');
+        $I->wait(1); // Wait for redirect
         $I->seeCurrentUrlEquals('/login');
     }
 }

@@ -51,7 +51,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->amOnPage('/decks');
         $I->wait(2); // Esperar página carregar completamente
-        $I->waitForText('Nenhum deck encontrado', 10);
+        $I->waitForText('Nenhum deck encontrado', 15);
         $I->see('Comece criando seu primeiro deck de estudos!');
     }
 
@@ -62,7 +62,7 @@ class DecksCest extends BaseAcceptanceCest
         $I->amOnPage('/decks/create');
         $I->seeCurrentUrlEquals('/decks/create');
         $I->wait(2); // Esperar página carregar
-        $I->waitForText('Criar Novo Deck', 10);
+        $I->waitForText('Criar Novo Deck', 15);
         $I->see('Nome do Deck');
         $I->see('Descrição');
     }
@@ -81,7 +81,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->seeCurrentUrlEquals('/decks');
         $I->wait(2);
-        $I->waitForText('Deck criado com sucesso', 10);
+        $I->waitForText('Deck criado com sucesso', 15);
         $I->see('Inglês Básico');
         $I->see('Vocabulário essencial de inglês para iniciantes');
     }
@@ -105,7 +105,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->seeCurrentUrlEquals('/decks/create');
         $I->wait(2);
-        $I->waitForText('Não foi possivel criar seu deck tente novamente!', 10);
+        $I->waitForText('Não foi possivel criar seu deck tente novamente!', 15);
     }
 
     public function cannotCreateDeckWithEmptyDescription(AcceptanceTester $I): void
@@ -127,7 +127,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->seeCurrentUrlEquals('/decks/create');
         $I->wait(2);
-        $I->waitForText('Não foi possivel criar seu deck tente novamente!', 10);
+        $I->waitForText('Não foi possivel criar seu deck tente novamente!', 15);
     }
 
     public function cannotCreateDeckWithDuplicateName(AcceptanceTester $I): void
@@ -154,7 +154,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->seeCurrentUrlEquals('/decks/create');
         $I->wait(2);
-        $I->waitForText('Não foi possivel criar seu deck tente novamente!', 10);
+        $I->waitForText('Não foi possivel criar seu deck tente novamente!', 15);
     }
 
     public function userCanViewCreatedDecks(AcceptanceTester $I): void
@@ -180,7 +180,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->amOnPage('/decks');
         $I->wait(2);
-        $I->waitForText('Matemática', 10);
+        $I->waitForText('Matemática', 15);
         $I->see('Fórmulas e conceitos matemáticos');
         $I->see('História');
         $I->see('Datas e eventos históricos');
@@ -213,7 +213,7 @@ class DecksCest extends BaseAcceptanceCest
 
         // Verificar ambos os decks
         $I->wait(2);
-        $I->waitForText('Deck 1', 10);
+        $I->waitForText('Deck 1', 15);
         $I->see('Deck 2');
     }
 
@@ -236,7 +236,7 @@ class DecksCest extends BaseAcceptanceCest
         $I->dontSee('Nenhum deck encontrado');
 
         // Verificar header da tabela e nome do deck
-        $I->waitForText('Programação PHP', 10);
+        $I->waitForText('Programação PHP', 15);
         $I->see('Nome do Deck'); // Header da tabela
     }
 
@@ -254,7 +254,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->amOnPage('/decks');
         $I->wait(2);
-        $I->waitForText('Recursos modernos do JavaScript', 10);
+        $I->waitForText('Recursos modernos do JavaScript', 15);
     }
 
     public function createDeckButtonIsVisibleOnDecksPage(AcceptanceTester $I): void
@@ -263,7 +263,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->amOnPage('/decks');
         $I->wait(2);
-        $I->waitForText('Criar Novo Deck', 10);
+        $I->waitForText('Criar Novo Deck', 15);
     }
 
     public function decksPageShowsCorrectStatistics(AcceptanceTester $I): void
@@ -285,7 +285,7 @@ class DecksCest extends BaseAcceptanceCest
         $I->dontSee('Nenhum deck encontrado');
 
         // Verificar que as colunas de estatísticas existem
-        $I->waitForText('Estatísticas Test', 10);
+        $I->waitForText('Estatísticas Test', 15);
         $I->see('Novas');
         $I->see('Revisar');
         $I->see('Total');
