@@ -70,16 +70,31 @@ jobs:
       - name: Up containers
         run: ./run up -d --build --force-recreate
 
+      - name: Clear all PHP caches inside container
+        run: |
+          docker exec flashwise-php_test-1 php -r "if (function_exists('opcache_reset')) opcache_reset();" || echo "No opcache"
+          docker exec flashwise-php_test-1 rm -rf /var/www/tests/Support/_generated/*
+          docker exec flashwise-php_test-1 ./vendor/bin/codecept build
+
       - name: See containers
         run: ./run ps
 
       - name: Verify code inside container
         run: |
-          echo "=== Code inside php_test container ==="
-          docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/access/PublicCest.php | head -20
+          echo "=== PublicCest.php completo ==="
+          docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/access/PublicCest.php
           echo ""
-          echo "=== AuthCest lines 10-20 ==="
-          docker exec flashwise-php_test-1 sed -n '10,20p' /var/www/tests/Acceptance/auth/AuthCest.php
+          echo "=== HomeIndexCest.php completo ==="
+          docker exec flashwise-php_test-1 cat /var/www/tests/Acceptance/home/HomeIndexCest.php
+          echo ""
+          echo "=== AuthCest.php linhas 10-60 ==="
+          docker exec flashwise-php_test-1 sed -n '10,60p' /var/www/tests/Acceptance/auth/AuthCest.php
+          echo ""
+          echo "=== Verificando cache Codeception ==="
+          docker exec flashwise-php_test-1 ls -la /var/www/tests/Support/_generated/
+          echo ""
+          echo "=== Verificando se há opcache ==="
+          docker exec flashwise-php_test-1 php -i | grep opcache || echo "Opcache não habilitado"
 
       - name: PHPUnit Acceptance test
         run: ./run test:browser
