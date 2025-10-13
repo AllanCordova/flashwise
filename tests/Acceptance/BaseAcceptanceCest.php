@@ -11,7 +11,7 @@ class BaseAcceptanceCest
     public function _before(AcceptanceTester $page): void
     {
         EnvLoader::init();
-        
+
         // Recriar banco de dados limpo para cada teste
         Database::drop();
         Database::create();

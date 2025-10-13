@@ -36,7 +36,9 @@ class DeckTest extends TestCase
         $result = $deck->save();
 
         $this->assertFalse($result);
-        $this->assertNotEmpty($deck->errors());
+        $errors = $deck->errors();
+        $this->assertIsArray($errors);
+        $this->assertNotEmpty($errors);
     }
 
     public function testDeckValidationRequiresDescription(): void
@@ -51,7 +53,9 @@ class DeckTest extends TestCase
         $result = $deck->save();
 
         $this->assertFalse($result);
-        $this->assertNotEmpty($deck->errors());
+        $errors = $deck->errors();
+        $this->assertIsArray($errors);
+        $this->assertNotEmpty($errors);
     }
 
     public function testDeckNameMustBeUnique(): void
@@ -73,7 +77,9 @@ class DeckTest extends TestCase
         $result = $deck2->save();
 
         $this->assertFalse($result);
-        $this->assertNotEmpty($deck2->errors());
+        $errors = $deck2->errors();
+        $this->assertIsArray($errors);
+        $this->assertNotEmpty($errors);
     }
 
     public function testDeckCanBeFound(): void
