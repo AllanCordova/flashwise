@@ -11,11 +11,8 @@ parameters:
     - tests/Acceptance/_output/*
     - tests/Support/Data/*
     - tests/Support/AcceptanceTester.php
-    - tests/Support/_generated/AcceptanceTesterActions.php
+    - tests/Support/_generated/*
   
-  scanDirectories:
-    - tests/Support/_generated
-
   ignoreErrors:
     - '#Unsafe usage of new static\(\)\.#'
     #- '#Access to an undefined property Core\\Database\\ActiveRecord\\Model::\$[a-zA-Z0-9_]+.#'
