@@ -1,0 +1,155 @@
+<link href="/assets/css/application.css" rel="stylesheet">
+<link href="/assets/css/deck-edit.css" rel="stylesheet">
+
+<main class="deck-edit-container">
+    <div class="deck-edit-wrapper">
+        <!-- Header -->
+        <div class="deck-edit-header">
+            <h1><i class="bi bi-pencil"></i> Editar Deck</h1>
+            <a href="/decks" class="btn-back">
+                <i class="bi bi-arrow-left"></i> Voltar para Decks
+            </a>
+        </div>
+
+        <!-- Formulário de Edição do Deck -->
+        <div class="deck-form-section">
+            <h2><i class="bi bi-collection"></i> Informações do Deck</h2>
+            <form action="/decks/<?= $deck->id ?>/update" method="post" class="deck-form">
+                <div class="form-group">
+                    <label for="name">
+                        <i class="bi bi-tag"></i> Nome do Deck
+                    </label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="deck[name]" 
+                        class="form-control" 
+                        value="<?= htmlspecialchars($deck->name ?? '') ?>"
+                        placeholder="Digite o nome do deck"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">
+                        <i class="bi bi-text-left"></i> Descrição
+                    </label>
+                    <textarea 
+                        id="description" 
+                        name="deck[description]" 
+                        class="form-control" 
+                        rows="3" 
+                        placeholder="Descreva o conteúdo deste deck"><?= htmlspecialchars($deck->description ?? '') ?></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="bi bi-check-circle"></i> Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista de Cards -->
+        <div class="cards-section">
+            <div class="cards-header">
+                <h2><i class="bi bi-card-list"></i> Cards deste Deck</h2>
+                <a href="/cards/create" class="btn-add-card">
+                    <i class="bi bi-plus-circle"></i> Novo Card
+                </a>
+            </div>
+
+            <?php if (empty($cards)): ?>
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <h3>Nenhum card neste deck</h3>
+                    <p>Comece adicionando o primeiro flashcard!</p>
+                    <a href="/cards/create" class="btn-primary">
+                        <i class="bi bi-plus-circle"></i> Criar Primeiro Card
+                    </a>
+                </div>
+            <?php else: ?>
+                <div class="cards-table-wrapper">
+                    <table class="cards-table">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-question-circle"></i> Frente</th>
+                                <th><i class="bi bi-lightbulb"></i> Verso</th>
+                                <th><i class="bi bi-tag"></i> Status</th>
+                                <th><i class="bi bi-gear"></i> Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($cards as $card): ?>
+                                <tr>
+                                    <td class="card-front">
+                                        <div class="card-content">
+                                            <?= htmlspecialchars(mb_substr($card->front, 0, 60)) ?>
+                                            <?= mb_strlen($card->front) > 60 ? '...' : '' ?>
+                                        </div>
+                                    </td>
+                                    <td class="card-back">
+                                        <div class="card-content">
+                                            <?= htmlspecialchars(mb_substr($card->back, 0, 60)) ?>
+                                            <?= mb_strlen($card->back) > 60 ? '...' : '' ?>
+                                        </div>
+                                    </td>
+                                    <td class="card-status">
+                                        <?php if ($card->card_type === 'new'): ?>
+                                            <span class="badge badge-new">
+                                                <i class="bi bi-star"></i> Novo
+                                            </span>
+                                        <?php elseif ($card->isNew()): ?>
+                                            <span class="badge badge-new">
+                                                <i class="bi bi-star"></i> Novo
+                                            </span>
+                                        <?php elseif ($card->isDue()): ?>
+                                            <span class="badge badge-due">
+                                                <i class="bi bi-clock"></i> Revisar
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="badge badge-learned">
+                                                <i class="bi bi-check-circle"></i> Aprendido
+                                            </span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="card-actions">
+                                        <a href="/cards/<?= $card->id ?>/edit" 
+                                           class="btn-action btn-edit" 
+                                           title="Editar card">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form action="/cards/<?= $card->id ?>/delete" 
+                                              method="post" 
+                                              class="delete-form" 
+                                              onsubmit="return confirm('Tem certeza que deseja excluir este card?');">
+                                            <button type="submit" 
+                                                    class="btn-action btn-delete" 
+                                                    title="Excluir card">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cards-summary">
+                    <div class="summary-item">
+                        <i class="bi bi-collection"></i>
+                        <span><strong><?= count($cards) ?></strong> card(s) no total</span>
+                    </div>
+                    <div class="summary-item">
+                        <i class="bi bi-star"></i>
+                        <span><strong><?= $deck->countNewCards() ?></strong> novo(s)</span>
+                    </div>
+                    <div class="summary-item">
+                        <i class="bi bi-clock"></i>
+                        <span><strong><?= $deck->countDueCards() ?></strong> para revisar</span>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</main>

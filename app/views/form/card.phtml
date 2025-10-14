@@ -1,0 +1,110 @@
+<link href="/assets/css/application.css" rel="stylesheet">
+<link href="/assets/css/card-form.css" rel="stylesheet">
+
+<div class="card-form-container">
+    <div class="card-form-wrapper">
+        <div class="card-form-header">
+            <h2><i class="bi bi-card-text"></i> Criar Novo Flashcard</h2>
+            <p>Adicione um novo card ao seu deck de estudos</p>
+        </div>
+
+        <form action="/cards/create" method="POST" class="card-form" onsubmit="return validateCardForm()">
+            <div class="form-group-card">
+                <label for="deck_id">
+                    <i class="bi bi-collection"></i> Deck
+                </label>
+                <select 
+                    class="form-input-card"
+                    id="deck_id"
+                    name="card[deck_id]"
+                    required>
+                    <option value="">Selecione um deck</option>
+                    <?php foreach ($decks as $deck): ?>
+                        <option value="<?= $deck->id ?>"><?= htmlspecialchars($deck->name) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="form-group-card">
+                <label for="front">
+                    <i class="bi bi-card-heading"></i> Frente do Card
+                </label>
+                <textarea
+                    class="form-input-card"
+                    id="front"
+                    name="card[front]"
+                    placeholder="Digite a pergunta ou conceito..."
+                    maxlength="1000"
+                    rows="4"
+                    required
+                    oninput="updateCharCount('front', 'frontCount', 1000)"></textarea>
+                <span class="char-counter"><span id="frontCount">0</span>/1000</span>
+            </div>
+
+            <div class="form-group-card">
+                <label for="back">
+                    <i class="bi bi-card-text"></i> Verso do Card
+                </label>
+                <textarea
+                    class="form-input-card"
+                    id="back"
+                    name="card[back]"
+                    placeholder="Digite a resposta ou explicação..."
+                    maxlength="1000"
+                    rows="4"
+                    required
+                    oninput="updateCharCount('back', 'backCount', 1000)"></textarea>
+                <span class="char-counter"><span id="backCount">0</span>/1000</span>
+            </div>
+
+            <div class="form-tip">
+                <p>
+                    <i class="bi bi-lightbulb"></i>
+                    <strong>Dica:</strong> Seja claro e objetivo. Cards simples são mais fáceis de memorizar!
+                </p>
+            </div>
+
+            <div class="form-actions-card">
+                <a href="/decks" class="btn-card btn-card-secondary">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+                <button type="submit" class="btn-card btn-card-primary">
+                    <i class="bi bi-check-circle"></i> Adicionar Card
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function updateCharCount(inputId, counterId, maxLength) {
+    const input = document.getElementById(inputId);
+    const counter = document.getElementById(counterId);
+    counter.textContent = input.value.length;
+    
+    if (input.value.length >= maxLength * 0.9) {
+        counter.style.color = '#dc3545';
+    } else {
+        counter.style.color = '#999';
+    }
+}
+
+function validateCardForm() {
+    const front = document.getElementById('front').value.trim();
+    const back = document.getElementById('back').value.trim();
+    const deckId = document.getElementById('deck_id').value;
+    
+    if (!front || !back || !deckId) {
+        alert('Por favor, preencha todos os campos!');
+        return false;
+    }
+    
+    return true;
+}
+
+// Initialize counters
+document.addEventListener('DOMContentLoaded', function() {
+    updateCharCount('front', 'frontCount', 1000);
+    updateCharCount('back', 'backCount', 1000);
+});
+</script>

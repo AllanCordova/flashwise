@@ -1,24 +1,24 @@
-/* Deck Creation Form - Unique Design */
-.deck-form-container {
+/* Card Creation Form - Unique Design */
+.card-form-container {
     max-width: 700px;
     margin: 0 auto;
     padding: 2rem;
     width: 100%;
 }
 
-.deck-form-wrapper {
+.card-form-wrapper {
     background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
     border-radius: 16px;
     padding: 3rem;
     box-shadow: 0 10px 40px rgba(214, 58, 92, 0.3);
 }
 
-.deck-form-header {
+.card-form-header {
     text-align: center;
     margin-bottom: 2.5rem;
 }
 
-.deck-form-header h2 {
+.card-form-header h2 {
     color: #ffffff;
     font-size: 2rem;
     font-weight: 700;
@@ -29,24 +29,25 @@
     gap: 0.75rem;
 }
 
-.deck-form-header p {
+.card-form-header p {
     color: rgba(255, 255, 255, 0.9);
     font-size: 1rem;
     font-weight: 300;
 }
 
-.deck-form {
+.card-form {
     background-color: #161b22;
     border-radius: 12px;
     padding: 2.5rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.form-group-deck {
+.form-group-card {
     margin-bottom: 1.75rem;
+    position: relative;
 }
 
-.form-group-deck label {
+.form-group-card label {
     display: block;
     font-weight: 600;
     color: #e6edf3;
@@ -57,12 +58,12 @@
     gap: 0.5rem;
 }
 
-.form-group-deck label i {
+.form-group-card label i {
     color: #d63a5c;
     font-size: 1.1rem;
 }
 
-.form-input-deck {
+.form-input-card {
     width: 100%;
     padding: 1rem 1.25rem;
     border: 2px solid #30363d;
@@ -74,22 +75,26 @@
     color: #e6edf3;
 }
 
-.form-input-deck:focus {
+.form-input-card:focus {
     outline: none;
     border-color: #d63a5c;
     background-color: #161b22;
     box-shadow: 0 0 0 4px rgba(214, 58, 92, 0.1);
 }
 
-.form-input-deck::placeholder {
+.form-input-card::placeholder {
     color: #6e7681;
     font-weight: 300;
 }
 
-textarea.form-input-deck {
+textarea.form-input-card {
     resize: vertical;
-    min-height: 120px;
+    min-height: 100px;
     font-family: 'Inter', sans-serif;
+}
+
+select.form-input-card {
+    cursor: pointer;
 }
 
 .char-counter {
@@ -100,13 +105,13 @@ textarea.form-input-deck {
     margin-top: 0.5rem;
 }
 
-.form-actions-deck {
+.form-actions-card {
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
 }
 
-.btn-deck {
+.btn-card {
     flex: 1;
     padding: 1rem 2rem;
     border: none;
@@ -120,31 +125,34 @@ textarea.form-input-deck {
     justify-content: center;
     gap: 0.5rem;
     font-family: 'Inter', sans-serif;
+    text-decoration: none;
 }
 
-.btn-deck-primary {
+.btn-card-primary {
     background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
     color: white;
     box-shadow: 0 4px 15px rgba(214, 58, 92, 0.3);
 }
 
-.btn-deck-primary:hover {
+.btn-card-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(214, 58, 92, 0.4);
 }
 
-.btn-deck-primary:active {
+.btn-card-primary:active {
     transform: translateY(0);
 }
 
-.btn-deck-secondary {
+.btn-card-secondary {
     background-color: #161b22;
     color: #e6edf3;
     border: 1px solid #30363d;
 }
 
-.btn-deck-secondary:hover {
+.btn-card-secondary:hover {
     background-color: #0d1117;
+    text-decoration: none;
+    color: #e6edf3;
 }
 
 .form-tip {
@@ -179,25 +187,25 @@ textarea.form-input-deck {
     }
 }
 
-.deck-form-wrapper {
+.card-form-wrapper {
     animation: slideIn 0.4s ease-out;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .deck-form-wrapper {
+    .card-form-wrapper {
         padding: 2rem 1.5rem;
     }
     
-    .deck-form {
+    .card-form {
         padding: 2rem 1.5rem;
     }
     
-    .form-actions-deck {
+    .form-actions-card {
         flex-direction: column;
     }
     
-    .btn-deck {
+    .btn-card {
         width: 100%;
     }
 }

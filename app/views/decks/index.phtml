@@ -8,9 +8,14 @@
                 <h2><i class="bi bi-collection"></i> Meus Decks</h2>
                 <p class="text-secondary mb-0">Bem-vindo, <?= htmlspecialchars($user->name) ?>!</p>
             </div>
-            <a href="/decks/create" class="create-deck-btn">
-                <i class="bi bi-plus-circle"></i> Criar Novo Deck
-            </a>
+            <div style="display: flex; gap: 10px;">
+                <a href="/cards/create" class="create-deck-btn">
+                    <i class="bi bi-plus-circle"></i> Adicionar Card
+                </a>
+                <a href="/decks/create" class="create-deck-btn">
+                    <i class="bi bi-plus-circle"></i> Criar Novo Deck
+                </a>
+            </div>
         </div>
 
         <?php if (!empty($decks)): ?>
@@ -26,37 +31,40 @@
                 </thead>
                 <tbody>
                     <?php foreach ($decks as $deck): ?>
-                        <tr>
+                        <tr class="deck-row-clickable" onclick="window.location.href='/decks/<?= $deck->id ?>';" style="cursor: pointer;">
                             <td>
                                 <div class="deck-name"><?= htmlspecialchars($deck->name) ?></div>
                                 <div class="deck-description"><?= htmlspecialchars($deck->description) ?></div>
                             </td>
                             <td style="text-align: center;">
                                 <div class="stat-item">
-                                    <span class="stat-number stat-new">0</span>
+                                    <span class="stat-number stat-new"><?= $deck->countNewCards() ?></span>
                                 </div>
                             </td>
                             <td style="text-align: center;">
                                 <div class="stat-item">
-                                    <span class="stat-number stat-due">0</span>
+                                    <span class="stat-number stat-due"><?= $deck->countDueCards() ?></span>
                                 </div>
                             </td>
                             <td style="text-align: center;">
                                 <div class="stat-item">
-                                    <span class="stat-number stat-total">0</span>
+                                    <span class="stat-number stat-total"><?= $deck->countTotalCards() ?></span>
                                 </div>
                             </td>
-                            <td>
+                            <td onclick="event.stopPropagation();">
                                 <div class="deck-actions">
-                                    <button class="action-btn btn-study" onclick="alert('Função de estudo em desenvolvimento')">
+                                    <button class="action-btn btn-study" onclick="window.location.href='/decks/<?= $deck->id ?>';" title="Estudar deck">
                                         <i class="bi bi-play-fill"></i> Estudar
+                                    </button>
+                                    <button class="action-btn btn-edit" onclick="window.location.href='/decks/<?= $deck->id ?>/edit';" title="Editar deck">
+                                        <i class="bi bi-pencil"></i>
                                     </button>
                                     <form
                                         action="/decks/<?= $deck->id ?>/delete"
                                         method="POST"
                                         style="display: inline;"
                                         onsubmit="return confirm('Tem certeza que deseja excluir este deck?');">
-                                        <button type="submit" class="action-btn btn-delete">
+                                        <button type="submit" class="action-btn btn-delete" title="Excluir deck">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>

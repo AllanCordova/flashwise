@@ -19,7 +19,7 @@
 
 .card-header {
   border-bottom: none;
-  background: linear-gradient(135deg, #ef476f 0%, #d63a5c 100%);
+  background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
   padding: 2rem;
 }
 
@@ -50,24 +50,25 @@
 }
 
 .form-control:focus {
-  border-color: #ef476f;
-  box-shadow: 0 0 0 4px rgba(239, 71, 111, 0.1);
+  border-color: #d63a5c;
+  box-shadow: 0 0 0 4px rgba(214, 58, 92, 0.1);
   background-color: #161b22;
 }
 
 .btn-primary {
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #ef476f 0%, #d63a5c 100%);
+  background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
   border: none;
   padding: 0.875rem;
   font-weight: 600;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(239, 71, 111, 0.3);
+  box-shadow: 0 4px 12px rgba(214, 58, 92, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(239, 71, 111, 0.4);
+  box-shadow: 0 6px 16px rgba(214, 58, 92, 0.4);
+  background: linear-gradient(135deg, #c22952 0%, #b01f45 100%);
 }
 
 .btn-primary:active {

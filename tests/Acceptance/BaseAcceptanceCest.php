@@ -16,7 +16,7 @@ class BaseAcceptanceCest
         Database::drop();
         Database::create();
         Database::migrate();
-        
+
         // Pequeno delay para garantir que o banco esteja pronto
         $page->wait(0.5);
     }

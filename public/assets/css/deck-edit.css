@@ -1,0 +1,532 @@
+/* Deck Edit Page Styles */
+
+.deck-edit-container {
+    min-height: 100vh;
+    background: #0d1117;
+    padding: 2rem 1rem;
+}
+
+.deck-edit-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.deck-edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #30363d;
+}
+
+.deck-edit-header h1 {
+    color: #e6edf3;
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.deck-edit-header h1 i {
+    color: #d63a5c;
+}
+
+.btn-back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #30363d;
+    color: #e6edf3;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background: #484f58;
+    transform: translateY(-2px);
+}
+
+/* Deck Form Section */
+.deck-form-section {
+    background: #161b22;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #30363d;
+}
+
+.deck-form-section h2 {
+    color: #e6edf3;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.deck-form-section h2 i {
+    color: #d63a5c;
+}
+
+.deck-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.deck-form .form-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.deck-form label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #e6edf3;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.deck-form label i {
+    color: #d63a5c;
+}
+
+.deck-form .form-control {
+    width: 100%;
+    padding: 0.875rem;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    color: #e6edf3;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.deck-form .form-control:focus {
+    outline: none;
+    border-color: #d63a5c;
+    box-shadow: 0 0 0 3px rgba(214, 58, 92, 0.1);
+}
+
+.deck-form textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+.deck-form .form-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Cards Section */
+.cards-section {
+    background: #161b22;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #30363d;
+}
+
+.cards-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.cards-header h2 {
+    color: #e6edf3;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.cards-header h2 i {
+    color: #d63a5c;
+}
+
+.btn-add-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #d63a5c;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-add-card:hover {
+    background: #c22952;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214, 58, 92, 0.3);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    background: #0d1117;
+    border-radius: 12px;
+    border: 2px dashed #30363d;
+    margin: 2rem 0;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.empty-state i {
+    font-size: 5rem;
+    color: #30363d;
+    margin-bottom: 1.5rem;
+    display: block;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+.empty-state h3 {
+    color: #e6edf3;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.empty-state p {
+    color: #8b949e;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.empty-state .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(214, 58, 92, 0.3);
+}
+
+.empty-state .btn-primary:hover {
+    background: linear-gradient(135deg, #c22952 0%, #b01f45 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(214, 58, 92, 0.4);
+    color: white;
+}
+
+.empty-state .btn-primary i {
+    font-size: 1.25rem;
+    color: white;
+    margin: 0;
+}
+
+/* Cards Table */
+.cards-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.cards-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.cards-table thead {
+    background: #0d1117;
+}
+
+.cards-table thead th {
+    padding: 1rem;
+    text-align: left;
+    color: #e6edf3;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-bottom: 2px solid #30363d;
+}
+
+.cards-table thead th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.cards-table thead th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.cards-table thead th i {
+    margin-right: 0.5rem;
+    color: #d63a5c;
+}
+
+.cards-table tbody tr {
+    background: #0d1117;
+    transition: all 0.2s ease;
+}
+
+.cards-table tbody tr:hover {
+    background: #161b22;
+}
+
+.cards-table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid #30363d;
+    color: #e6edf3;
+}
+
+.card-content {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-front .card-content {
+    color: #e6edf3;
+    font-weight: 500;
+}
+
+.card-back .card-content {
+    color: #8b949e;
+}
+
+/* Card Status */
+.card-status {
+    text-align: center;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.badge i {
+    font-size: 0.9rem;
+}
+
+.badge-new {
+    background: rgba(88, 166, 255, 0.15);
+    color: #58a6ff;
+    border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
+.badge-due {
+    background: rgba(214, 58, 92, 0.15);
+    color: #d63a5c;
+    border: 1px solid rgba(214, 58, 92, 0.3);
+}
+
+.badge-learned {
+    background: rgba(46, 160, 67, 0.15);
+    color: #2ea043;
+    border: 1px solid rgba(46, 160, 67, 0.3);
+}
+
+/* Card Actions */
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-edit {
+    background: rgba(88, 166, 255, 0.15);
+    color: #58a6ff;
+}
+
+.btn-edit:hover {
+    background: rgba(88, 166, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    background: rgba(214, 58, 92, 0.15);
+    color: #d63a5c;
+}
+
+.btn-delete:hover {
+    background: rgba(214, 58, 92, 0.25);
+    transform: translateY(-2px);
+}
+
+.delete-form {
+    margin: 0;
+    display: inline;
+}
+
+/* Cards Summary */
+.cards-summary {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    background: #0d1117;
+    border-radius: 8px;
+    border: 1px solid #30363d;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #8b949e;
+}
+
+.summary-item i {
+    color: #d63a5c;
+    font-size: 1.1rem;
+}
+
+.summary-item strong {
+    color: #e6edf3;
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: #d63a5c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background: #c22952;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214, 58, 92, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .deck-edit-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .cards-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .btn-add-card {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cards-table thead th,
+    .cards-table tbody td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .card-content {
+        max-width: 150px;
+        font-size: 0.85rem;
+    }
+
+    .cards-summary {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .deck-edit-wrapper {
+        padding: 1rem;
+    }
+
+    .deck-form-section,
+    .cards-section {
+        padding: 1.5rem;
+    }
+
+    .empty-state {
+        padding: 3rem 1.5rem;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.25rem;
+    }
+
+    .empty-state p {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+
+    .empty-state .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -22,6 +22,79 @@ class DecksController extends Controller
         ]);
     }
 
+    public function show(Request $request): void
+    {
+        $user = Auth::user();
+        $id = $request->getParam('id');
+
+        $deck = Deck::findById($id);
+
+        if (!$deck) {
+            FlashMessage::danger('Deck não encontrado');
+            $this->redirectTo('/decks');
+            return;
+        }
+
+        $newCards = $deck->countNewCards();
+        $dueCards = $deck->countDueCards();
+        $totalCards = $deck->countTotalCards();
+
+        $this->render('decks/show', [
+            'user' => $user,
+            'deck' => $deck,
+            'newCards' => $newCards,
+            'dueCards' => $dueCards,
+            'totalCards' => $totalCards
+        ]);
+    }
+
+    public function edit(Request $request): void
+    {
+        $user = Auth::user();
+        $id = $request->getParam('id');
+
+        $deck = Deck::findById($id);
+
+        if (!$deck) {
+            FlashMessage::danger('Deck não encontrado');
+            $this->redirectTo('/decks');
+            return;
+        }
+
+        $cards = $deck->cards;
+
+        $this->render('decks/edit', [
+            'user' => $user,
+            'deck' => $deck,
+            'cards' => $cards
+        ]);
+    }
+
+    public function update(Request $request): void
+    {
+        $id = $request->getParam('id');
+        $params = $request->getParam('deck');
+
+        $deck = Deck::findById($id);
+
+        if (!$deck) {
+            FlashMessage::danger('Deck não encontrado');
+            $this->redirectTo('/decks');
+            return;
+        }
+
+        $deck->name = $params['name'];
+        $deck->description = $params['description'];
+
+        if ($deck->save()) {
+            FlashMessage::success('Deck atualizado com sucesso');
+            $this->redirectTo('/decks/' . $id . '/edit');
+        } else {
+            FlashMessage::danger('Não foi possível atualizar o deck. Verifique os dados!');
+            $this->redirectTo('/decks/' . $id . '/edit');
+        }
+    }
+
     public function createview(): void
     {
         $this->render('form/deck');

@@ -1,0 +1,70 @@
+<link href="/assets/css/application.css" rel="stylesheet">
+<link href="/assets/css/deck-details.css" rel="stylesheet">
+
+<div class="container py-4">
+    <div class="deck-details-container">
+        <div class="deck-details-header">
+            <a href="/decks" class="back-arrow">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <div class="deck-details-title">
+                <h2><?= htmlspecialchars($deck->name) ?></h2>
+                <p class="deck-details-description"><?= htmlspecialchars($deck->description) ?></p>
+            </div>
+        </div>
+
+        <?php if ($totalCards > 0 && ($newCards > 0 || $dueCards > 0)): ?>
+            <div class="deck-stats-container">
+                <div class="deck-stat-card stat-new">
+                    <div class="stat-label">Novos</div>
+                    <div class="stat-value"><?= $newCards ?></div>
+                </div>
+                <div class="deck-stat-card stat-due">
+                    <div class="stat-label">Revisar</div>
+                    <div class="stat-value"><?= $dueCards ?></div>
+                </div>
+                <div class="deck-stat-card stat-total">
+                    <div class="stat-label">Total</div>
+                    <div class="stat-value"><?= $totalCards ?></div>
+                </div>
+            </div>
+
+            <div class="study-button-container">
+                <button class="btn-study-now" onclick="alert('Função de estudo será implementada em breve!')">
+                    <i class="bi bi-play-circle-fill"></i> Estudar Agora
+                </button>
+            </div>
+        <?php else: ?>
+            <div class="congratulations-container">
+                <div class="congratulations-icon">
+                    <i class="bi bi-trophy-fill"></i>
+                </div>
+                <h3>Parabéns!</h3>
+                <p>Você terminou este deck por enquanto.</p>
+                <?php if ($totalCards === 0): ?>
+                    <p class="small-text">Este deck ainda não possui cards. <a href="/cards/create">Adicione alguns cards</a> para começar a estudar!</p>
+                <?php else: ?>
+                    <p class="small-text">Volte mais tarde para revisar seus cards.</p>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="deck-info-summary">
+            <h4><i class="bi bi-info-circle"></i> Informações do Deck</h4>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Total de Cards:</span>
+                    <span class="info-value"><?= $totalCards ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Cards Novos:</span>
+                    <span class="info-value"><?= $newCards ?></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Para Revisar:</span>
+                    <span class="info-value"><?= $dueCards ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

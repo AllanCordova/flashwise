@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
+use Core\Database\ActiveRecord\HasMany;
 
 /**
  * @property int $id
@@ -13,6 +14,7 @@ use Core\Database\ActiveRecord\Model;
  * @property string $category
  * @property string $created_at
  * @property string $updated_at
+ * @property Card[] $cards
  */
 class Deck extends Model
 {
@@ -31,5 +33,36 @@ class Deck extends Model
         Validations::notEmpty('description', $this);
 
         Validations::uniqueness('name', $this);
+    }
+
+    public function cards(): HasMany
+    {
+        return $this->hasMany(Card::class, 'deck_id');
+    }
+
+    /**
+     * Count new cards (never studied)
+     */
+    public function countNewCards(): int
+    {
+        $cards = $this->cards;
+        return count(array_filter($cards, fn($card) => $card->isNew()));
+    }
+
+    /**
+     * Count cards due for review
+     */
+    public function countDueCards(): int
+    {
+        $cards = $this->cards;
+        return count(array_filter($cards, fn($card) => $card->isDue()));
+    }
+
+    /**
+     * Count total cards in deck
+     */
+    public function countTotalCards(): int
+    {
+        return count($this->cards);
     }
 }

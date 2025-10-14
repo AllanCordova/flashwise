@@ -1,6 +1,6 @@
 /* Home Page Styling */
 .home-hero {
-    background: linear-gradient(135deg, #ef476f 0%, #d63a5c 100%);
+    background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
     color: white;
     padding: 4rem 2rem;
     text-align: center;
@@ -8,7 +8,7 @@
     margin: 2rem auto;
     max-width: 900px;
     width: 100%;
-    box-shadow: 0 10px 40px rgba(239, 71, 111, 0.3);
+    box-shadow: 0 10px 40px rgba(214, 58, 92, 0.3);
 }
 
 .home-hero h1 {
@@ -59,14 +59,14 @@
 
 .cta-primary {
     background-color: white;
-    color: #ef476f;
+    color: #d63a5c;
     box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
 }
 
 .cta-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
-    color: #ef476f;
+    color: #d63a5c;
 }
 
 .cta-secondary {
@@ -110,7 +110,7 @@
 
 .feature-icon {
     font-size: 3rem;
-    color: #667eea;
+    color: #d63a5c;
     margin-bottom: 1rem;
 }
 
