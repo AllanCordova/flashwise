@@ -130,12 +130,12 @@ html {
 
 /* Selection styling */
 ::selection {
-    background-color: #667eea;
+    background-color: #d63a5c;
     color: white;
 }
 
 ::-moz-selection {
-    background-color: #667eea;
+    background-color: #d63a5c;
     color: white;
 }
 

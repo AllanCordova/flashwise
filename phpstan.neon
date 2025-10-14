@@ -20,5 +20,9 @@ parameters:
     #- '#Access to an undefined property Core\\Database\\ActiveRecord\\Model::\$[a-zA-Z0-9_]+.#'
     - '#Call to an undefined method ReflectionType::getName\(\).#'
     - '#PHPDoc tag @var with type Tests\\Support\\AcceptanceTester is not subtype of native type Codeception\\Module#'
-    - message: '#Call to an undefined method Tests\\Support\\AcceptanceTester::(wait|waitForText|seeCurrentUrlEquals|executeJS|scrollTo|dontSee)\(\)#'
-      path: tests/Acceptance/*
+    -
+      message: '#Trait Tests\\Support\\_generated\\AcceptanceTesterActions is used zero times and is not analysed\.#'
+      reportUnmatched: false
+    -
+      message: '#Call to an undefined method Tests\\Support\\AcceptanceTester::#'
+      reportUnmatched: false
