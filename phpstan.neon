@@ -11,10 +11,13 @@ parameters:
     - tests/Acceptance/_output/*
     - tests/Support/Data/*
     - tests/Support/AcceptanceTester.php
-    - tests/Support/_generated/*
   
+  scanDirectories:
+    - tests/Support/_generated
+
   ignoreErrors:
     - '#Unsafe usage of new static\(\)\.#'
     #- '#Access to an undefined property Core\\Database\\ActiveRecord\\Model::\$[a-zA-Z0-9_]+.#'
     - '#Call to an undefined method ReflectionType::getName\(\).#'
     - '#PHPDoc tag @var with type Tests\\Support\\AcceptanceTester is not subtype of native type Codeception\\Module#'
+    - '#Trait Tests\\Support\\_generated\\AcceptanceTesterActions is used zero times and is not analysed\.#'
