@@ -1,13 +1,13 @@
 footer {
-  background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
+  background-color: var(--bg-primary);
   padding: 1.5rem 0;
   margin-top: auto;
-  border-top: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 -2px 8px rgba(239, 71, 111, 0.2);
+  border-top: 1px solid var(--border-primary);  /* Borda monocromática */
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
 }
 
 footer p {
-  color: #ffffff;
+  color: var(--text-secondary);
   text-align: center;
   margin: 0;
   font-size: 0.9rem;
