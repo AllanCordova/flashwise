@@ -7,10 +7,10 @@
 }
 
 .deck-form-wrapper {
-    background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
     border-radius: 16px;
     padding: 3rem;
-    box-shadow: 0 10px 40px rgba(214, 58, 92, 0.3);
 }
 
 .deck-form-header {
@@ -19,8 +19,8 @@
 }
 
 .deck-form-header h2 {
-    color: #ffffff;
-    font-size: 2rem;
+    color: var(--text-primary);
+    font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     display: flex;
@@ -30,16 +30,15 @@
 }
 
 .deck-form-header p {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-secondary);
     font-size: 1rem;
     font-weight: 300;
 }
 
 .deck-form {
-    background-color: #161b22;
+    background-color: var(--bg-secondary);
     border-radius: 12px;
     padding: 2.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .form-group-deck {
@@ -49,7 +48,7 @@
 .form-group-deck label {
     display: block;
     font-weight: 600;
-    color: #e6edf3;
+    color: var(--text-primary);
     margin-bottom: 0.75rem;
     font-size: 0.95rem;
     display: flex;
@@ -58,31 +57,31 @@
 }
 
 .form-group-deck label i {
-    color: #d63a5c;
+    color: var(--text-primary);  /* Ícones em branco */
     font-size: 1.1rem;
 }
 
 .form-input-deck {
     width: 100%;
     padding: 1rem 1.25rem;
-    border: 2px solid #30363d;
+    border: 2px solid var(--border-primary);
     border-radius: 8px;
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
-    transition: all 0.3s ease;
-    background-color: #0d1117;
-    color: #e6edf3;
+    transition: all var(--transition-normal);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 .form-input-deck:focus {
     outline: none;
-    border-color: #d63a5c;
-    background-color: #161b22;
-    box-shadow: 0 0 0 4px rgba(214, 58, 92, 0.1);
+    border-color: var(--accent-color);  /* Vermelho rosado apenas no foco */
+    background-color: var(--bg-secondary);
+    box-shadow: 0 0 0 3px rgba(214, 58, 92, 0.1);
 }
 
 .form-input-deck::placeholder {
-    color: #6e7681;
+    color: var(--text-tertiary);
     font-weight: 300;
 }
 
@@ -96,7 +95,7 @@ textarea.form-input-deck {
     display: block;
     text-align: right;
     font-size: 0.8rem;
-    color: #8b949e;
+    color: var(--text-tertiary);
     margin-top: 0.5rem;
 }
 
@@ -108,29 +107,31 @@ textarea.form-input-deck {
 
 .btn-deck {
     flex: 1;
-    padding: 1rem 2rem;
+    padding: var(--btn-padding);
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
+    border-radius: var(--btn-radius);
+    font-size: var(--btn-font-size);
+    font-weight: var(--btn-font-weight);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     font-family: 'Inter', sans-serif;
+    text-decoration: none;
 }
 
 .btn-deck-primary {
-    background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
+    background: var(--gradient-accent);
     color: white;
-    box-shadow: 0 4px 15px rgba(214, 58, 92, 0.3);
+    box-shadow: var(--shadow-lg);
 }
 
 .btn-deck-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(214, 58, 92, 0.4);
+    background: var(--gradient-accent-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
 }
 
 .btn-deck-primary:active {
@@ -138,18 +139,20 @@ textarea.form-input-deck {
 }
 
 .btn-deck-secondary {
-    background-color: #161b22;
-    color: #e6edf3;
-    border: 1px solid #30363d;
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--border-primary);
 }
 
 .btn-deck-secondary:hover {
-    background-color: #0d1117;
+    background-color: var(--bg-hover);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
 }
 
 .form-tip {
-    background-color: #0d1117;
-    border-left: 4px solid #d63a5c;
+    background-color: var(--bg-primary);
+    border-left: 4px solid var(--accent-color);
     padding: 1rem 1.25rem;
     border-radius: 6px;
     margin-top: 1.5rem;
@@ -157,13 +160,13 @@ textarea.form-input-deck {
 
 .form-tip p {
     margin: 0;
-    color: #8b949e;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     line-height: 1.6;
 }
 
 .form-tip i {
-    color: #d63a5c;
+    color: var(--accent-color);
     margin-right: 0.5rem;
 }
 

@@ -12,69 +12,68 @@
 .card {
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #30363d;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  background-color: #161b22;
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-md);
+  background-color: var(--bg-secondary);
 }
 
 .card-header {
-  border-bottom: none;
-  background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
+  border-bottom: 1px solid var(--border-primary);  /* Borda monocromática */
+  background-color: var(--bg-secondary);
   padding: 2rem;
 }
 
 .card-header h2 {
-  color: #ffffff;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .card-header p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-secondary);
   font-weight: 300;
 }
 
 .form-label {
-  color: #e6edf3;
+  color: var(--text-primary);
   font-weight: 500;
   font-size: 0.9rem;
 }
 
 .form-control {
-  border: 2px solid #30363d;
+  border: 2px solid var(--border-primary);
   border-radius: 8px;
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  transition: all 0.3s ease;
-  background-color: #0d1117;
-  color: #e6edf3;
+  transition: all var(--transition-normal);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .form-control:focus {
-  border-color: #d63a5c;
-  box-shadow: 0 0 0 4px rgba(214, 58, 92, 0.1);
-  background-color: #161b22;
+  border-color: var(--accent-color);  /* Vermelho rosado apenas no foco */
+  box-shadow: 0 0 0 3px rgba(214, 58, 92, 0.1);
+  background-color: var(--bg-secondary);
 }
 
 .btn-primary {
-  transition: all 0.3s ease;
-  background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
-  border: none;
-  padding: 0.875rem;
-  font-weight: 600;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(214, 58, 92, 0.3);
+    transition: all var(--transition-normal);
+    background: var(--gradient-accent);
+    border: none;
+    padding: var(--btn-padding);
+    font-weight: var(--btn-font-weight);
+    border-radius: var(--btn-radius);
+    box-shadow: var(--shadow-lg);
+    font-size: var(--btn-font-size);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(214, 58, 92, 0.4);
-  background: linear-gradient(135deg, #c22952 0%, #b01f45 100%);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+    background: var(--gradient-accent-hover);
 }
 
 .btn-primary:active {
-  transform: translateY(0);
-}
-
-.bg-light {
-  background-color: #161b22 !important;
+    transform: translateY(0);
+}.bg-light {
+  background-color: var(--bg-secondary) !important;
 }

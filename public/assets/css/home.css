@@ -1,21 +1,22 @@
 /* Home Page Styling */
 .home-hero {
-    background: linear-gradient(135deg, #d63a5c 0%, #c22952 100%);
-    color: white;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);  /* Borda monocromática */
+    color: var(--text-primary);
     padding: 4rem 2rem;
     text-align: center;
     border-radius: 12px;
     margin: 2rem auto;
     max-width: 900px;
     width: 100%;
-    box-shadow: 0 10px 40px rgba(214, 58, 92, 0.3);
+    box-shadow: var(--shadow-dark);
 }
 
 .home-hero h1 {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: white !important;
+    color: var(--text-primary) !important;  /* Branco */
     display: block;
     width: 100%;
     text-align: center;
@@ -24,17 +25,34 @@
     opacity: 1;
 }
 
+.home-hero h1 i {
+    color: var(--accent-color);  /* Ícone em vermelho rosado como detalhe */
+    filter: drop-shadow(0 0 15px rgba(214, 58, 92, 0.8));  /* Brilho mais intenso */
+    animation: cardGlow 3s ease-in-out infinite;
+}
+
+@keyframes cardGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 15px rgba(214, 58, 92, 0.8));
+    }
+    50% {
+        filter: drop-shadow(0 0 25px rgba(214, 58, 92, 1));
+    }
+}
+
 .home-hero .lead {
     font-size: 1.5rem;
     font-weight: 300;
     margin-bottom: 2rem;
     opacity: 0.95;
+    color: var(--text-secondary);
 }
 
 .home-hero p {
     font-size: 1.1rem;
     opacity: 0.9;
     margin-bottom: 2rem;
+    color: var(--text-secondary);
 }
 
 .home-cta {
@@ -46,39 +64,42 @@
 }
 
 .cta-btn {
-    padding: 1rem 2.5rem;
-    border-radius: 8px;
+    padding: var(--btn-padding);
+    border-radius: var(--btn-radius);
     text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
+    font-weight: var(--btn-font-weight);
+    font-size: var(--btn-font-size);
+    transition: all var(--transition-normal);
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
 }
 
 .cta-primary {
-    background-color: white;
-    color: #d63a5c;
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: var(--shadow-lg);
+    border: none;
 }
 
 .cta-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
-    color: #d63a5c;
+    box-shadow: var(--shadow-xl);
+    color: white;
+    background-color: var(--primary-hover);
 }
 
 .cta-secondary {
     background-color: transparent;
-    color: white;
-    border: 2px solid white;
+    color: var(--text-primary);  /* Branco */
+    border: 2px solid var(--border-primary);  /* Borda monocromática */
 }
 
 .cta-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--bg-hover);
     transform: translateY(-3px);
-    color: white;
+    color: var(--text-primary);
+    border-color: var(--accent-color);  /* Vermelho rosado no hover */
 }
 
 .features-section {
@@ -95,41 +116,44 @@
 }
 
 .feature-card {
-    background-color: white;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
     text-align: center;
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-primary);  /* Mantém monocromático */
+    background-color: var(--bg-tertiary);
 }
 
 .feature-icon {
     font-size: 3rem;
-    color: #d63a5c;
+    color: var(--accent-color);  /* Ícones em vermelho rosado como detalhe */
     margin-bottom: 1rem;
 }
 
 .feature-card h3 {
-    color: #1a1a1a;
+    color: var(--text-primary);
     font-size: 1.3rem;
     margin-bottom: 1rem;
     font-weight: 600;
 }
 
 .feature-card p {
-    color: #666;
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    color: #1a1a1a;
+    color: var(--text-primary);
     margin-bottom: 1rem;
     font-weight: 700;
 }
@@ -137,7 +161,7 @@
 .section-subtitle {
     text-align: center;
     font-size: 1.2rem;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 3rem;
 }
 
