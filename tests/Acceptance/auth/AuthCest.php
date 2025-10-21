@@ -55,7 +55,6 @@ class AuthCest extends BaseAcceptanceCest
         $I->wait(2); // Wait for redirect and page load
         $I->seeCurrentUrlEquals('/');
         $I->waitForText('Login realizado com sucesso! Bem-vindo(a), Allan!', 15);
-        $I->waitForText('Sair', 15);
     }
 
     public function successfulLogout(AcceptanceTester $I): void

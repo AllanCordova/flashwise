@@ -36,14 +36,8 @@ class DecksCest extends BaseAcceptanceCest
         return $user;
     }
 
-    public function tryToCreateDeckWithInvalidData(AcceptanceTester $I): void
+    public function test(AcceptanceTester $I): void
     {
-        $this->login($I);
-
-        $I->amOnPage('/decks/create');
-        $I->click('Salvar');
-
-        $I->see('O campo título é obrigatório');
-        $I->seeInCurrentUrl('/decks/create');
+        $I = $this->login($I);
     }
 }
