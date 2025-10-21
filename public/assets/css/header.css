@@ -68,12 +68,53 @@ header .navbar {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(214, 58, 92, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Força o menu a ser sempre visível em testes */
-.navbar-collapse {
+/* Responsive Design */
+@media (max-width: 991px) {
+  .navbar-brand.nav-logo {
+    font-size: 1.3rem;
+  }
+
+  .navbar-brand.nav-logo i {
+    font-size: 1.5rem;
+  }
+
+  /* Remove força para permitir menu hambúrguer funcionar */
+  .navbar-collapse {
+    display: none !important;
+    flex-basis: 100%;
+  }
+
+  .navbar-collapse.show {
     display: flex !important;
-    flex-basis: auto;
+    flex-direction: column;
+  }
+
+  .navbar-nav {
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-item a {
+    width: 100%;
+    margin: 0.25rem 0;
+    padding: 0.75rem 1rem;
+  }
 }
 
-.navbar-collapse.collapse:not(.show) {
-    display: flex !important;
+@media (max-width: 480px) {
+  header .navbar {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .navbar-brand.nav-logo {
+    font-size: 1.2rem;
+  }
+
+  .navbar-brand.nav-logo i {
+    font-size: 1.3rem;
+  }
 }

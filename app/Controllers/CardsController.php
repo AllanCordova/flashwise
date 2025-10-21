@@ -11,7 +11,7 @@ use Core\Http\Request;
 
 class CardsController extends Controller
 {
-    public function createview(): void
+    public function new(): void
     {
         $user = Auth::user();
         $decks = Deck::all();
@@ -79,7 +79,7 @@ class CardsController extends Controller
 
         $decks = Deck::all();
 
-        $this->render('form/card-edit', [
+        $this->render('card/edit', [
             'user' => $user,
             'card' => $card,
             'decks' => $decks

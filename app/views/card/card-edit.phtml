@@ -8,12 +8,13 @@
             <p>Atualize o conteúdo do seu flashcard</p>
         </div>
 
-        <form action="/cards/<?= $card->id ?>/update" method="post" class="card-form" onsubmit="return validateCardForm()">
+        <form action="/cards/<?= $card->id ?>" method="post" class="card-form" onsubmit="return validateCardForm()">
+            <input type="hidden" name="_method" value="PUT">
             <div class="form-group-card">
                 <label for="deck_id">
                     <i class="bi bi-collection"></i> Deck
                 </label>
-                <select 
+                <select
                     class="form-input-card"
                     id="deck_id"
                     name="card[deck_id]"
@@ -79,34 +80,34 @@
 </div>
 
 <script>
-function updateCharCount(inputId, counterId, maxLength) {
-    const input = document.getElementById(inputId);
-    const counter = document.getElementById(counterId);
-    counter.textContent = input.value.length;
-    
-    if (input.value.length >= maxLength * 0.9) {
-        counter.style.color = '#dc3545';
-    } else {
-        counter.style.color = '#8b949e';
-    }
-}
+    function updateCharCount(inputId, counterId, maxLength) {
+        const input = document.getElementById(inputId);
+        const counter = document.getElementById(counterId);
+        counter.textContent = input.value.length;
 
-function validateCardForm() {
-    const front = document.getElementById('front').value.trim();
-    const back = document.getElementById('back').value.trim();
-    const deckId = document.getElementById('deck_id').value;
-    
-    if (!front || !back || !deckId) {
-        alert('Por favor, preencha todos os campos!');
-        return false;
+        if (input.value.length >= maxLength * 0.9) {
+            counter.style.color = '#dc3545';
+        } else {
+            counter.style.color = '#8b949e';
+        }
     }
-    
-    return true;
-}
 
-// Initialize counters
-document.addEventListener('DOMContentLoaded', function() {
-    updateCharCount('front', 'frontCount', 1000);
-    updateCharCount('back', 'backCount', 1000);
-});
+    function validateCardForm() {
+        const front = document.getElementById('front').value.trim();
+        const back = document.getElementById('back').value.trim();
+        const deckId = document.getElementById('deck_id').value;
+
+        if (!front || !back || !deckId) {
+            alert('Por favor, preencha todos os campos!');
+            return false;
+        }
+
+        return true;
+    }
+
+    // Initialize counters
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCharCount('front', 'frontCount', 1000);
+        updateCharCount('back', 'backCount', 1000);
+    });
 </script>

@@ -166,26 +166,144 @@
 }
 
 /* Responsive */
+@media (max-width: 992px) {
+    .home-hero {
+        padding: 3rem 1.5rem;
+        margin: 1.5rem auto;
+    }
+
+    .home-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .features-section {
+        padding: 0 1.5rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .home-hero {
+        padding: 2.5rem 1.25rem;
+        margin: 1rem auto;
+    }
+
     .home-hero h1 {
         font-size: 2rem;
+        margin-bottom: 0.75rem;
     }
     
     .home-hero .lead {
         font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .home-hero p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
     }
     
     .home-cta {
         flex-direction: column;
         align-items: stretch;
+        margin-top: 1.5rem;
     }
     
     .cta-btn {
         width: 100%;
         justify-content: center;
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+    }
+
+    .features-section {
+        margin: 3rem auto;
+        padding: 0 1rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-top: 2rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.2rem;
     }
     
     .section-title {
         font-size: 2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-hero {
+        padding: 2rem 1rem;
+        border-radius: 8px;
+    }
+
+    .home-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .home-hero .lead {
+        font-size: 1.05rem;
+    }
+
+    .home-hero p {
+        font-size: 0.95rem;
+    }
+
+    .cta-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .feature-card {
+        padding: 1.25rem;
+    }
+
+    .feature-icon {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .feature-card p {
+        font-size: 0.9rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .features-section {
+        margin: 2rem auto;
     }
 }

@@ -8,38 +8,44 @@ use App\Controllers\AdminController;
 use App\Controllers\RegisterController;
 use Core\Router\Route;
 
-// Página inicial
-Route::get('/', [HomeController::class, 'index'])->name('root');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Autenticação
-Route::get('/login', [AuthController::class, 'new'])->name('login');
-Route::post('/login', [AuthController::class, 'create'])->name('login.create');
-
-Route::get('/register', [RegisterController::class, 'new'])->name('register');
+Route::get('/register', [RegisterController::class, 'new'])->name('register.new');
 Route::post('/register', [RegisterController::class, 'create'])->name('register.create');
 
+Route::get('/login', [AuthController::class, 'new'])->name('login.new');
+Route::post('/login', [AuthController::class, 'create'])->name('login.create');
 
-// rotas protegidas
 Route::middleware('auth')->group(function () {
-    // Autenticação
     Route::get('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-    // Decks
-    Route::get('/decks', [DecksController::class, 'index'])->name('decks');
-    Route::get('/decks/create', [DecksController::class, 'createview'])->name('decks.create');
-    Route::post('/decks/create', [DecksController::class, 'create'])->name('decks.store');
-    Route::get('/decks/{id}', [DecksController::class, 'show'])->name('decks.show');
+    // decks
+    // create
+    Route::get('/decks/create', [DecksController::class, 'new'])->name('decks.new');
+    Route::post('/decks', [DecksController::class, 'create'])->name('decks.create');
+
+    // edit
     Route::get('/decks/{id}/edit', [DecksController::class, 'edit'])->name('decks.edit');
-    Route::post('/decks/{id}/update', [DecksController::class, 'update'])->name('decks.update');
-    Route::post('/decks/{id}/delete', [DecksController::class, 'destroy'])->name('decks.destroy');
+    Route::put('/decks/{id}', [DecksController::class, 'update'])->name('decks.update');
 
-    // Cards
-    Route::get('/cards/create', [CardsController::class, 'createview'])->name('cards.create');
-    Route::post('/cards/create', [CardsController::class, 'create'])->name('cards.store');
+    // delete
+    Route::delete('/decks/{id}', [DecksController::class, 'destroy'])->name('decks.destroy');
+
+    // view
+    Route::get('/decks', [DecksController::class, 'index'])->name('decks.index');
+    Route::get('/decks/{id}', [DecksController::class, 'show'])->name('decks.show');
+
+    // create
+    Route::get('/cards/create', [CardsController::class, 'new'])->name('cards.new');
+    Route::post('/cards', [CardsController::class, 'create'])->name('cards.create');
+
+    // edit
     Route::get('/cards/{id}/edit', [CardsController::class, 'edit'])->name('cards.edit');
-    Route::post('/cards/{id}/update', [CardsController::class, 'update'])->name('cards.update');
-    Route::post('/cards/{id}/delete', [CardsController::class, 'destroy'])->name('cards.destroy');
+    Route::put('/cards/{id}', [CardsController::class, 'update'])->name('cards.update');
 
-    // Administração
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    // delete
+    Route::delete('/cards/{id}', [CardsController::class, 'destroy'])->name('cards.destroy');
+
+    // view
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 });
