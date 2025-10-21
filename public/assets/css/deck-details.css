@@ -257,30 +257,231 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
+    .deck-details-container {
+        max-width: 800px;
+        padding: 1.5rem;
+    }
+
     .deck-stats-container {
-        grid-template-columns: 1fr;
+        gap: 1.25rem;
     }
-    
+
+    .deck-stat-card {
+        padding: 1.75rem;
+    }
+
+    .stat-value {
+        font-size: 2.75rem;
+    }
+
     .info-grid {
-        grid-template-columns: 1fr;
+        gap: 1.25rem;
     }
-    
+}
+
+@media (max-width: 768px) {
+    .deck-details-container {
+        padding: 1.25rem;
+        border-radius: 8px;
+    }
+
     .deck-details-header {
         flex-direction: row;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.25rem;
+    }
+
+    .back-arrow {
+        font-size: 1.5rem;
+        padding: 0.4rem;
     }
     
     .deck-details-title h2 {
         font-size: 1.5rem;
+        margin-bottom: 0.4rem;
     }
-    
+
+    .deck-details-description {
+        font-size: 1rem;
+    }
+
+    .deck-stats-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .deck-stat-card {
+        padding: 1.5rem;
+    }
+
+    .stat-value {
+        font-size: 2.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+    }
+
     .btn-study-now {
         padding: 1rem 2rem;
         font-size: 1rem;
+        gap: 0.5rem;
+    }
+
+    .btn-study-now i {
+        font-size: 1.25rem;
+    }
+
+    .congratulations-container {
+        padding: 3rem 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .congratulations-icon {
+        font-size: 4rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .congratulations-container h3 {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .congratulations-container p {
+        font-size: 1rem;
+    }
+
+    .deck-info-summary {
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .deck-info-summary h4 {
+        font-size: 1.1rem;
+        margin-bottom: 1.25rem;
     }
     
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .info-item {
+        padding: 0.875rem;
+    }
+
+    .info-label {
+        font-size: 0.9rem;
+    }
+
+    .info-value {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .deck-details-container {
+        padding: 1rem;
+    }
+
+    .deck-details-header {
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 1rem;
+    }
+
+    .back-arrow {
+        font-size: 1.3rem;
+        padding: 0.3rem;
+    }
+
+    .deck-details-title h2 {
+        font-size: 1.25rem;
+    }
+
+    .deck-details-description {
+        font-size: 0.95rem;
+    }
+
+    .deck-stats-container {
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .deck-stat-card {
+        padding: 1.25rem;
+        border-radius: 10px;
+    }
+
     .stat-value {
-        font-size: 2.5rem;
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .btn-study-now {
+        width: 100%;
+        padding: 0.9rem 1.5rem;
+        font-size: 0.95rem;
+        border-radius: 10px;
+    }
+
+    .btn-study-now i {
+        font-size: 1.1rem;
+    }
+
+    .congratulations-container {
+        padding: 2.5rem 1.25rem;
+        margin: 1.25rem 0;
+    }
+
+    .congratulations-icon {
+        font-size: 3.5rem;
+    }
+
+    .congratulations-container h3 {
+        font-size: 1.5rem;
+    }
+
+    .congratulations-container p {
+        font-size: 0.95rem;
+    }
+
+    .small-text {
+        font-size: 0.85rem;
+    }
+
+    .deck-info-summary {
+        padding: 1.25rem;
+        margin-top: 1.25rem;
+        border-radius: 10px;
+    }
+
+    .deck-info-summary h4 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-grid {
+        gap: 0.75rem;
+    }
+
+    .info-item {
+        padding: 0.75rem;
+        border-radius: 6px;
+    }
+
+    .info-label {
+        font-size: 0.85rem;
+    }
+
+    .info-value {
+        font-size: 0.95rem;
     }
 }
 

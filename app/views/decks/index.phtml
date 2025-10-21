@@ -8,12 +8,12 @@
                 <h2><i class="bi bi-collection"></i> Meus Decks</h2>
                 <p class="text-secondary mb-0">Bem-vindo, <?= htmlspecialchars($user->name) ?>!</p>
             </div>
-            <div style="display: flex; gap: 10px;">
+            <div class="decks-header-actions">
                 <a href="/cards/create" class="create-deck-btn">
-                    <i class="bi bi-plus-circle"></i> Adicionar Card
+                    <i class="bi bi-plus-circle"></i> <span>Adicionar Card</span>
                 </a>
                 <a href="/decks/create" class="create-deck-btn">
-                    <i class="bi bi-plus-circle"></i> Criar Novo Deck
+                    <i class="bi bi-plus-circle"></i> <span>Criar Novo Deck</span>
                 </a>
             </div>
         </div>
@@ -58,10 +58,11 @@
                                         <i class="bi bi-pencil"></i>
                                     </button>
                                     <form
-                                        action="/decks/<?= $deck->id ?>/delete"
+                                        action="/decks/<?= $deck->id ?>"
                                         method="POST"
                                         style="display: inline;"
                                         onsubmit="return confirm('Tem certeza que deseja excluir este deck?');">
+                                        <input type="hidden" name="_method" value="DELETE">
                                         <button type="submit" class="action-btn btn-delete" title="Excluir deck">
                                             <i class="bi bi-trash"></i>
                                         </button>

@@ -24,6 +24,11 @@
     font-weight: 600;
 }
 
+.decks-header-actions {
+    display: flex;
+    gap: 10px;
+}
+
 .create-deck-btn {
     background: var(--gradient-accent);
     color: white;
@@ -279,24 +284,204 @@
 }
 
 /* Responsive */
+@media (max-width: 992px) {
+    .decks-container {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .decks-header {
+        gap: 1rem;
+    }
+
+    .decks-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .create-deck-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .deck-stats {
+        gap: 1rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .decks-container {
+        width: 100%;
+        padding: 1.25rem;
+        border-radius: 6px;
+    }
+
+    .decks-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+
+    .decks-header-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .create-deck-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    /* Transformar tabela em cards em mobile */
     .decks-table {
+        display: block;
+    }
+
+    .decks-table thead {
+        display: none;
+    }
+
+    .decks-table tbody {
+        display: block;
+    }
+
+    .decks-table tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-primary);
+        border-radius: 8px;
+        padding: 1rem;
+        background-color: var(--bg-secondary);
+    }
+
+    .decks-table tbody tr:hover {
+        background-color: var(--bg-tertiary);
+    }
+
+    .decks-table tbody td {
+        display: block;
+        padding: 0.5rem 0;
+        border-bottom: none;
+    }
+
+    .decks-table tbody td:first-child {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-primary);
+    }
+
+    .deck-name {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .deck-description {
         font-size: 0.85rem;
     }
-    
-    .decks-table thead th,
-    .decks-table tbody td {
-        padding: 0.75rem 0.5rem;
-    }
-    
+
     .deck-stats {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        margin: 1rem 0;
     }
     
     .stat-item {
-        flex-direction: row;
-        gap: 0.5rem;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--bg-primary);
+        padding: 0.75rem;
+        border-radius: 6px;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+        margin-top: 0.25rem;
+    }
+
+    .deck-actions {
+        justify-content: center;
+        margin-top: 0.75rem;
+    }
+
+    .action-btn.btn-study {
+        flex: 1;
+        justify-content: center;
+    }
+
+    /* No decks state */
+    .no-decks {
+        padding: 3rem 1.5rem;
+    }
+
+    .no-decks i {
+        font-size: 3rem;
+    }
+
+    .no-decks h3 {
+        font-size: 1.2rem;
+    }
+
+    .no-decks p {
+        font-size: 0.95rem;
+    }
+
+    .no-decks .create-deck-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .decks-container {
+        padding: 1rem;
+    }
+
+    .decks-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .create-deck-btn {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.25rem;
+    }
+
+    .decks-table tbody tr {
+        padding: 0.75rem;
+    }
+
+    .deck-name {
+        font-size: 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .action-btn.btn-study {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .no-decks {
+        padding: 2rem 1rem;
+    }
+
+    .no-decks i {
+        font-size: 2.5rem;
     }
 }

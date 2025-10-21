@@ -95,7 +95,7 @@ class DecksController extends Controller
         }
     }
 
-    public function createview(): void
+    public function new(): void
     {
         $this->render('form/deck');
     }

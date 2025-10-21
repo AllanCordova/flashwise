@@ -74,6 +74,91 @@
 
 .btn-primary:active {
     transform: translateY(0);
-}.bg-light {
+}
+
+.bg-light {
   background-color: var(--bg-secondary) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .card {
+    border-radius: 10px;
+  }
+
+  .card-header {
+    padding: 1.5rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .card-header p {
+    font-size: 0.95rem;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .form-label {
+    font-size: 0.875rem;
+  }
+
+  .form-control {
+    padding: 0.65rem 0.875rem;
+    font-size: 0.95rem;
+    border-radius: 7px;
+  }
+
+  .btn-primary {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+    border-radius: 7px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .card {
+    border-radius: 8px;
+  }
+
+  .card-header {
+    padding: 1.25rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .card-header p {
+    font-size: 0.9rem;
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .form-label {
+    font-size: 0.85rem;
+  }
+
+  .form-control {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+  }
 }

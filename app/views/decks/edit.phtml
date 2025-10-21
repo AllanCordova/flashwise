@@ -14,16 +14,18 @@
         <!-- Formulário de Edição do Deck -->
         <div class="deck-form-section">
             <h2><i class="bi bi-collection"></i> Informações do Deck</h2>
-            <form action="/decks/<?= $deck->id ?>/update" method="post" class="deck-form">
+            <form action="/decks/<?= $deck->id ?>" method="post" class="deck-form">
+                <input type="hidden" name="_method" value="PUT">
+
                 <div class="form-group">
                     <label for="name">
                         <i class="bi bi-tag"></i> Nome do Deck
                     </label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        name="deck[name]" 
-                        class="form-control" 
+                    <input
+                        type="text"
+                        id="name"
+                        name="deck[name]"
+                        class="form-control"
                         value="<?= htmlspecialchars($deck->name ?? '') ?>"
                         placeholder="Digite o nome do deck"
                         required>
@@ -33,11 +35,11 @@
                     <label for="description">
                         <i class="bi bi-text-left"></i> Descrição
                     </label>
-                    <textarea 
-                        id="description" 
-                        name="deck[description]" 
-                        class="form-control" 
-                        rows="3" 
+                    <textarea
+                        id="description"
+                        name="deck[description]"
+                        class="form-control"
+                        rows="3"
                         placeholder="Descreva o conteúdo deste deck"><?= htmlspecialchars($deck->description ?? '') ?></textarea>
                 </div>
 
@@ -64,7 +66,7 @@
                     <h3>Nenhum card neste deck</h3>
                     <p>Comece adicionando o primeiro flashcard!</p>
                     <a href="/cards/create" class="btn-primary">
-                        <i class="bi bi-plus-circle"></i> Criar Primeiro Card
+                        <i class="bi bi-plus-circle fs-5"></i> Criar Primeiro Card
                     </a>
                 </div>
             <?php else: ?>
@@ -81,19 +83,19 @@
                         <tbody>
                             <?php foreach ($cards as $card): ?>
                                 <tr>
-                                    <td class="card-front">
+                                    <td class="card-front" data-label="Frente">
                                         <div class="card-content">
                                             <?= htmlspecialchars(mb_substr($card->front, 0, 60)) ?>
                                             <?= mb_strlen($card->front) > 60 ? '...' : '' ?>
                                         </div>
                                     </td>
-                                    <td class="card-back">
+                                    <td class="card-back" data-label="Verso">
                                         <div class="card-content">
                                             <?= htmlspecialchars(mb_substr($card->back, 0, 60)) ?>
                                             <?= mb_strlen($card->back) > 60 ? '...' : '' ?>
                                         </div>
                                     </td>
-                                    <td class="card-status">
+                                    <td class="card-status" data-label="Status">
                                         <?php if ($card->card_type === 'new'): ?>
                                             <span class="badge badge-new">
                                                 <i class="bi bi-star"></i> Novo
@@ -113,18 +115,21 @@
                                         <?php endif; ?>
                                     </td>
                                     <td class="card-actions">
-                                        <a href="/cards/<?= $card->id ?>/edit" 
-                                           class="btn-action btn-edit" 
-                                           title="Editar card">
+                                        <a href="/cards/<?= $card->id ?>/edit"
+                                            class="btn-action btn-edit"
+                                            title="Editar card">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <form action="/cards/<?= $card->id ?>/delete" 
-                                              method="post" 
-                                              class="delete-form" 
-                                              onsubmit="return confirm('Tem certeza que deseja excluir este card?');">
-                                            <button type="submit" 
-                                                    class="btn-action btn-delete" 
-                                                    title="Excluir card">
+
+                                        <!-- formulario de exclusão do card -->
+                                        <form action="/cards/<?= $card->id ?>"
+                                            method="post"
+                                            class="delete-form"
+                                            onsubmit="return confirm('Tem certeza que deseja excluir este card?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit"
+                                                class="btn-action btn-delete"
+                                                title="Excluir card">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
