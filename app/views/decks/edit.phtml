@@ -1,6 +1,3 @@
-<link href="/assets/css/application.css" rel="stylesheet">
-<link href="/assets/css/deck-edit.css" rel="stylesheet">
-
 <main class="deck-edit-container">
     <div class="deck-edit-wrapper">
         <!-- Header -->
@@ -14,7 +11,7 @@
         <!-- Formulário de Edição do Deck -->
         <div class="deck-form-section">
             <h2><i class="bi bi-collection"></i> Informações do Deck</h2>
-            <form action="/decks/<?= $deck->id ?>" method="post" class="deck-form">
+            <form action="<?= route('decks.update', ['id' => $deck->id]) ?>" method="post" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
                 <input type="hidden" name="_method" value="PUT">
 
                 <div class="form-group">
@@ -29,6 +26,7 @@
                         value="<?= htmlspecialchars($deck->name ?? '') ?>"
                         placeholder="Digite o nome do deck"
                         required>
+                    <div class="invalid-feedback"><?= $deck->errors('name') ? $deck->errors('name') : '' ?></div>
                 </div>
 
                 <div class="form-group">
@@ -40,7 +38,9 @@
                         name="deck[description]"
                         class="form-control"
                         rows="3"
-                        placeholder="Descreva o conteúdo deste deck"><?= htmlspecialchars($deck->description ?? '') ?></textarea>
+                        placeholder="Descreva o conteúdo deste deck"
+                        required><?= htmlspecialchars($deck->description ?? '') ?></textarea>
+                    <div class="invalid-feedback"><?= $deck->errors('description') ? $deck->errors('description') : '' ?></div>
                 </div>
 
                 <div class="form-actions">
@@ -55,7 +55,7 @@
         <div class="cards-section">
             <div class="cards-header">
                 <h2><i class="bi bi-card-list"></i> Cards deste Deck</h2>
-                <a href="/cards/create" class="btn-add-card">
+                <a href="<?= route('cards.new') ?>" class="btn-add-card">
                     <i class="bi bi-plus-circle"></i> Novo Card
                 </a>
             </div>
@@ -65,7 +65,7 @@
                     <i class="bi bi-inbox"></i>
                     <h3>Nenhum card neste deck</h3>
                     <p>Comece adicionando o primeiro flashcard!</p>
-                    <a href="/cards/create" class="btn-primary">
+                    <a href="<?= route('cards.new') ?>" class="btn-primary">
                         <i class="bi bi-plus-circle fs-5"></i> Criar Primeiro Card
                     </a>
                 </div>
@@ -115,14 +115,14 @@
                                         <?php endif; ?>
                                     </td>
                                     <td class="card-actions">
-                                        <a href="/cards/<?= $card->id ?>/edit"
+                                        <a href="<?= route('cards.edit', ['id' => $card->id]) ?>"
                                             class="btn-action btn-edit"
                                             title="Editar card">
                                             <i class="bi bi-pencil"></i>
                                         </a>
 
                                         <!-- formulario de exclusão do card -->
-                                        <form action="/cards/<?= $card->id ?>"
+                                        <form action="<?= route('cards.destroy', ['id' => $card->id]) ?>"
                                             method="post"
                                             class="delete-form"
                                             onsubmit="return confirm('Tem certeza que deseja excluir este card?');">

@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\Deck;
-use Codeception\Step\Retry;
 use Core\Http\Controllers\Controller;
 use Lib\Authentication\Auth;
 use Lib\FlashMessage;
@@ -11,15 +10,17 @@ use Core\Http\Request;
 
 class DecksController extends Controller
 {
+    // protected string $layout = "decks";
+
     public function index(): void
     {
-        $user = Auth::user();
         $decks = Deck::all();
 
-        $this->render('decks/index', [
-            'user' => $user,
-            'decks' => $decks
-        ]);
+        // $this->render('decks/index', [
+        //     'decks' => $decks
+        // ]);
+
+        $this->render('decks/index', compact("decks"));
     }
 
     public function show(Request $request): void
@@ -91,13 +92,17 @@ class DecksController extends Controller
             $this->redirectTo('/decks/' . $id . '/edit');
         } else {
             FlashMessage::danger('Não foi possível atualizar o deck. Verifique os dados!');
-            $this->redirectTo('/decks/' . $id . '/edit');
+
+            $this->render('/decks/edit', compact('deck'));
         }
     }
 
     public function new(): void
     {
-        $this->render('form/deck');
+
+        $deck = new Deck();
+
+        $this->render('decks/new', compact("deck"));
     }
 
     public function create(Request $request): void
@@ -120,7 +125,7 @@ class DecksController extends Controller
         } else {
             FlashMessage::danger('Não foi possivel criar seu deck tente novamente!');
 
-            $this->redirectTo('/decks/create');
+            $this->render('/decks/new', compact("deck"));
         }
     }
 

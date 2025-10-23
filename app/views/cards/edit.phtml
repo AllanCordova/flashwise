@@ -1,6 +1,3 @@
-<link href="/assets/css/application.css" rel="stylesheet">
-<link href="/assets/css/card-form.css" rel="stylesheet">
-
 <div class="card-form-container">
     <div class="card-form-wrapper">
         <div class="card-form-header">
@@ -8,7 +5,7 @@
             <p>Atualize o conteúdo do seu flashcard</p>
         </div>
 
-        <form action="/cards/<?= $card->id ?>" method="post" class="card-form" onsubmit="return validateCardForm()">
+        <form action="<?= route('cards.update', ['id' => $card->id]) ?>" method="post" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group-card">
                 <label for="deck_id">
@@ -19,7 +16,6 @@
                     id="deck_id"
                     name="card[deck_id]"
                     required>
-                    <option value="">Selecione um deck</option>
                     <?php foreach ($decks as $deck): ?>
                         <option value="<?= $deck->id ?>" <?= $deck->id == $card->deck_id ? 'selected' : '' ?>>
                             <?= htmlspecialchars($deck->name) ?>
@@ -41,7 +37,7 @@
                     rows="4"
                     required
                     oninput="updateCharCount('front', 'frontCount', 1000)"><?= htmlspecialchars($card->front ?? '') ?></textarea>
-                <span class="char-counter"><span id="frontCount">0</span>/1000</span>
+                <div class="invalid-feedback"><?= $card->errors('front') ? $card->errors('front') : '' ?></div>
             </div>
 
             <div class="form-group-card">
@@ -57,7 +53,7 @@
                     rows="4"
                     required
                     oninput="updateCharCount('back', 'backCount', 1000)"><?= htmlspecialchars($card->back ?? '') ?></textarea>
-                <span class="char-counter"><span id="backCount">0</span>/1000</span>
+                <div class="invalid-feedback"><?= $card->errors('back') ? $card->errors('back') : '' ?></div>
             </div>
 
             <div class="form-tip">
@@ -68,7 +64,7 @@
             </div>
 
             <div class="form-actions-card">
-                <a href="/decks/<?= $card->deck_id ?>/edit" class="btn-card btn-card-secondary">
+                <a href="<?= route('decks.edit', ['id' => $card->deck_id]) ?>" class="btn-card btn-card-secondary">
                     <i class="bi bi-x-circle"></i> Cancelar
                 </a>
                 <button type="submit" class="btn-card btn-card-primary">
@@ -78,36 +74,3 @@
         </form>
     </div>
 </div>
-
-<script>
-    function updateCharCount(inputId, counterId, maxLength) {
-        const input = document.getElementById(inputId);
-        const counter = document.getElementById(counterId);
-        counter.textContent = input.value.length;
-
-        if (input.value.length >= maxLength * 0.9) {
-            counter.style.color = '#dc3545';
-        } else {
-            counter.style.color = '#8b949e';
-        }
-    }
-
-    function validateCardForm() {
-        const front = document.getElementById('front').value.trim();
-        const back = document.getElementById('back').value.trim();
-        const deckId = document.getElementById('deck_id').value;
-
-        if (!front || !back || !deckId) {
-            alert('Por favor, preencha todos os campos!');
-            return false;
-        }
-
-        return true;
-    }
-
-    // Initialize counters
-    document.addEventListener('DOMContentLoaded', function() {
-        updateCharCount('front', 'frontCount', 1000);
-        updateCharCount('back', 'backCount', 1000);
-    });
-</script>

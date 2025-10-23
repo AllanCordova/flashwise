@@ -17,7 +17,9 @@ class RegisterController extends Controller
             $this->redirectTo('/');
         }
 
-        $this->render('form/register');
+        $user = new User();
+
+        $this->render('auth/register', compact('user'));
     }
 
     public function create(Request $request): void
@@ -28,7 +30,7 @@ class RegisterController extends Controller
             'name' => $params['name'],
             'email' => $params['email'],
             'password' => $params['password'],
-            'password_confirmation' => $params['confirm_password'],
+            'password_confirmation' => $params['password_confirmation'],
             'role' => 'user',
             'avatar_name' => 'default.png'
         ];
@@ -42,7 +44,7 @@ class RegisterController extends Controller
         } else {
             FlashMessage::danger('Dados inválidos registre-se novamente!' . htmlspecialchars($user->name) . '!');
 
-            $this->redirectTo('/register');
+            $this->render('/auth/register', compact('user'));
         }
     }
 }

@@ -15,6 +15,7 @@ class CardsController extends Controller
     {
         $user = Auth::user();
         $decks = Deck::all();
+        $card = new Card();
 
         // Check if user has at least one deck
         if (empty($decks)) {
@@ -31,10 +32,7 @@ class CardsController extends Controller
             }
         }
 
-        $this->render('form/card', [
-            'user' => $user,
-            'decks' => $decks
-        ]);
+        $this->render('cards/new', compact('decks', 'card'));
     }
 
     public function create(Request $request): void
@@ -54,13 +52,14 @@ class CardsController extends Controller
         ];
 
         $card = new Card($cardData);
+        $decks = Deck::all();
 
         if ($card->save()) {
             FlashMessage::success('Card criado com sucesso');
             $this->redirectTo('/decks');
         } else {
             FlashMessage::danger('Não foi possível criar o card. Preencha todos os campos!');
-            $this->redirectTo('/cards/create');
+            $this->render('/cards/new', compact('card', 'decks'));
         }
     }
 
@@ -79,7 +78,7 @@ class CardsController extends Controller
 
         $decks = Deck::all();
 
-        $this->render('card/edit', [
+        $this->render('cards/edit', [
             'user' => $user,
             'card' => $card,
             'decks' => $decks
@@ -92,6 +91,7 @@ class CardsController extends Controller
         $params = $request->getParam('card');
 
         $card = Card::findById($id);
+        $decks = Deck::all();
 
         if (!$card) {
             FlashMessage::danger('Card não encontrado');
@@ -110,7 +110,7 @@ class CardsController extends Controller
             $this->redirectTo('/decks/' . $deckId . '/edit');
         } else {
             FlashMessage::danger('Não foi possível atualizar o card. Preencha todos os campos!');
-            $this->redirectTo('/cards/' . $id . '/edit');
+            $this->render('/cards/edit', compact('card', 'decks'));
         }
     }
 

@@ -18,7 +18,7 @@
 }
 
 .card-header {
-  border-bottom: 1px solid var(--border-primary);  /* Borda monocromática */
+  border-bottom: 1px solid var(--border-primary);
   background-color: var(--bg-secondary);
   padding: 2rem;
 }
@@ -46,119 +46,62 @@
   font-size: 1rem;
   transition: all var(--transition-normal);
   background-color: var(--bg-primary);
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
+}
+
+/* Corrige o texto do input em todos os estados */
+.form-control,
+.form-control:focus,
+.form-control:active,
+.form-control:hover {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+/* Corrige o autocomplete do navegador */
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text-primary) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-primary) inset !important;
+  box-shadow: 0 0 0 1000px var(--bg-primary) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Para textarea */
+textarea.form-control {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
 }
 
 .form-control:focus {
-  border-color: var(--accent-color);  /* Vermelho rosado apenas no foco */
+  border-color: var(--accent-color);
   box-shadow: 0 0 0 3px rgba(214, 58, 92, 0.1);
   background-color: var(--bg-secondary);
 }
 
 .btn-primary {
-    transition: all var(--transition-normal);
-    background: var(--gradient-accent);
-    border: none;
-    padding: var(--btn-padding);
-    font-weight: var(--btn-font-weight);
-    border-radius: var(--btn-radius);
-    box-shadow: var(--shadow-lg);
-    font-size: var(--btn-font-size);
+  transition: all var(--transition-normal);
+  background: var(--gradient-accent);
+  border: none;
+  padding: var(--btn-padding);
+  font-weight: var(--btn-font-weight);
+  border-radius: var(--btn-radius);
+  box-shadow: var(--shadow-lg);
+  font-size: var(--btn-font-size);
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-xl);
-    background: var(--gradient-accent-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+  background: var(--gradient-accent-hover);
 }
 
 .btn-primary:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .bg-light {
   background-color: var(--bg-secondary) !important;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .auth-container {
-    padding: 1.5rem 1rem;
-  }
-
-  .card {
-    border-radius: 10px;
-  }
-
-  .card-header {
-    padding: 1.5rem;
-  }
-
-  .card-header h2 {
-    font-size: 1.5rem;
-  }
-
-  .card-header p {
-    font-size: 0.95rem;
-  }
-
-  .card-body {
-    padding: 1.5rem;
-  }
-
-  .form-label {
-    font-size: 0.875rem;
-  }
-
-  .form-control {
-    padding: 0.65rem 0.875rem;
-    font-size: 0.95rem;
-    border-radius: 7px;
-  }
-
-  .btn-primary {
-    padding: 0.9rem 2rem;
-    font-size: 1rem;
-    border-radius: 7px;
-  }
-}
-
-@media (max-width: 480px) {
-  .auth-container {
-    padding: 1rem 0.75rem;
-  }
-
-  .card {
-    border-radius: 8px;
-  }
-
-  .card-header {
-    padding: 1.25rem;
-  }
-
-  .card-header h2 {
-    font-size: 1.3rem;
-  }
-
-  .card-header p {
-    font-size: 0.9rem;
-  }
-
-  .card-body {
-    padding: 1.25rem;
-  }
-
-  .form-label {
-    font-size: 0.85rem;
-  }
-
-  .form-control {
-    padding: 0.6rem 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .btn-primary {
-    padding: 0.8rem 1.5rem;
-    font-size: 0.95rem;
-  }
 }

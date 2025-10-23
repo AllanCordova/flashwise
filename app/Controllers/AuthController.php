@@ -17,7 +17,9 @@ class AuthController extends Controller
             $this->redirectTo('/');
         }
 
-        $this->render('form/login');
+        $user = new User();
+
+        $this->render('auth/login', compact('user'));
     }
 
     public function create(Request $request): void
@@ -33,7 +35,7 @@ class AuthController extends Controller
         } else {
             FlashMessage::danger('E-mail ou senha inválidos. Por favor, tente novamente.');
 
-            $this->redirectTo('/login');
+            $this->render('/auth/login', compact('user'));
         }
     }
 

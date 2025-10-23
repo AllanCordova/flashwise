@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
 
     // decks
     // create
-    Route::get('/decks/create', [DecksController::class, 'new'])->name('decks.new');
+    Route::get('/decks/new', [DecksController::class, 'new'])->name('decks.new');
     Route::post('/decks', [DecksController::class, 'create'])->name('decks.create');
 
     // edit
@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/decks/{id}', [DecksController::class, 'show'])->name('decks.show');
 
     // create
-    Route::get('/cards/create', [CardsController::class, 'new'])->name('cards.new');
+    Route::get('/cards/new', [CardsController::class, 'new'])->name('cards.new');
     Route::post('/cards', [CardsController::class, 'create'])->name('cards.create');
 
     // edit
