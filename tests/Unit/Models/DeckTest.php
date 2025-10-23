@@ -3,10 +3,29 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Deck;
+use App\Models\User;
 use Tests\TestCase;
 
 class DeckTest extends TestCase
 {
+    private ?User $testUser = null;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // Create a test user for deck tests
+        $this->testUser = new User([
+            'name' => 'Test User',
+            'email' => 'testdeck@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'role' => 'user',
+            'avatar_name' => 'default.png'
+        ]);
+        $this->testUser->save();
+    }
+
     public function testDeckModelCanBeCreated(): void
     {
         $deck = new Deck([
@@ -14,6 +33,7 @@ class DeckTest extends TestCase
             'description' => 'Test Description',
             'path_img' => 'test.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
 
         $result = $deck->save();
@@ -31,6 +51,7 @@ class DeckTest extends TestCase
             'description' => 'Valid Description',
             'path_img' => 'test.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
 
         $result = $deck->save();
@@ -47,6 +68,7 @@ class DeckTest extends TestCase
             'description' => '',
             'path_img' => 'test.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
 
         $result = $deck->save();
@@ -63,6 +85,7 @@ class DeckTest extends TestCase
             'description' => 'First deck',
             'path_img' => 'test1.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
         $deck1->save();
 
@@ -71,6 +94,7 @@ class DeckTest extends TestCase
             'description' => 'Second deck',
             'path_img' => 'test2.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
         $result = $deck2->save();
 
@@ -86,6 +110,7 @@ class DeckTest extends TestCase
             'description' => 'Can be found',
             'path_img' => 'find.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
         $deck->save();
 
@@ -103,6 +128,7 @@ class DeckTest extends TestCase
             'description' => 'Will be deleted',
             'path_img' => 'delete.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
         $deck->save();
         $deckId = $deck->id;
@@ -120,6 +146,7 @@ class DeckTest extends TestCase
             'description' => 'First deck',
             'path_img' => 'deck1.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
         $deck1->save();
 
@@ -128,6 +155,7 @@ class DeckTest extends TestCase
             'description' => 'Second deck',
             'path_img' => 'deck2.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
         $deck2->save();
 
@@ -143,6 +171,7 @@ class DeckTest extends TestCase
             'description' => 'Deck without category',
             'path_img' => 'nocat.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
 
         $result = $deck->save();
@@ -161,6 +190,7 @@ class DeckTest extends TestCase
             'description' => $longDescription,
             'path_img' => 'long.png',
             'category_id' => null,
+            'user_id' => $this->testUser->id,
         ]);
 
         $result = $deck->save();
