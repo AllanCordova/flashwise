@@ -1,6 +1,3 @@
-<link href="/assets/css/application.css" rel="stylesheet">
-<link href="/assets/css/deck-form.css" rel="stylesheet">
-
 <div class="deck-form-container">
     <div class="deck-form-wrapper">
         <div class="deck-form-header">
@@ -8,36 +5,36 @@
             <p>Organize seus estudos criando baralhos personalizados</p>
         </div>
 
-        <form action="/decks" method="POST" class="deck-form">
+        <form action="/decks" method="POST" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
             <div class="form-group-deck">
-                <label for="name">
+                <label for="deck_name">
                     <i class="bi bi-card-heading"></i> Nome do Deck
                 </label>
                 <input
                     class="form-input-deck"
                     type="text"
-                    id="name"
+                    id="deck_name"
                     name="deck[name]"
                     placeholder="Ex: Inglês - Verbos Irregulares"
-                    maxlength="100"
                     required
-                    oninput="updateCharCount('name', 'nameCount', 100)">
-                <span class="char-counter"><span id="nameCount">0</span>/100</span>
+                    maxlength="100">
+
+                <div class="invalid-feedback"><?= $deck->errors('name') ? $deck->errors('name') : '' ?></div>
             </div>
 
             <div class="form-group-deck">
-                <label for="description">
+                <label for="deck_description">
                     <i class="bi bi-text-paragraph"></i> Descrição
                 </label>
                 <textarea
                     class="form-input-deck"
-                    id="description"
+                    id="deck_description"
                     name="deck[description]"
                     placeholder="Descreva o conteúdo e objetivo deste deck..."
-                    maxlength="500"
                     required
-                    oninput="updateCharCount('description', 'descCount', 500)"></textarea>
-                <span class="char-counter"><span id="descCount">0</span>/500</span>
+                    maxlength="500"></textarea>
+
+                <div class="invalid-feedback"><?= $deck->errors('description') ? $deck->errors('description') : '' ?></div>
             </div>
 
             <div class="form-tip">
@@ -58,23 +55,3 @@
         </form>
     </div>
 </div>
-
-<script>
-    function updateCharCount(inputId, counterId, maxLength) {
-        const input = document.getElementById(inputId);
-        const counter = document.getElementById(counterId);
-        counter.textContent = input.value.length;
-
-        if (input.value.length >= maxLength * 0.9) {
-            counter.style.color = '#dc3545';
-        } else {
-            counter.style.color = '#999';
-        }
-    }
-
-    // Initialize counters
-    document.addEventListener('DOMContentLoaded', function() {
-        updateCharCount('name', 'nameCount', 100);
-        updateCharCount('description', 'descCount', 500);
-    });
-</script>

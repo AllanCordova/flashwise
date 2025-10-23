@@ -1,79 +1,93 @@
 /* FlashWise CSS Variables - Tema Monocromático com Acentos */
 
 :root {
-    /* Accent Color - Vermelho Rosado (usado apenas em detalhes) */
-    --accent-color: #d63a5c;
-    --accent-hover: #c22952;
-    --accent-dark: #b01f45;
-    --accent-light: #e85077;
-    
-    /* Monochrome Palette - Preto e Branco */
-    --mono-black: #000000;
-    --mono-darkest: #0a0a0a;
-    --mono-darker: #141414;
-    --mono-dark: #1a1a1a;
-    --mono-gray-dark: #2a2a2a;
-    --mono-gray: #4a4a4a;
-    --mono-gray-light: #6a6a6a;
-    --mono-light: #b0b0b0;
-    --mono-lighter: #d0d0d0;
-    --mono-lightest: #f0f0f0;
-    --mono-white: #ffffff;
-    
-    /* Background Colors - Monocromático */
-    --bg-primary: var(--mono-darkest);        /* #0a0a0a - Fundo principal muito escuro */
-    --bg-secondary: var(--mono-darker);       /* #141414 - Fundo de cards/containers */
-    --bg-tertiary: var(--mono-dark);          /* #1a1a1a - Fundo de elementos elevados */
-    --bg-hover: var(--mono-gray-dark);        /* #2a2a2a - Hover states */
-    
-    /* Border Colors - Monocromático */
-    --border-primary: var(--mono-gray-dark);  /* #2a2a2a - Bordas principais */
-    --border-secondary: var(--mono-dark);      /* #1a1a1a - Bordas sutis */
-    --border-accent: var(--accent-color);      /* Bordas com destaque (vermelho) */
-    
-    /* Text Colors - Monocromático */
-    --text-primary: var(--mono-lightest);     /* #f0f0f0 - Texto principal */
-    --text-secondary: var(--mono-light);      /* #b0b0b0 - Texto secundário */
-    --text-tertiary: var(--mono-gray-light);  /* #6a6a6a - Texto terciário */
-    --text-muted: var(--mono-gray);           /* #4a4a4a - Texto desabilitado */
-    --text-accent: var(--accent-color);        /* Texto com destaque (vermelho) */
-    
-    /* Gradients */
-    --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
-    --gradient-accent-hover: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-dark) 100%);
-    --gradient-mono: linear-gradient(135deg, var(--mono-darkest) 0%, var(--mono-darker) 100%);
-    
-    /* Shadows - Monocromático */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-    --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 4px 15px rgba(0, 0, 0, 0.7);
-    --shadow-xl: 0 6px 25px rgba(0, 0, 0, 0.8);
-    --shadow-dark: 0 10px 40px rgba(0, 0, 0, 0.9);
-    --shadow-accent: 0 0 20px rgba(214, 58, 92, 0.15);  /* Sombra sutil com acento */
-    
-    /* Status Colors - Monocromático com acentos sutis */
-    --success-color: var(--mono-light);       /* Cinza claro para sucesso */
-    --danger-color: var(--accent-color);       /* Vermelho rosado para perigo */
-    --warning-color: var(--mono-lighter);      /* Cinza mais claro para avisos */
-    --info-color: var(--mono-light);          /* Cinza claro para info */
-    
-    /* Button Styles */
-    --btn-padding: 1rem 2.5rem;
-    --btn-padding2: 0.8rem 2rem;
-    --btn-radius: 8px;
-    --btn-font-size: 1.1rem;
-    --btn-font-weight: 600;
-    
-    /* Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
-    --transition-slow: 0.4s ease;
-    
-    /* Legacy support - mapeamento das cores antigas */
-    --primary-color: var(--accent-color);
-    --primary-hover: var(--accent-hover);
-    --primary-dark: var(--accent-dark);
-    --primary-light: var(--accent-light);
-    --gradient-primary: var(--gradient-accent);
-    --gradient-primary-hover: var(--gradient-accent-hover);
+  /* Accent Color - Vermelho Rosado (usado apenas em detalhes) */
+  --accent-color: #d63a5c;
+  --accent-hover: #c22952;
+  --accent-dark: #b01f45;
+  --accent-light: #e85077;
+
+  /* Monochrome Palette - Preto e Branco */
+  --mono-black: #000000;
+  --mono-darkest: #0a0a0a;
+  --mono-darker: #141414;
+  --mono-dark: #1a1a1a;
+  --mono-gray-dark: #2a2a2a;
+  --mono-gray: #4a4a4a;
+  --mono-gray-light: #6a6a6a;
+  --mono-light: #b0b0b0;
+  --mono-lighter: #d0d0d0;
+  --mono-lightest: #ffffff;
+  --mono-white: #ffffff;
+
+  /* Background Colors - Monocromático */
+  --bg-primary: var(
+    --mono-darkest
+  ); /* #0a0a0a - Fundo principal muito escuro */
+  --bg-secondary: var(--mono-darker); /* #141414 - Fundo de cards/containers */
+  --bg-tertiary: var(--mono-dark); /* #1a1a1a - Fundo de elementos elevados */
+  --bg-hover: var(--mono-gray-dark); /* #2a2a2a - Hover states */
+
+  /* Border Colors - Monocromático */
+  --border-primary: var(--mono-gray-dark); /* #2a2a2a - Bordas principais */
+  --border-secondary: var(--mono-dark); /* #1a1a1a - Bordas sutis */
+  --border-accent: var(--accent-color); /* Bordas com destaque (vermelho) */
+
+  /* Text Colors - Monocromático */
+  --text-primary: var(--mono-lightest); /* #f0f0f0 - Texto principal */
+  --text-secondary: var(--mono-light); /* #b0b0b0 - Texto secundário */
+  --text-tertiary: var(--mono-gray-light); /* #6a6a6a - Texto terciário */
+  --text-muted: var(--mono-gray); /* #4a4a4a - Texto desabilitado */
+  --text-accent: var(--accent-color); /* Texto com destaque (vermelho) */
+
+  /* Gradients */
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--accent-color) 0%,
+    var(--accent-hover) 100%
+  );
+  --gradient-accent-hover: linear-gradient(
+    135deg,
+    var(--accent-hover) 0%,
+    var(--accent-dark) 100%
+  );
+  --gradient-mono: linear-gradient(
+    135deg,
+    var(--mono-darkest) 0%,
+    var(--mono-darker) 100%
+  );
+
+  /* Shadows - Monocromático */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 4px 15px rgba(0, 0, 0, 0.7);
+  --shadow-xl: 0 6px 25px rgba(0, 0, 0, 0.8);
+  --shadow-dark: 0 10px 40px rgba(0, 0, 0, 0.9);
+  --shadow-accent: 0 0 20px rgba(214, 58, 92, 0.15); /* Sombra sutil com acento */
+
+  /* Status Colors - Monocromático com acentos sutis */
+  --success-color: var(--mono-light); /* Cinza claro para sucesso */
+  --danger-color: var(--accent-color); /* Vermelho rosado para perigo */
+  --warning-color: var(--mono-lighter); /* Cinza mais claro para avisos */
+  --info-color: var(--mono-light); /* Cinza claro para info */
+
+  /* Button Styles */
+  --btn-padding: 1rem 2.5rem;
+  --btn-padding2: 0.8rem 2rem;
+  --btn-radius: 8px;
+  --btn-font-size: 1.1rem;
+  --btn-font-weight: 600;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+
+  /* Legacy support - mapeamento das cores antigas */
+  --primary-color: var(--accent-color);
+  --primary-hover: var(--accent-hover);
+  --primary-dark: var(--accent-dark);
+  --primary-light: var(--accent-light);
+  --gradient-primary: var(--gradient-accent);
+  --gradient-primary-hover: var(--gradient-accent-hover);
 }

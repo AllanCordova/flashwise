@@ -1,5 +1,3 @@
-<link href="/assets/css/header.css" rel="stylesheet">
-
 <header>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
@@ -11,7 +9,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <?php 
+                    <?php
                     $currentUser = \Lib\Authentication\Auth::user();
                     $currentPath = $_SERVER['REQUEST_URI'] ?? '/';
                     ?>

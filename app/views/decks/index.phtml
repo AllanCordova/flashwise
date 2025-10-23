@@ -1,18 +1,15 @@
-<link href="/assets/css/application.css" rel="stylesheet">
-<link href="/assets/css/decks.css" rel="stylesheet">
-
 <div class="container py-4">
     <div class="decks-container">
         <div class="decks-header">
             <div>
                 <h2><i class="bi bi-collection"></i> Meus Decks</h2>
-                <p class="text-secondary mb-0">Bem-vindo, <?= htmlspecialchars($user->name) ?>!</p>
+                <p class="text-secondary mb-0">Bem-vindo, <?= htmlspecialchars($this->currentUser()->name) ?>!</p>
             </div>
             <div class="decks-header-actions">
-                <a href="/cards/create" class="create-deck-btn">
+                <a href="<?= route('cards.new') ?>" class="create-deck-btn">
                     <i class="bi bi-plus-circle"></i> <span>Adicionar Card</span>
                 </a>
-                <a href="/decks/create" class="create-deck-btn">
+                <a href="<?= route('decks.new') ?>" class="create-deck-btn">
                     <i class="bi bi-plus-circle"></i> <span>Criar Novo Deck</span>
                 </a>
             </div>
@@ -54,11 +51,11 @@
                             <td onclick="event.stopPropagation();">
                                 <div class="deck-actions">
 
-                                    <button class="action-btn btn-edit" onclick="window.location.href='/decks/<?= $deck->id ?>/edit';" title="Editar deck">
+                                    <a class="action-btn btn-edit" href='<?= route('decks.edit', ['id' => $deck->id]) ?>' title="Editar deck">
                                         <i class="bi bi-pencil"></i>
-                                    </button>
+                                    </a>
                                     <form
-                                        action="/decks/<?= $deck->id ?>"
+                                        action="<?= route('decks.destroy', ['id' => $deck->id]) ?>"
                                         method="POST"
                                         style="display: inline;"
                                         onsubmit="return confirm('Tem certeza que deseja excluir este deck?');">
@@ -78,7 +75,7 @@
                 <i class="bi bi-inbox"></i>
                 <h3>Nenhum deck encontrado</h3>
                 <p>Comece criando seu primeiro deck de estudos!</p>
-                <a href="/decks/create" class="create-deck-btn" style="display: inline-block; margin-top: 1rem;">
+                <a href="<?= route('decks.new') ?>" class="create-deck-btn" style="display: inline-block; margin-top: 1rem;">
                     <i class="bi bi-plus-circle"></i> Criar Primeiro Deck
                 </a>
             </div>

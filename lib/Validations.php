@@ -26,6 +26,18 @@ class Validations
         return true;
     }
 
+    public static function isEmail($attribute, $obj)
+    {
+        $email = $obj->$attribute;
+
+        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $obj->addError($attribute, 'precisa ser um endereço de e-mail válido.');
+            return false;
+        }
+
+        return true;
+    }
+
     public static function uniqueness($fields, $object)
     {
         $dbFieldsValues = [];

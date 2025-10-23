@@ -1,0 +1,85 @@
+<div class="auth-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-sm-9">
+                <div class="card shadow-lg">
+                    <div class="card-header text-center py-4">
+                        <h2 class="mb-0">
+                            <i class="bi bi-person-plus"></i> FlashWise
+                        </h2>
+                        <p class="mb-0 mt-2">Crie sua conta</p>
+                    </div>
+
+                    <div class="card-body p-5">
+                        <form action="<?= route('register.create') ?>" class="<?= $user->hasErrors() ? 'was-validated' : '' ?>" method="POST" novalidate>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold" for="name">
+                                    <i class="bi bi-person"></i> Nome
+                                </label>
+                                <input
+                                    class="form-control form-control-lg"
+                                    type="text"
+                                    id="name"
+                                    name="user[name]"
+                                    value="<?= $user->name ?? '' ?>"
+                                    placeholder="Seu nome completo"
+                                    required>
+                                <div class="invalid-feedback"><?= $user->errors('name') ? $user->errors('name') : '' ?></div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold" for="email">
+                                    <i class="bi bi-envelope"></i> Email
+                                </label>
+                                <input
+                                    class="form-control form-control-lg"
+                                    type="email"
+                                    id="email"
+                                    name="user[email]"
+                                    value="<?= $user->email ?? '' ?>"
+                                    placeholder="seu@email.com"
+                                    required>
+                                <div class="invalid-feedback"><?= $user->errors('email') ? $user->errors('email') : '' ?></div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold" for="password">
+                                    <i class="bi bi-lock"></i> Senha
+                                </label>
+                                <input
+                                    class="form-control form-control-lg"
+                                    type="password"
+                                    id="password"
+                                    name="user[password]"
+                                    placeholder="••••••••"
+                                    required>
+                                <div class="invalid-feedback"><?= $user->errors('password') ? $user->errors('password') : '' ?></div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold" for="confirm_password">
+                                    <i class="bi bi-lock-fill"></i> Confirmar Senha
+                                </label>
+                                <input
+                                    class="form-control form-control-lg"
+                                    type="password"
+                                    id="confirm_password"
+                                    name="user[password_confirmation]"
+                                    placeholder="••••••••"
+                                    required>
+                                <div class="invalid-feedback"><?= $user->errors('password_confirmation') ? $user->errors('password_confirmation') : '' ?></div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-lg" type="submit">
+                                    <i class="bi bi-person-plus"></i> Registrar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

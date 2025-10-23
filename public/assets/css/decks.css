@@ -1,487 +1,489 @@
 /* Decks Page Styling - Anki-inspired */
 .decks-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: var(--bg-secondary);
-    border-radius: 8px;
-    box-shadow: var(--shadow-sm);
-    width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  width: 90%;
 }
 
 .decks-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--border-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-primary);
 }
 
 .decks-header h2 {
-    font-size: 1.75rem;
-    color: var(--text-primary);
-    font-weight: 600;
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .decks-header-actions {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .create-deck-btn {
-    background: var(--gradient-accent);
-    color: white;
-    padding: var(--btn-padding2);
-    border-radius: var(--btn-radius);
-    text-decoration: none;
-    font-weight: var(--btn-font-weight);
-    transition: all var(--transition-normal);
-    border: none;
-    cursor: pointer;
-    font-size: var(--btn-font-size);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: var(--shadow-lg);
+  background: var(--gradient-accent);
+  color: white;
+  padding: var(--btn-padding2);
+  border-radius: var(--btn-radius);
+  text-decoration: none;
+  font-weight: var(--btn-font-weight);
+  transition: all var(--transition-normal);
+  border: none;
+  cursor: pointer;
+  font-size: var(--btn-font-size);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-lg);
 }
 
 .create-deck-btn:hover {
-    background: var(--gradient-accent-hover);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-xl);
-    color: white;
-    text-decoration: none;
+  background: var(--gradient-accent-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+  color: white;
+  text-decoration: none;
 }
 
 .create-deck-btn i {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 /* Decks Table */
 .decks-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background-color: var(--bg-secondary);
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--bg-secondary);
 }
 
 .decks-table thead {
-    background-color: var(--bg-primary);
-    border-bottom: 2px solid var(--border-primary);
+  background-color: var(--bg-primary);
+  border-bottom: 2px solid var(--border-primary);
 }
 
 .decks-table thead th {
-    padding: 1rem;
-    text-align: left;
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 2px solid var(--border-primary);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border-primary);
 }
 
 .decks-table tbody tr {
-    border-bottom: 1px solid var(--border-secondary);
-    transition: background-color 0.15s ease;
+  border-bottom: 1px solid var(--border-secondary);
+  transition: background-color 0.15s ease;
 }
 
 .decks-table tbody tr:hover {
-    background-color: var(--bg-primary);
-    cursor: pointer;
+  background-color: var(--bg-primary);
+  cursor: pointer;
 }
 
 .decks-table tbody tr:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .decks-table tbody td {
-    padding: 1.25rem 1rem;
-    font-size: 0.95rem;
-    color: var(--text-primary);
+  padding: 1.25rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
 }
 
 .deck-name {
-    font-weight: 600;
-    color: var(--text-primary);  /* Monocromático - branco */
-    font-size: 1rem;
-    transition: color var(--transition-fast);
+  font-weight: 600;
+  color: var(--text-primary); /* Monocromático - branco */
+  font-size: 1rem;
+  transition: color var(--transition-fast);
 }
 
 .deck-name:hover {
-    color: var(--accent-color);  /* Vermelho rosado no hover apenas */
+  color: var(--accent-color); /* Vermelho rosado no hover apenas */
 }
 
 .deck-description {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-top: 0.25rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
 }
 
 .deck-stats {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stat-number {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-primary);  /* Monocromático - branco */
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary); /* Monocromático - branco */
 }
 
 .stat-label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.25rem;
 }
 
 .stat-new {
-    color: var(--text-primary);  /* Monocromático */
+  color: var(--text-primary); /* Monocromático */
 }
 
 .stat-due {
-    color: var(--accent-color);  /* Vermelho rosado apenas para "devido" (urgente) */
+  color: var(
+    --accent-color
+  ); /* Vermelho rosado apenas para "devido" (urgente) */
 }
 
 .stat-total {
-    color: var(--text-secondary);  /* Cinza */
+  color: var(--text-secondary); /* Cinza */
 }
 
 .stat-total {
-    color: #6c757d;
+  color: #6c757d;
 }
 
 .deck-actions {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-end;
-    align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .action-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 /* Botão Estudar - com texto */
 .action-btn.btn-study {
-    padding: 0.5rem 1rem;
-    gap: 0.5rem;
-    background: var(--gradient-accent);
-    color: white;
-    font-size: 0.875rem;
-    font-weight: var(--btn-font-weight);
-    box-shadow: var(--shadow-md);
-    white-space: nowrap;
+  padding: 0.5rem 1rem;
+  gap: 0.5rem;
+  background: var(--gradient-accent);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: var(--btn-font-weight);
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
 }
 
 .action-btn.btn-study:hover {
-    background: var(--gradient-accent-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+  background: var(--gradient-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .action-btn.btn-study i {
-    font-size: 0.875rem;
+  font-size: 0.875rem;
 }
 
 /* Botões de ação quadrados - apenas ícones */
 .action-btn.btn-edit,
 .action-btn.btn-delete {
-    width: 36px;
-    height: 36px;
-    padding: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
 }
 
 .action-btn.btn-edit {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-    border: 1px solid var(--border-primary);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
 }
 
 .action-btn.btn-edit:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
 }
 
 .action-btn.btn-delete {
-    background: rgba(214, 58, 92, 0.15);
-    color: var(--accent-color);
-    border: 1px solid rgba(214, 58, 92, 0.3);
+  background: rgba(214, 58, 92, 0.15);
+  color: var(--accent-color);
+  border: 1px solid rgba(214, 58, 92, 0.3);
 }
 
 .action-btn.btn-delete:hover {
-    background: rgba(214, 58, 92, 0.25);
-    transform: translateY(-2px);
+  background: rgba(214, 58, 92, 0.25);
+  transform: translateY(-2px);
 }
 
 .action-btn i {
-    margin: 0;
+  margin: 0;
 }
 
 .no-decks {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--text-secondary);
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
 }
 
 .no-decks i {
-    font-size: 4rem;
-    color: var(--text-tertiary);
-    margin-bottom: 1rem;
+  font-size: 4rem;
+  color: var(--text-tertiary);
+  margin-bottom: 1rem;
 }
 
 .no-decks h3 {
-    color: var(--text-secondary);
-    font-weight: 500;
-    margin-bottom: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
 .no-decks p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
 }
 
 .no-decks .create-deck-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    color: white;
-    text-decoration: none;
-    font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  text-decoration: none;
+  font-size: 0.95rem;
 }
 
 .no-decks .create-deck-btn:hover {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 .no-decks .create-deck-btn i {
-    font-size: 1rem;
-    color: white;
-    margin: 0;
+  font-size: 1rem;
+  color: white;
+  margin: 0;
 }
 
 /* Responsive */
 @media (max-width: 992px) {
-    .decks-container {
-        width: 95%;
-        padding: 1.5rem;
-    }
+  .decks-container {
+    width: 95%;
+    padding: 1.5rem;
+  }
 
-    .decks-header {
-        gap: 1rem;
-    }
+  .decks-header {
+    gap: 1rem;
+  }
 
-    .decks-header h2 {
-        font-size: 1.5rem;
-    }
+  .decks-header h2 {
+    font-size: 1.5rem;
+  }
 
-    .create-deck-btn {
-        padding: 0.7rem 1.5rem;
-        font-size: 1rem;
-    }
+  .create-deck-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+  }
 
-    .deck-stats {
-        gap: 1rem;
-    }
+  .deck-stats {
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 768px) {
-    .decks-container {
-        width: 100%;
-        padding: 1.25rem;
-        border-radius: 6px;
-    }
+  .decks-container {
+    width: 100%;
+    padding: 1.25rem;
+    border-radius: 6px;
+  }
 
-    .decks-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.25rem;
-    }
+  .decks-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
 
-    .decks-header-actions {
-        width: 100%;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
+  .decks-header-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 
-    .create-deck-btn {
-        width: 100%;
-        justify-content: center;
-        padding: 0.8rem 1.5rem;
-        font-size: 0.95rem;
-    }
+  .create-deck-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+  }
 
-    /* Transformar tabela em cards em mobile */
-    .decks-table {
-        display: block;
-    }
+  /* Transformar tabela em cards em mobile */
+  .decks-table {
+    display: block;
+  }
 
-    .decks-table thead {
-        display: none;
-    }
+  .decks-table thead {
+    display: none;
+  }
 
-    .decks-table tbody {
-        display: block;
-    }
+  .decks-table tbody {
+    display: block;
+  }
 
-    .decks-table tbody tr {
-        display: block;
-        margin-bottom: 1rem;
-        border: 1px solid var(--border-primary);
-        border-radius: 8px;
-        padding: 1rem;
-        background-color: var(--bg-secondary);
-    }
+  .decks-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+  }
 
-    .decks-table tbody tr:hover {
-        background-color: var(--bg-tertiary);
-    }
+  .decks-table tbody tr:hover {
+    background-color: var(--bg-tertiary);
+  }
 
-    .decks-table tbody td {
-        display: block;
-        padding: 0.5rem 0;
-        border-bottom: none;
-    }
+  .decks-table tbody td {
+    display: block;
+    padding: 0.5rem 0;
+    border-bottom: none;
+  }
 
-    .decks-table tbody td:first-child {
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid var(--border-primary);
-    }
+  .decks-table tbody td:first-child {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-primary);
+  }
 
-    .deck-name {
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-    }
+  .deck-name {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
 
-    .deck-description {
-        font-size: 0.85rem;
-    }
+  .deck-description {
+    font-size: 0.85rem;
+  }
 
-    .deck-stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.75rem;
-        margin: 1rem 0;
-    }
-    
-    .stat-item {
-        flex-direction: column;
-        align-items: center;
-        background-color: var(--bg-primary);
-        padding: 0.75rem;
-        border-radius: 6px;
-    }
+  .deck-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
 
-    .stat-number {
-        font-size: 1.5rem;
-    }
+  .stat-item {
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--bg-primary);
+    padding: 0.75rem;
+    border-radius: 6px;
+  }
 
-    .stat-label {
-        font-size: 0.7rem;
-        margin-top: 0.25rem;
-    }
+  .stat-number {
+    font-size: 1.5rem;
+  }
 
-    .deck-actions {
-        justify-content: center;
-        margin-top: 0.75rem;
-    }
+  .stat-label {
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+  }
 
-    .action-btn.btn-study {
-        flex: 1;
-        justify-content: center;
-    }
+  .deck-actions {
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
 
-    /* No decks state */
-    .no-decks {
-        padding: 3rem 1.5rem;
-    }
+  .action-btn.btn-study {
+    flex: 1;
+    justify-content: center;
+  }
 
-    .no-decks i {
-        font-size: 3rem;
-    }
+  /* No decks state */
+  .no-decks {
+    padding: 3rem 1.5rem;
+  }
 
-    .no-decks h3 {
-        font-size: 1.2rem;
-    }
+  .no-decks i {
+    font-size: 3rem;
+  }
 
-    .no-decks p {
-        font-size: 0.95rem;
-    }
+  .no-decks h3 {
+    font-size: 1.2rem;
+  }
 
-    .no-decks .create-deck-btn {
-        width: 100%;
-    }
+  .no-decks p {
+    font-size: 0.95rem;
+  }
+
+  .no-decks .create-deck-btn {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
-    .decks-container {
-        padding: 1rem;
-    }
+  .decks-container {
+    padding: 1rem;
+  }
 
-    .decks-header h2 {
-        font-size: 1.3rem;
-    }
+  .decks-header h2 {
+    font-size: 1.3rem;
+  }
 
-    .create-deck-btn {
-        font-size: 0.9rem;
-        padding: 0.7rem 1.25rem;
-    }
+  .create-deck-btn {
+    font-size: 0.9rem;
+    padding: 0.7rem 1.25rem;
+  }
 
-    .decks-table tbody tr {
-        padding: 0.75rem;
-    }
+  .decks-table tbody tr {
+    padding: 0.75rem;
+  }
 
-    .deck-name {
-        font-size: 1rem;
-    }
+  .deck-name {
+    font-size: 1rem;
+  }
 
-    .stat-number {
-        font-size: 1.25rem;
-    }
+  .stat-number {
+    font-size: 1.25rem;
+  }
 
-    .stat-label {
-        font-size: 0.65rem;
-    }
+  .stat-label {
+    font-size: 0.65rem;
+  }
 
-    .action-btn {
-        width: 32px;
-        height: 32px;
-    }
+  .action-btn {
+    width: 32px;
+    height: 32px;
+  }
 
-    .action-btn.btn-study {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-    }
+  .action-btn.btn-study {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
 
-    .no-decks {
-        padding: 2rem 1rem;
-    }
+  .no-decks {
+    padding: 2rem 1rem;
+  }
 
-    .no-decks i {
-        font-size: 2.5rem;
-    }
+  .no-decks i {
+    font-size: 2.5rem;
+  }
 }

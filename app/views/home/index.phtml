@@ -1,7 +1,3 @@
-<link href="/assets/css/variables.css" rel="stylesheet">
-<link href="/assets/css/application.css" rel="stylesheet">
-<link href="/assets/css/home.css" rel="stylesheet">
-
 <div class="container">
     <div class="d-flex align-items-center justify-content-center" style="min-height: 60vh;">
         <div class="home-hero">
@@ -14,17 +10,17 @@
             <?php $currentUser = \Lib\Authentication\Auth::user(); ?>
             <div class="home-cta">
                 <?php if ($currentUser): ?>
-                    <a href="/decks" class="cta-btn cta-primary">
+                    <a href="<?= route('decks.index') ?>" class="cta-btn cta-primary">
                         <i class="bi bi-collection"></i> Meus Decks
                     </a>
-                    <a href="/decks/create" class="cta-btn cta-secondary">
+                    <a href="<?= route('decks.new') ?>" class="cta-btn cta-secondary">
                         <i class="bi bi-plus-circle"></i> Criar Novo Deck
                     </a>
                 <?php else: ?>
-                    <a href="/register" class="cta-btn cta-primary">
+                    <a href="<?= route('register.new') ?>" class="cta-btn cta-primary">
                         <i class="bi bi-person-plus"></i> Começar Agora
                     </a>
-                    <a href="/login" class="cta-btn cta-secondary">
+                    <a href="<?= route('login.new') ?>" class="cta-btn cta-secondary">
                         <i class="bi bi-box-arrow-in-right"></i> Fazer Login
                     </a>
                 <?php endif; ?>

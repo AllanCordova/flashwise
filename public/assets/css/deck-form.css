@@ -1,329 +1,329 @@
 /* Deck Creation Form - Unique Design */
 .deck-form-container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem;
-    width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
 }
 
 .deck-form-wrapper {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-primary);
-    border-radius: 16px;
-    padding: 3rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 16px;
+  padding: 3rem;
 }
 
 .deck-form-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
 .deck-form-header h2 {
-    color: var(--text-primary);
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
+  color: var(--text-primary);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
 }
 
 .deck-form-header p {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    font-weight: 300;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 300;
 }
 
 .deck-form {
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    padding: 2.5rem;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 2.5rem;
 }
 
 .form-group-deck {
-    margin-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
 }
 
 .form-group-deck label {
-    display: block;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.75rem;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .form-group-deck label i {
-    color: var(--text-primary);  /* Ícones em branco */
-    font-size: 1.1rem;
+  color: var(--text-primary); /* Ícones em branco */
+  font-size: 1.1rem;
 }
 
 .form-input-deck {
-    width: 100%;
-    padding: 1rem 1.25rem;
-    border: 2px solid var(--border-primary);
-    border-radius: 8px;
-    font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-    transition: all var(--transition-normal);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--border-primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  transition: all var(--transition-normal);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .form-input-deck:focus {
-    outline: none;
-    border-color: var(--accent-color);  /* Vermelho rosado apenas no foco */
-    background-color: var(--bg-secondary);
-    box-shadow: 0 0 0 3px rgba(214, 58, 92, 0.1);
+  outline: none;
+  border-color: var(--accent-color); /* Vermelho rosado apenas no foco */
+  background-color: var(--bg-secondary);
+  box-shadow: 0 0 0 3px rgba(214, 58, 92, 0.1);
 }
 
 .form-input-deck::placeholder {
-    color: var(--text-tertiary);
-    font-weight: 300;
+  color: var(--text-tertiary);
+  font-weight: 300;
 }
 
 textarea.form-input-deck {
-    resize: vertical;
-    min-height: 120px;
-    font-family: 'Inter', sans-serif;
+  resize: vertical;
+  min-height: 120px;
+  font-family: "Inter", sans-serif;
 }
 
 .char-counter {
-    display: block;
-    text-align: right;
-    font-size: 0.8rem;
-    color: var(--text-tertiary);
-    margin-top: 0.5rem;
+  display: block;
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin-top: 0.5rem;
 }
 
 .form-actions-deck {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .btn-deck {
-    flex: 1;
-    padding: var(--btn-padding);
-    border: none;
-    border-radius: var(--btn-radius);
-    font-size: var(--btn-font-size);
-    font-weight: var(--btn-font-weight);
-    cursor: pointer;
-    transition: all var(--transition-normal);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-family: 'Inter', sans-serif;
-    text-decoration: none;
+  flex: 1;
+  padding: var(--btn-padding);
+  border: none;
+  border-radius: var(--btn-radius);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
 }
 
 .btn-deck-primary {
-    background: var(--gradient-accent);
-    color: white;
-    box-shadow: var(--shadow-lg);
+  background: var(--gradient-accent);
+  color: white;
+  box-shadow: var(--shadow-lg);
 }
 
 .btn-deck-primary:hover {
-    background: var(--gradient-accent-hover);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-xl);
+  background: var(--gradient-accent-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
 }
 
 .btn-deck-primary:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .btn-deck-secondary {
-    background-color: transparent;
-    color: var(--text-primary);
-    border: 2px solid var(--border-primary);
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-primary);
 }
 
 .btn-deck-secondary:hover {
-    background-color: var(--bg-hover);
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
+  background-color: var(--bg-hover);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
 }
 
 .form-tip {
-    background-color: var(--bg-primary);
-    border-left: 4px solid var(--accent-color);
-    padding: 1rem 1.25rem;
-    border-radius: 6px;
-    margin-top: 1.5rem;
+  background-color: var(--bg-primary);
+  border-left: 4px solid var(--accent-color);
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  margin-top: 1.5rem;
 }
 
 .form-tip p {
-    margin: 0;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    line-height: 1.6;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .form-tip i {
-    color: var(--accent-color);
-    margin-right: 0.5rem;
+  color: var(--accent-color);
+  margin-right: 0.5rem;
 }
 
 /* Animations */
 @keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .deck-form-wrapper {
-    animation: slideIn 0.4s ease-out;
+  animation: slideIn 0.4s ease-out;
 }
 
 /* Responsive */
 @media (max-width: 992px) {
-    .deck-form-container {
-        max-width: 650px;
-        padding: 1.5rem;
-    }
+  .deck-form-container {
+    max-width: 650px;
+    padding: 1.5rem;
+  }
 
-    .deck-form-wrapper {
-        padding: 2.5rem;
-    }
+  .deck-form-wrapper {
+    padding: 2.5rem;
+  }
 
-    .deck-form {
-        padding: 2rem;
-    }
+  .deck-form {
+    padding: 2rem;
+  }
 }
 
 @media (max-width: 768px) {
-    .deck-form-container {
-        padding: 1rem;
-    }
+  .deck-form-container {
+    padding: 1rem;
+  }
 
-    .deck-form-wrapper {
-        padding: 2rem 1.5rem;
-        border-radius: 12px;
-    }
+  .deck-form-wrapper {
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+  }
 
-    .deck-form-header h2 {
-        font-size: 1.5rem;
-        gap: 0.5rem;
-    }
+  .deck-form-header h2 {
+    font-size: 1.5rem;
+    gap: 0.5rem;
+  }
 
-    .deck-form-header p {
-        font-size: 0.95rem;
-    }
-    
-    .deck-form {
-        padding: 1.5rem;
-        border-radius: 10px;
-    }
+  .deck-form-header p {
+    font-size: 0.95rem;
+  }
 
-    .form-group-deck {
-        margin-bottom: 1.5rem;
-    }
+  .deck-form {
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
 
-    .form-group-deck label {
-        font-size: 0.9rem;
-        margin-bottom: 0.6rem;
-    }
+  .form-group-deck {
+    margin-bottom: 1.5rem;
+  }
 
-    .form-input-deck {
-        padding: 0.875rem 1rem;
-        font-size: 0.95rem;
-    }
+  .form-group-deck label {
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
 
-    textarea.form-input-deck {
-        min-height: 100px;
-    }
+  .form-input-deck {
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
+  }
 
-    .char-counter {
-        font-size: 0.75rem;
-    }
-    
-    .form-actions-deck {
-        flex-direction: column;
-        gap: 0.75rem;
-        margin-top: 1.5rem;
-    }
-    
-    .btn-deck {
-        width: 100%;
-        padding: 0.9rem 2rem;
-        font-size: 1rem;
-    }
+  textarea.form-input-deck {
+    min-height: 100px;
+  }
 
-    .form-tip {
-        padding: 0.875rem 1rem;
-        margin-top: 1.25rem;
-        border-radius: 5px;
-    }
+  .char-counter {
+    font-size: 0.75rem;
+  }
 
-    .form-tip p {
-        font-size: 0.85rem;
-    }
+  .form-actions-deck {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn-deck {
+    width: 100%;
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+  }
+
+  .form-tip {
+    padding: 0.875rem 1rem;
+    margin-top: 1.25rem;
+    border-radius: 5px;
+  }
+
+  .form-tip p {
+    font-size: 0.85rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .deck-form-container {
-        padding: 0.75rem;
-    }
+  .deck-form-container {
+    padding: 0.75rem;
+  }
 
-    .deck-form-wrapper {
-        padding: 1.5rem 1rem;
-        border-radius: 10px;
-    }
+  .deck-form-wrapper {
+    padding: 1.5rem 1rem;
+    border-radius: 10px;
+  }
 
-    .deck-form-header {
-        margin-bottom: 2rem;
-    }
+  .deck-form-header {
+    margin-bottom: 2rem;
+  }
 
-    .deck-form-header h2 {
-        font-size: 1.3rem;
-        flex-direction: row;
-    }
+  .deck-form-header h2 {
+    font-size: 1.3rem;
+    flex-direction: row;
+  }
 
-    .deck-form-header p {
-        font-size: 0.9rem;
-    }
+  .deck-form-header p {
+    font-size: 0.9rem;
+  }
 
-    .deck-form {
-        padding: 1.25rem;
-    }
+  .deck-form {
+    padding: 1.25rem;
+  }
 
-    .form-group-deck {
-        margin-bottom: 1.25rem;
-    }
+  .form-group-deck {
+    margin-bottom: 1.25rem;
+  }
 
-    .form-group-deck label {
-        font-size: 0.85rem;
-    }
+  .form-group-deck label {
+    font-size: 0.85rem;
+  }
 
-    .form-input-deck {
-        padding: 0.8rem 0.875rem;
-        font-size: 0.9rem;
-        border-radius: 7px;
-    }
+  .form-input-deck {
+    padding: 0.8rem 0.875rem;
+    font-size: 0.9rem;
+    border-radius: 7px;
+  }
 
-    .btn-deck {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.95rem;
-        border-radius: 7px;
-    }
+  .btn-deck {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+    border-radius: 7px;
+  }
 
-    .form-tip {
-        padding: 0.75rem 0.875rem;
-        border-left-width: 3px;
-    }
+  .form-tip {
+    padding: 0.75rem 0.875rem;
+    border-left-width: 3px;
+  }
 
-    .form-tip p {
-        font-size: 0.8rem;
-    }
+  .form-tip p {
+    font-size: 0.8rem;
+  }
 }
