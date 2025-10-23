@@ -1,6 +1,6 @@
-## Problem Track
+## Flash Wise
 
-"Problem Track" is the ultimate solution for organizations seeking to enhance their problem resolution processes, drive operational efficiency, and deliver exceptional customer experiences.
+Flash Wise is an intelligent web-based learning system designed to help you conquer the forgetting curve. Using the power of spaced repetition, our platform schedules flashcard reviews at the perfect moment, right before you're about to forget. Stop cramming and start building lasting knowledge efficiently.
 
 ### Dependências
 
