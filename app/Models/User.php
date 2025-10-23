@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
+use Core\Database\ActiveRecord\HasMany;
 
 /**
  * @property int $id
@@ -14,6 +15,7 @@ use Core\Database\ActiveRecord\Model;
  * @property string $role
  * @property string $created_at
  * @property string $updated_at
+ * @property Deck[] $decks
  */
 class User extends Model
 {
@@ -30,6 +32,11 @@ class User extends Model
 
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
+
+    public function decks(): HasMany
+    {
+        return $this->hasMany(Deck::class, 'user_id');
+    }
 
     public function validates(): void
     {

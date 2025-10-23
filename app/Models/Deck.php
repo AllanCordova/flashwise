@@ -5,16 +5,19 @@ namespace App\Models;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 use Core\Database\ActiveRecord\HasMany;
+use Core\Database\ActiveRecord\BelongsTo;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $description
  * @property string $path_img
- * @property string $category
+ * @property int $category_id
+ * @property int $user_id
  * @property string $created_at
  * @property string $updated_at
  * @property Card[] $cards
+ * @property User $user
  */
 class Deck extends Model
 {
@@ -24,6 +27,7 @@ class Deck extends Model
         'description',
         'path_img',
         'category_id',
+        'user_id',
     ];
 
 
@@ -38,6 +42,11 @@ class Deck extends Model
     public function cards(): HasMany
     {
         return $this->hasMany(Card::class, 'deck_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

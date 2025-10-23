@@ -34,8 +34,7 @@ class AuthController extends Controller
             $this->redirectTo('/');
         } else {
             FlashMessage::danger('E-mail ou senha inválidos. Por favor, tente novamente.');
-
-            $this->render('/auth/login', compact('user'));
+            $this->redirectTo('/login');
         }
     }
 

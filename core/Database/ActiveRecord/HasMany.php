@@ -22,6 +22,14 @@ class HasMany
     }
 
     /**
+     * @return array<Model>
+     */
+    public function all(): array
+    {
+        return $this->get();
+    }
+
+    /**
      * @param array<string, mixed> $params
      */
     public function new(array $params = []): Model

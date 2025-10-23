@@ -2,33 +2,25 @@
 
 namespace App\Controllers;
 
-use App\Models\Deck;
 use Core\Http\Controllers\Controller;
-use Lib\Authentication\Auth;
 use Lib\FlashMessage;
 use Core\Http\Request;
 
 class DecksController extends Controller
 {
-    // protected string $layout = "decks";
-
     public function index(): void
     {
-        $decks = Deck::all();
+        $decks = $this->current_user->decks()->all();
 
-        // $this->render('decks/index', [
-        //     'decks' => $decks
-        // ]);
-
-        $this->render('decks/index', compact("decks"));
+        $this->render('decks/index', compact('decks'));
     }
 
     public function show(Request $request): void
     {
-        $user = Auth::user();
         $id = $request->getParam('id');
 
-        $deck = Deck::findById($id);
+        /** @var \App\Models\Deck|null $deck */
+        $deck = $this->current_user->decks()->findById($id);
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');
@@ -41,7 +33,6 @@ class DecksController extends Controller
         $totalCards = $deck->countTotalCards();
 
         $this->render('decks/show', [
-            'user' => $user,
             'deck' => $deck,
             'newCards' => $newCards,
             'dueCards' => $dueCards,
@@ -51,10 +42,10 @@ class DecksController extends Controller
 
     public function edit(Request $request): void
     {
-        $user = Auth::user();
         $id = $request->getParam('id');
 
-        $deck = Deck::findById($id);
+        /** @var \App\Models\Deck|null $deck */
+        $deck = $this->current_user->decks()->findById($id);
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');
@@ -65,7 +56,6 @@ class DecksController extends Controller
         $cards = $deck->cards;
 
         $this->render('decks/edit', [
-            'user' => $user,
             'deck' => $deck,
             'cards' => $cards
         ]);
@@ -76,7 +66,8 @@ class DecksController extends Controller
         $id = $request->getParam('id');
         $params = $request->getParam('deck');
 
-        $deck = Deck::findById($id);
+        /** @var \App\Models\Deck|null $deck */
+        $deck = $this->current_user->decks()->findById($id);
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');
@@ -92,40 +83,31 @@ class DecksController extends Controller
             $this->redirectTo('/decks/' . $id . '/edit');
         } else {
             FlashMessage::danger('Não foi possível atualizar o deck. Verifique os dados!');
-
-            $this->render('/decks/edit', compact('deck'));
+            /** @var \App\Models\Card[] $cards */
+            $cards = $deck->cards;
+            $this->render('decks/edit', compact('deck', 'cards'));
         }
     }
 
     public function new(): void
     {
+        $deck = $this->current_user->decks()->new();
 
-        $deck = new Deck();
-
-        $this->render('decks/new', compact("deck"));
+        $this->render('decks/new', compact('deck'));
     }
 
     public function create(Request $request): void
     {
         $params = $request->getParam('deck');
 
-        $deckData = [
-            'name' => $params['name'],
-            'description' => $params['description'],
-            'path_img' => 'teste',
-            'category_id' => null,
-        ];
-
-        $deck = new Deck($deckData);
+        $deck = $this->current_user->decks()->new($params);
 
         if ($deck->save()) {
             FlashMessage::success('Deck criado com sucesso');
-
             $this->redirectTo('/decks');
         } else {
-            FlashMessage::danger('Não foi possivel criar seu deck tente novamente!');
-
-            $this->render('/decks/new', compact("deck"));
+            FlashMessage::danger('Não foi possível criar seu deck. Verifique os dados!');
+            $this->render('decks/new', compact('deck'));
         }
     }
 
@@ -133,7 +115,14 @@ class DecksController extends Controller
     {
         $id = $request->getParam('id');
 
-        $deck = Deck::findById($id);
+        /** @var \App\Models\Deck|null $deck */
+        $deck = $this->current_user->decks()->findById($id);
+
+        if (!$deck) {
+            FlashMessage::danger('Deck não encontrado');
+            $this->redirectTo('/decks');
+            return;
+        }
 
         if ($deck->destroy()) {
             FlashMessage::success('Deck excluído com sucesso!');
