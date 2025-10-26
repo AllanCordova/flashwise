@@ -5,7 +5,7 @@
             <p>Atualize o conteúdo do seu flashcard</p>
         </div>
 
-        <form action="<?= route('cards.update', ['id' => $card->id]) ?>" method="post" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+        <form id="card_update" action="<?= route('cards.update', ['id' => $card->id]) ?>" method="post" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group-card">
                 <label for="deck_id">
@@ -29,7 +29,7 @@
                     <i class="bi bi-card-heading"></i> Frente do Card
                 </label>
                 <textarea
-                    class="form-input-card"
+                    class="form-input-card <?= ($card->hasErrors() && $card->errors('front')) ? 'is-invalid' : '' ?>"
                     id="front"
                     name="card[front]"
                     placeholder="Digite a pergunta ou conceito..."
@@ -37,7 +37,9 @@
                     rows="4"
                     required
                     oninput="updateCharCount('front', 'frontCount', 1000)"><?= htmlspecialchars($card->front ?? '') ?></textarea>
-                <div class="invalid-feedback"><?= $card->errors('front') ? $card->errors('front') : '' ?></div>
+                <?php if ($card->errors('front')): ?>
+                    <div class="invalid-feedback" style="display: block !important;"><?= $card->errors('front') ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-group-card">
@@ -45,7 +47,7 @@
                     <i class="bi bi-card-text"></i> Verso do Card
                 </label>
                 <textarea
-                    class="form-input-card"
+                    class="form-input-card <?= ($card->hasErrors() && $card->errors('back')) ? 'is-invalid' : '' ?>"
                     id="back"
                     name="card[back]"
                     placeholder="Digite a resposta ou explicação..."
@@ -53,7 +55,9 @@
                     rows="4"
                     required
                     oninput="updateCharCount('back', 'backCount', 1000)"><?= htmlspecialchars($card->back ?? '') ?></textarea>
-                <div class="invalid-feedback"><?= $card->errors('back') ? $card->errors('back') : '' ?></div>
+                <?php if ($card->errors('back')): ?>
+                    <div class="invalid-feedback" style="display: block !important;"><?= $card->errors('back') ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-tip">

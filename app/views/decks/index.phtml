@@ -15,7 +15,8 @@
             </div>
         </div>
 
-        <?php if (!empty($decks)): ?>
+        <?php if ($paginator->totalOfRegisters() > 0):
+        ?>
             <table class="decks-table">
                 <thead>
                     <tr>
@@ -27,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($decks as $deck): ?>
+                    <?php foreach ($paginator->registers() as $deck): ?>
                         <tr class="deck-row-clickable" onclick="window.location.href='/decks/<?= $deck->id ?>';" style="cursor: pointer;">
                             <td>
                                 <div class="deck-name"><?= htmlspecialchars($deck->name) ?></div>
@@ -50,7 +51,6 @@
                             </td>
                             <td onclick="event.stopPropagation();">
                                 <div class="deck-actions">
-
                                     <a class="action-btn btn-edit" href='<?= route('decks.edit', ['id' => $deck->id]) ?>' title="Editar deck">
                                         <i class="bi bi-pencil"></i>
                                     </a>
@@ -70,6 +70,13 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <div class="pagination-links">
+                <?php $paginator->renderPagesNavigation();
+                ?>
+            </div>
+
+
         <?php else: ?>
             <div class="no-decks">
                 <i class="bi bi-inbox"></i>

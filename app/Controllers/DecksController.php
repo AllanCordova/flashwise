@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Deck;
 use Core\Http\Controllers\Controller;
 use Lib\FlashMessage;
 use Core\Http\Request;
@@ -10,9 +11,19 @@ class DecksController extends Controller
 {
     public function index(): void
     {
-        $decks = $this->current_user->decks()->all();
+        $perPage = 10;
 
-        $this->render('decks/index', compact('decks'));
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $userId = $this->currentUser()->id;
+
+        $paginator = Deck::paginate(
+            page: $currentPage,
+            per_page: $perPage,
+            route: 'decks.index',
+            conditions: ['user_id' => $userId]
+        );
+
+        $this->render('decks/index', ['paginator' => $paginator]);
     }
 
     public function show(Request $request): void
@@ -75,12 +86,12 @@ class DecksController extends Controller
             return;
         }
 
-        $deck->name = $params['name'];
-        $deck->description = $params['description'];
+        $deck->name = $params['name'] ?? '';
+        $deck->description = $params['description'] ?? '';
 
         if ($deck->save()) {
             FlashMessage::success('Deck atualizado com sucesso');
-            $this->redirectTo('/decks/' . $id . '/edit');
+            $this->redirectTo('/decks');
         } else {
             FlashMessage::danger('Não foi possível atualizar o deck. Verifique os dados!');
             /** @var \App\Models\Card[] $cards */
@@ -100,7 +111,10 @@ class DecksController extends Controller
     {
         $params = $request->getParam('deck');
 
-        $deck = $this->current_user->decks()->new($params);
+        $deck = $this->current_user->decks()->new([
+            'name' => $params['name'] ?? '',
+            'description' => $params['description'] ?? '',
+        ]);
 
         if ($deck->save()) {
             FlashMessage::success('Deck criado com sucesso');

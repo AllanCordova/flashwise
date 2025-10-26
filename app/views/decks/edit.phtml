@@ -11,7 +11,7 @@
         <!-- Formulário de Edição do Deck -->
         <div class="deck-form-section">
             <h2><i class="bi bi-collection"></i> Informações do Deck</h2>
-            <form action="<?= route('decks.update', ['id' => $deck->id]) ?>" method="post" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+            <form id='deck_update' action="<?= route('decks.update', ['id' => $deck->id]) ?>" method="post" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
                 <input type="hidden" name="_method" value="PUT">
 
                 <div class="form-group">
@@ -22,11 +22,13 @@
                         type="text"
                         id="name"
                         name="deck[name]"
-                        class="form-control"
+                        class="form-control <?= ($deck->hasErrors() && $deck->errors('name')) ? 'is-invalid' : '' ?>"
                         value="<?= htmlspecialchars($deck->name ?? '') ?>"
                         placeholder="Digite o nome do deck"
                         required>
-                    <div class="invalid-feedback"><?= $deck->errors('name') ? $deck->errors('name') : '' ?></div>
+                    <?php if ($deck->errors('name')): ?>
+                        <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('name') ?></div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
@@ -36,11 +38,13 @@
                     <textarea
                         id="description"
                         name="deck[description]"
-                        class="form-control"
+                        class="form-control <?= ($deck->hasErrors() && $deck->errors('description')) ? 'is-invalid' : '' ?>"
                         rows="3"
                         placeholder="Descreva o conteúdo deste deck"
                         required><?= htmlspecialchars($deck->description ?? '') ?></textarea>
-                    <div class="invalid-feedback"><?= $deck->errors('description') ? $deck->errors('description') : '' ?></div>
+                    <?php if ($deck->errors('description')): ?>
+                        <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('description') ?></div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-actions">

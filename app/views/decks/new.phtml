@@ -5,21 +5,23 @@
             <p>Organize seus estudos criando baralhos personalizados</p>
         </div>
 
-        <form action="/decks" method="POST" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+        <form id="deck_create" action="/decks" method="POST" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
             <div class="form-group-deck">
                 <label for="deck_name">
                     <i class="bi bi-card-heading"></i> Nome do Deck
                 </label>
                 <input
-                    class="form-input-deck"
+                    class="form-input-deck <?= ($deck->hasErrors() && $deck->errors('name')) ? 'is-invalid' : '' ?>"
                     type="text"
                     id="deck_name"
                     name="deck[name]"
                     placeholder="Ex: Inglês - Verbos Irregulares"
                     required
-                    maxlength="100">
-
-                <div class="invalid-feedback"><?= $deck->errors('name') ? $deck->errors('name') : '' ?></div>
+                    maxlength="100"
+                    value="<?= htmlspecialchars($deck->name ?? '') ?>">
+                <?php if ($deck->errors('name')): ?>
+                    <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('name') ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-group-deck">
@@ -27,14 +29,15 @@
                     <i class="bi bi-text-paragraph"></i> Descrição
                 </label>
                 <textarea
-                    class="form-input-deck"
+                    class="form-input-deck <?= ($deck->hasErrors() && $deck->errors('description')) ? 'is-invalid' : '' ?>"
                     id="deck_description"
                     name="deck[description]"
                     placeholder="Descreva o conteúdo e objetivo deste deck..."
                     required
-                    maxlength="500"></textarea>
-
-                <div class="invalid-feedback"><?= $deck->errors('description') ? $deck->errors('description') : '' ?></div>
+                    maxlength="500"><?= htmlspecialchars($deck->description ?? '') ?></textarea>
+                <?php if ($deck->errors('description')): ?>
+                    <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('description') ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-tip">
