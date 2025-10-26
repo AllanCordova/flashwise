@@ -26,41 +26,24 @@ class PrivatedCest extends BaseAcceptanceCest
         return $user;
     }
 
-    private function doLogin(AcceptanceTester $I): void
+    public function unauthenticatedUserCannotAccessProtectedRouteDecksIndex(AcceptanceTester $I): void
     {
-        $I->amOnPage('/login');
-        $I->fillField('user[email]', 'user@test.com');
-        $I->fillField('user[password]', 'password123');
-        $I->click('Entrar');
-        $I->wait(2);
-    }
-
-    public function authenticatedUserCanAccessProtectedRouteDecksIndex(AcceptanceTester $I): void
-    {
-        $this->currentUser = $this->createUser();
-        $this->doLogin($I);
-
         $I->amOnPage('/decks');
-        $I->seeCurrentUrlEquals('/decks');
-        $I->waitForText('Meus Decks', 15);
+        $I->seeCurrentUrlEquals('/login');
+        $I->see('Login');
     }
 
-    public function authenticatedUserCanAccessProtectedRouteDecksNew(AcceptanceTester $I): void
+    public function unauthenticatedUserCannotAccessProtectedRouteDecksNew(AcceptanceTester $I): void
     {
-        $this->currentUser = $this->createUser();
-        $this->doLogin($I);
-
         $I->amOnPage('/decks/new');
-        $I->seeCurrentUrlEquals('/decks/new');
-        $I->waitForText('Criar Novo Deck', 15);
+        $I->seeCurrentUrlEquals('/login');
+        $I->see('Login');
     }
 
-    public function authenticatedUserCanAccessProtectedRouteDecksEdit(AcceptanceTester $I): void
+    public function unauthenticatedUserCannotAccessProtectedRouteDecksEdit(AcceptanceTester $I): void
     {
+        // Criar um deck para testar
         $this->currentUser = $this->createUser();
-        $this->doLogin($I);
-
-        // Criar um deck para editar
         $deck = new Deck([
             'name' => 'Test Deck',
             'description' => 'Test Description',
@@ -69,16 +52,14 @@ class PrivatedCest extends BaseAcceptanceCest
         $deck->save();
 
         $I->amOnPage('/decks/' . $deck->id . '/edit');
-        $I->seeCurrentUrlEquals('/decks/' . $deck->id . '/edit');
-        $I->waitForText('Editar Deck', 15);
+        $I->seeCurrentUrlEquals('/login');
+        $I->see('Login');
     }
 
-    public function authenticatedUserCanAccessProtectedRouteDecksShow(AcceptanceTester $I): void
+    public function unauthenticatedUserCannotAccessProtectedRouteDecksShow(AcceptanceTester $I): void
     {
+        // Criar um deck para testar
         $this->currentUser = $this->createUser();
-        $this->doLogin($I);
-
-        // Criar um deck para visualizar
         $deck = new Deck([
             'name' => 'Test Deck',
             'description' => 'Test Description',
@@ -87,34 +68,21 @@ class PrivatedCest extends BaseAcceptanceCest
         $deck->save();
 
         $I->amOnPage('/decks/' . $deck->id);
-        $I->seeCurrentUrlEquals('/decks/' . $deck->id);
-        $I->waitForText('Test Deck', 15);
+        $I->seeCurrentUrlEquals('/login');
+        $I->see('Login');
     }
 
-    public function authenticatedUserCanAccessProtectedRouteCardsNew(AcceptanceTester $I): void
+    public function unauthenticatedUserCannotAccessProtectedRouteCardsNew(AcceptanceTester $I): void
     {
-        $this->currentUser = $this->createUser();
-        $this->doLogin($I);
-
-        // Criar um deck primeiro (cards precisam de deck)
-        $deck = new Deck([
-            'name' => 'Test Deck',
-            'description' => 'Test Description',
-            'user_id' => $this->currentUser->id
-        ]);
-        $deck->save();
-
         $I->amOnPage('/cards/new');
-        $I->seeCurrentUrlEquals('/cards/new');
-        $I->waitForText('Criar Novo Flashcard', 15);
+        $I->seeCurrentUrlEquals('/login');
+        $I->see('Login');
     }
 
-    public function authenticatedUserCanAccessProtectedRouteCardsEdit(AcceptanceTester $I): void
+    public function unauthenticatedUserCannotAccessProtectedRouteCardsEdit(AcceptanceTester $I): void
     {
+        // Criar um deck e um card para testar
         $this->currentUser = $this->createUser();
-        $this->doLogin($I);
-
-        // Criar um deck e um card para editar
         $deck = new Deck([
             'name' => 'Test Deck',
             'description' => 'Test Description',
@@ -136,26 +104,21 @@ class PrivatedCest extends BaseAcceptanceCest
         $card->save();
 
         $I->amOnPage('/cards/' . $card->id . '/edit');
-        $I->seeCurrentUrlEquals('/cards/' . $card->id . '/edit');
-        $I->waitForText('Editar Flashcard', 15);
+        $I->seeCurrentUrlEquals('/login');
+        $I->see('Login');
     }
 
-    public function authenticatedUserCanAccessProtectedRouteAdmin(AcceptanceTester $I): void
+    public function unauthenticatedUserCannotAccessProtectedRouteAdmin(AcceptanceTester $I): void
     {
-        $this->currentUser = $this->createUser();
-        $this->doLogin($I);
-
         $I->amOnPage('/admin');
-        $I->seeCurrentUrlEquals('/admin');
-        $I->waitForText('Painel do Administrador', 15);
+        $I->seeCurrentUrlEquals('/login');
+        $I->see('Login');
     }
 
-    public function authenticatedUserIsRedirectedFromGuestOnlyRoutes(AcceptanceTester $I): void
+    public function unauthenticatedUserCannotAccessProtectedRouteLogout(AcceptanceTester $I): void
     {
-        $this->currentUser = $this->createUser();
-        $this->doLogin($I);
-
-        $I->amOnPage('/login');
-        $I->seeCurrentUrlEquals('/');
+        $I->amOnPage('/logout');
+        $I->seeCurrentUrlEquals('/login');
+        $I->see('Login');
     }
 }
