@@ -69,11 +69,14 @@ class CardsCest extends BaseAcceptanceCest
     // auxiliar functions
     private function submitEmptyFormAndExpectError(AcceptanceTester $I, string $formId): void
     {
+        $I->wait(1);
         $I->fillField('card[front]', '');
         $I->fillField('card[back]', '');
 
         $I->scrollTo($formId);
+        $I->wait(0.5);
         $I->submitForm($formId, []);
+        $I->wait(1);
         $I->see('não pode ser vazio!');
     }
 
@@ -160,12 +163,15 @@ class CardsCest extends BaseAcceptanceCest
         $card = $cards[0];
 
         $I->amOnPage('/cards/' . $card->id . '/edit');
+        $I->wait(1);
 
         $I->fillField('card[front]', '');
         $I->fillField('card[back]', '');
 
         $I->scrollTo('#card_update');
+        $I->wait(0.5);
         $I->submitForm('#card_update', []);
+        $I->wait(1);
         $I->see('não pode ser vazio!');
     }
 

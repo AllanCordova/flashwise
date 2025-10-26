@@ -45,10 +45,13 @@ class DecksCest extends BaseAcceptanceCest
     // auxiliar functions
     private function submitEmptyFormAndExpectError(AcceptanceTester $I, string $form_id): void
     {
+        $I->wait(1);
         $I->fillField('deck[name]', '');
         $I->fillField('deck[description]', '');
 
+        $I->wait(0.5);
         $I->submitForm($form_id, []);
+        $I->wait(1);
         $I->see('não pode ser vazio!');
     }
 
@@ -56,11 +59,13 @@ class DecksCest extends BaseAcceptanceCest
     {
         $this->createDecks(1);
 
+        $I->wait(1);
         $I->fillField('deck[name]', 'deck 1');
         $I->fillField('deck[description]', 'deck 1');
 
         $I->waitForElementClickable('button.btn-deck-primary', 5);
         $I->submitForm('#deck_create', []);
+        $I->wait(1);
 
         $I->see('já existe um registro com esse dado');
         $I->seeCurrentUrlEquals('/decks');
