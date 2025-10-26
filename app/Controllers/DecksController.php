@@ -86,8 +86,8 @@ class DecksController extends Controller
             return;
         }
 
-        $deck->name = $params['name'];
-        $deck->description = $params['description'];
+        $deck->name = $params['name'] ?? '';
+        $deck->description = $params['description'] ?? '';
 
         if ($deck->save()) {
             FlashMessage::success('Deck atualizado com sucesso');
@@ -111,7 +111,10 @@ class DecksController extends Controller
     {
         $params = $request->getParam('deck');
 
-        $deck = $this->current_user->decks()->new($params);
+        $deck = $this->current_user->decks()->new([
+            'name' => $params['name'] ?? '',
+            'description' => $params['description'] ?? '',
+        ]);
 
         if ($deck->save()) {
             FlashMessage::success('Deck criado com sucesso');
