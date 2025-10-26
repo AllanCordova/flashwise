@@ -185,25 +185,26 @@ select.form-input-card {
 
 /* Validation Styles */
 .form-input-card.is-invalid {
-  border-color: #dc3545;
+  border-color: #dc3545 !important;
   background-color: var(--bg-primary);
 }
 
 .form-input-card.is-invalid:focus {
-  border-color: #dc3545;
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25) !important;
 }
 
 .invalid-feedback {
-  display: none;
+  display: block !important;
   width: 100%;
   margin-top: 0.5rem;
   font-size: 0.875rem;
   color: #dc3545;
+  min-height: 1.25rem;
 }
 
-.is-invalid ~ .invalid-feedback {
-  display: block;
+.invalid-feedback:empty {
+  display: none !important;
 }
 
 /* Animations */
