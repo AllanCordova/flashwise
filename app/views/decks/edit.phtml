@@ -22,7 +22,7 @@
                         type="text"
                         id="name"
                         name="deck[name]"
-                        class="form-control"
+                        class="form-control <?= $deck->errors('name') ? 'is-invalid' : '' ?>"
                         value="<?= htmlspecialchars($deck->name ?? '') ?>"
                         placeholder="Digite o nome do deck"
                         required>
@@ -36,7 +36,7 @@
                     <textarea
                         id="description"
                         name="deck[description]"
-                        class="form-control"
+                        class="form-control <?= $deck->errors('description') ? 'is-invalid' : '' ?>"
                         rows="3"
                         placeholder="Descreva o conteúdo deste deck"
                         required><?= htmlspecialchars($deck->description ?? '') ?></textarea>

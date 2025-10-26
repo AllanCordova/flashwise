@@ -11,13 +11,14 @@
                     <i class="bi bi-card-heading"></i> Nome do Deck
                 </label>
                 <input
-                    class="form-input-deck"
+                    class="form-input-deck <?= $deck->errors('name') ? 'is-invalid' : '' ?>"
                     type="text"
                     id="deck_name"
                     name="deck[name]"
                     placeholder="Ex: Inglês - Verbos Irregulares"
                     required
-                    maxlength="100">
+                    maxlength="100"
+                    value="<?= htmlspecialchars($deck->name ?? '') ?>">
 
                 <div class="invalid-feedback"><?= $deck->errors('name') ? $deck->errors('name') : '' ?></div>
             </div>
@@ -27,12 +28,12 @@
                     <i class="bi bi-text-paragraph"></i> Descrição
                 </label>
                 <textarea
-                    class="form-input-deck"
+                    class="form-input-deck <?= $deck->errors('description') ? 'is-invalid' : '' ?>"
                     id="deck_description"
                     name="deck[description]"
                     placeholder="Descreva o conteúdo e objetivo deste deck..."
                     required
-                    maxlength="500"></textarea>
+                    maxlength="500"><?= htmlspecialchars($deck->description ?? '') ?></textarea>
 
                 <div class="invalid-feedback"><?= $deck->errors('description') ? $deck->errors('description') : '' ?></div>
             </div>
