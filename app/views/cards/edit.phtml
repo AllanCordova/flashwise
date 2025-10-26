@@ -5,7 +5,7 @@
             <p>Atualize o conteúdo do seu flashcard</p>
         </div>
 
-        <form action="<?= route('cards.update', ['id' => $card->id]) ?>" method="post" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+        <form id="card_update" action="<?= route('cards.update', ['id' => $card->id]) ?>" method="post" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group-card">
                 <label for="deck_id">

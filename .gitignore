@@ -16,6 +16,7 @@ html
 
 # Ignore .env
 .env
+.env.test
 
 # Ignore files and folders inside uploads but keep it
 /public/assets/uploads/*

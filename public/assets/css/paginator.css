@@ -1,0 +1,44 @@
+.pagination .page-link {
+  background-color: var(--dark-surface);
+  color: var(--dark-text);
+  border: 1px solid var(--dark-border);
+  margin: 0 3px; /* Adds a little space between buttons */
+  border-radius: 0.3rem; /* Softens the button corners */
+  transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for links */
+.pagination .page-link:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--dark-text);
+}
+
+/* Style for the currently active page number */
+.pagination .page-item.active .page-link {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--dark-text);
+  font-weight: bold;
+  z-index: 1; /* Ensures the active item is visually on top */
+}
+
+/* Style for disabled previous/next buttons */
+.pagination .page-item.disabled .page-link {
+  background-color: var(--dark-surface);
+  color: var(--dark-text-muted);
+  border-color: var(--dark-border);
+  pointer-events: none; /* Prevents clicking */
+}
+
+/* Custom focus ring using your accent color */
+.pagination .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(214, 58, 92, 0.35);
+}
+
+/* Style for the "Showing 1 to 10 of 50" text */
+.pagination-info {
+  color: var(--dark-text-muted);
+  margin-top: 0.5rem;
+  font-size: 0.875em;
+}

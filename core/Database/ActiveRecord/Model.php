@@ -281,7 +281,10 @@ abstract class Model
         return $models;
     }
 
-    public static function paginate(int $page = 1, int $per_page = 10, string $route = null): Paginator
+    /**
+     * @param array<string, mixed> $conditions
+     */
+    public static function paginate(int $page = 1, int $per_page = 10, string $route = null, array $conditions = []): Paginator
     {
         return new Paginator(
             class: static::class,
@@ -289,7 +292,8 @@ abstract class Model
             per_page: $per_page,
             table: static::$table,
             attributes: static::$columns,
-            route: $route
+            conditions: $conditions,
+            route: $route,
         );
     }
 

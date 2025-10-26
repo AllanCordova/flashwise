@@ -5,7 +5,7 @@
             <p>Adicione um novo card ao seu deck de estudos</p>
         </div>
 
-        <form action="<?= route('cards.create') ?>" method="POST" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+        <form id="card_create" action="<?= route('cards.create') ?>" method="POST" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
             <div class="form-group-card">
                 <label for="deck_id">
                     <i class="bi bi-collection"></i> Deck

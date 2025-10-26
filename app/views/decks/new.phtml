@@ -5,7 +5,7 @@
             <p>Organize seus estudos criando baralhos personalizados</p>
         </div>
 
-        <form action="/decks" method="POST" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+        <form id="deck_create" action="/decks" method="POST" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
             <div class="form-group-deck">
                 <label for="deck_name">
                     <i class="bi bi-card-heading"></i> Nome do Deck
