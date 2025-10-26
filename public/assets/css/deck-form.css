@@ -170,6 +170,29 @@ textarea.form-input-deck {
   margin-right: 0.5rem;
 }
 
+/* Validation Styles */
+.form-input-deck.is-invalid {
+  border-color: #dc3545;
+  background-color: var(--bg-primary);
+}
+
+.form-input-deck.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #dc3545;
+}
+
+.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+
 /* Animations */
 @keyframes slideIn {
   from {
