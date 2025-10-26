@@ -22,12 +22,12 @@
                         type="text"
                         id="name"
                         name="deck[name]"
-                        class="form-control <?= $deck->errors('name') ? 'is-invalid' : '' ?>"
+                        class="form-control <?php if ($deck->hasErrors() && $deck->errors('name')) echo 'is-invalid'; ?>"
                         value="<?= htmlspecialchars($deck->name ?? '') ?>"
                         placeholder="Digite o nome do deck"
                         required>
-                    <?php if ($deck->errors('name')): ?>
-                        <div class="invalid-feedback"><?= $deck->errors('name') ?></div>
+                    <?php if ($deck->hasErrors() && $deck->errors('name')): ?>
+                        <div class="invalid-feedback" style="display: block;"><?= $deck->errors('name') ?></div>
                     <?php endif; ?>
                 </div>
 
@@ -38,12 +38,12 @@
                     <textarea
                         id="description"
                         name="deck[description]"
-                        class="form-control <?= $deck->errors('description') ? 'is-invalid' : '' ?>"
+                        class="form-control <?php if ($deck->hasErrors() && $deck->errors('description')) echo 'is-invalid'; ?>"
                         rows="3"
                         placeholder="Descreva o conteúdo deste deck"
                         required><?= htmlspecialchars($deck->description ?? '') ?></textarea>
-                    <?php if ($deck->errors('description')): ?>
-                        <div class="invalid-feedback"><?= $deck->errors('description') ?></div>
+                    <?php if ($deck->hasErrors() && $deck->errors('description')): ?>
+                        <div class="invalid-feedback" style="display: block;"><?= $deck->errors('description') ?></div>
                     <?php endif; ?>
                 </div>
 

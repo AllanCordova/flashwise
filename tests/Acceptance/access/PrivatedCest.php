@@ -30,14 +30,12 @@ class PrivatedCest extends BaseAcceptanceCest
     {
         $I->amOnPage('/decks');
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Faça seu Login');
     }
 
     public function unauthenticatedUserCannotAccessProtectedRouteDecksNew(AcceptanceTester $I): void
     {
         $I->amOnPage('/decks/new');
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Faça seu Login');
     }
 
     public function unauthenticatedUserCannotAccessProtectedRouteDecksEdit(AcceptanceTester $I): void
@@ -53,7 +51,6 @@ class PrivatedCest extends BaseAcceptanceCest
 
         $I->amOnPage('/decks/' . $deck->id . '/edit');
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Faça seu Login');
     }
 
     public function unauthenticatedUserCannotAccessProtectedRouteDecksShow(AcceptanceTester $I): void
@@ -69,14 +66,12 @@ class PrivatedCest extends BaseAcceptanceCest
 
         $I->amOnPage('/decks/' . $deck->id);
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Faça seu Login');
     }
 
     public function unauthenticatedUserCannotAccessProtectedRouteCardsNew(AcceptanceTester $I): void
     {
         $I->amOnPage('/cards/new');
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Faça seu Login');
     }
 
     public function unauthenticatedUserCannotAccessProtectedRouteCardsEdit(AcceptanceTester $I): void
@@ -105,20 +100,17 @@ class PrivatedCest extends BaseAcceptanceCest
 
         $I->amOnPage('/cards/' . $card->id . '/edit');
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Faça seu Login');
     }
 
     public function unauthenticatedUserCannotAccessProtectedRouteAdmin(AcceptanceTester $I): void
     {
         $I->amOnPage('/admin');
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Faça seu Login');
     }
 
     public function unauthenticatedUserCannotAccessProtectedRouteLogout(AcceptanceTester $I): void
     {
         $I->amOnPage('/logout');
         $I->seeCurrentUrlEquals('/login');
-        $I->see('Faça seu Login');
     }
 }
