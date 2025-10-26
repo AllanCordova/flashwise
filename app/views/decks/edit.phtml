@@ -26,7 +26,7 @@
                         value="<?= htmlspecialchars($deck->name ?? '') ?>"
                         placeholder="Digite o nome do deck"
                         required>
-                    <?php if ($deck->hasErrors() && $deck->errors('name')): ?>
+                    <?php if ($deck->errors('name')): ?>
                         <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('name') ?></div>
                     <?php endif; ?>
                 </div>
@@ -42,7 +42,7 @@
                         rows="3"
                         placeholder="Descreva o conteúdo deste deck"
                         required><?= htmlspecialchars($deck->description ?? '') ?></textarea>
-                    <?php if ($deck->hasErrors() && $deck->errors('description')): ?>
+                    <?php if ($deck->errors('description')): ?>
                         <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('description') ?></div>
                     <?php endif; ?>
                 </div>

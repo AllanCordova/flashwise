@@ -19,7 +19,7 @@
                     required
                     maxlength="100"
                     value="<?= htmlspecialchars($deck->name ?? '') ?>">
-                <?php if ($deck->hasErrors() && $deck->errors('name')): ?>
+                <?php if ($deck->errors('name')): ?>
                     <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('name') ?></div>
                 <?php endif; ?>
             </div>
@@ -35,7 +35,7 @@
                     placeholder="Descreva o conteúdo e objetivo deste deck..."
                     required
                     maxlength="500"><?= htmlspecialchars($deck->description ?? '') ?></textarea>
-                <?php if ($deck->hasErrors() && $deck->errors('description')): ?>
+                <?php if ($deck->errors('description')): ?>
                     <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('description') ?></div>
                 <?php endif; ?>
             </div>

@@ -34,7 +34,7 @@
                     rows="4"
                     required
                     oninput="updateCharCount('front', 'frontCount', 1000)"><?= htmlspecialchars($card->front ?? '') ?></textarea>
-                <?php if ($card->hasErrors() && $card->errors('front')): ?>
+                <?php if ($card->errors('front')): ?>
                     <div class="invalid-feedback" style="display: block !important;"><?= $card->errors('front') ?></div>
                 <?php endif; ?>
             </div>
@@ -52,7 +52,7 @@
                     rows="4"
                     required
                     oninput="updateCharCount('back', 'backCount', 1000)"><?= htmlspecialchars($card->back ?? '') ?></textarea>
-                <?php if ($card->hasErrors() && $card->errors('back')): ?>
+                <?php if ($card->errors('back')): ?>
                     <div class="invalid-feedback" style="display: block !important;"><?= $card->errors('back') ?></div>
                 <?php endif; ?>
             </div>
