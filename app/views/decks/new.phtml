@@ -11,7 +11,7 @@
                     <i class="bi bi-card-heading"></i> Nome do Deck
                 </label>
                 <input
-                    class="form-input-deck <?php if ($deck->hasErrors() && $deck->errors('name')) echo 'is-invalid'; ?>"
+                    class="form-input-deck <?= ($deck->hasErrors() && $deck->errors('name')) ? 'is-invalid' : '' ?>"
                     type="text"
                     id="deck_name"
                     name="deck[name]"
@@ -20,7 +20,7 @@
                     maxlength="100"
                     value="<?= htmlspecialchars($deck->name ?? '') ?>">
                 <?php if ($deck->hasErrors() && $deck->errors('name')): ?>
-                    <div class="invalid-feedback" style="display: block;"><?= $deck->errors('name') ?></div>
+                    <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('name') ?></div>
                 <?php endif; ?>
             </div>
 
@@ -29,14 +29,14 @@
                     <i class="bi bi-text-paragraph"></i> Descrição
                 </label>
                 <textarea
-                    class="form-input-deck <?php if ($deck->hasErrors() && $deck->errors('description')) echo 'is-invalid'; ?>"
+                    class="form-input-deck <?= ($deck->hasErrors() && $deck->errors('description')) ? 'is-invalid' : '' ?>"
                     id="deck_description"
                     name="deck[description]"
                     placeholder="Descreva o conteúdo e objetivo deste deck..."
                     required
                     maxlength="500"><?= htmlspecialchars($deck->description ?? '') ?></textarea>
                 <?php if ($deck->hasErrors() && $deck->errors('description')): ?>
-                    <div class="invalid-feedback" style="display: block;"><?= $deck->errors('description') ?></div>
+                    <div class="invalid-feedback" style="display: block !important;"><?= $deck->errors('description') ?></div>
                 <?php endif; ?>
             </div>
 
