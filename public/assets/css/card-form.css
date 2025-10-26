@@ -195,16 +195,11 @@ select.form-input-card {
 }
 
 .invalid-feedback {
-  display: block !important;
+  display: block;
   width: 100%;
   margin-top: 0.5rem;
   font-size: 0.875rem;
   color: #dc3545;
-  min-height: 1.25rem;
-}
-
-.invalid-feedback:empty {
-  display: none !important;
 }
 
 /* Animations */

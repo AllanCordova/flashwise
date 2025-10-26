@@ -34,7 +34,9 @@
                     rows="4"
                     required
                     oninput="updateCharCount('front', 'frontCount', 1000)"><?= htmlspecialchars($card->front ?? '') ?></textarea>
-                <div class="invalid-feedback"><?= $card->errors('front') ? $card->errors('front') : '' ?></div>
+                <?php if ($card->errors('front')): ?>
+                    <div class="invalid-feedback"><?= $card->errors('front') ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-group-card">
@@ -50,7 +52,9 @@
                     rows="4"
                     required
                     oninput="updateCharCount('back', 'backCount', 1000)"><?= htmlspecialchars($card->back ?? '') ?></textarea>
-                <div class="invalid-feedback"><?= $card->errors('back') ? $card->errors('back') : '' ?></div>
+                <?php if ($card->errors('back')): ?>
+                    <div class="invalid-feedback"><?= $card->errors('back') ?></div>
+                <?php endif; ?>
             </div>
 
             <div class="form-tip">
