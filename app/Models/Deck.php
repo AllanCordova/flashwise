@@ -74,4 +74,52 @@ class Deck extends Model
     {
         return count($this->cards);
     }
+
+    /**
+     * Get cards ready for study (new cards + due cards)
+     * @return Card[]
+     */
+    public function getCardsForStudy(): array
+    {
+        $cards = $this->cards;
+        $studyCards = [];
+
+        // Collect new cards and due cards
+        foreach ($cards as $card) {
+            if ($card->card_type === 'new' || $card->isDue()) {
+                $studyCards[] = $card;
+            }
+        }
+
+        // Sort: new cards first, then due cards by next_review date
+        usort($studyCards, function ($a, $b) {
+            // New cards come first
+            if ($a->card_type === 'new' && $b->card_type !== 'new') {
+                return -1;
+            }
+            if ($a->card_type !== 'new' && $b->card_type === 'new') {
+                return 1;
+            }
+
+            // Both new or both due - sort by next_review
+            if ($a->next_review === null) {
+                return -1;
+            }
+            if ($b->next_review === null) {
+                return 1;
+            }
+
+            return strcmp($a->next_review, $b->next_review);
+        });
+
+        return $studyCards;
+    }
+
+    /**
+     * Check if deck has cards available for study
+     */
+    public function hasCardsToStudy(): bool
+    {
+        return $this->countNewCards() > 0 || $this->countDueCards() > 0;
+    }
 }

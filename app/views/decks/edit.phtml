@@ -100,23 +100,38 @@
                                         </div>
                                     </td>
                                     <td class="card-status" data-label="Status">
-                                        <?php if ($card->card_type === 'new'): ?>
-                                            <span class="badge badge-new">
-                                                <i class="bi bi-star"></i> Novo
-                                            </span>
-                                        <?php elseif ($card->isNew()): ?>
-                                            <span class="badge badge-new">
-                                                <i class="bi bi-star"></i> Novo
-                                            </span>
-                                        <?php elseif ($card->isDue()): ?>
-                                            <span class="badge badge-due">
-                                                <i class="bi bi-clock"></i> Revisar
-                                            </span>
-                                        <?php else: ?>
-                                            <span class="badge badge-learned">
-                                                <i class="bi bi-check-circle"></i> Aprendido
-                                            </span>
-                                        <?php endif; ?>
+                                        <div class="status-container">
+                                            <?php if ($card->isNew()): ?>
+                                                <span class="badge badge-new">
+                                                    <i class="bi bi-star"></i> Novo
+                                                </span>
+                                            <?php elseif ($card->isDue()): ?>
+                                                <span class="badge badge-due">
+                                                    <i class="bi bi-clock"></i> Revisar
+                                                </span>
+                                            <?php else: ?>
+                                                <span class="badge badge-learned">
+                                                    <i class="bi bi-check-circle"></i> Aprendido
+                                                </span>
+                                                <?php 
+                                                $timeDetails = $card->getDetailedTimeUntilReview();
+                                                if ($timeDetails): 
+                                                ?>
+                                                    <span class="time-countdown">
+                                                        <i class="bi bi-hourglass-split"></i>
+                                                        <?php if ($timeDetails['days'] > 0): ?>
+                                                            <?= $timeDetails['days'] ?>d 
+                                                        <?php endif; ?>
+                                                        <?php if ($timeDetails['hours'] > 0 || $timeDetails['days'] > 0): ?>
+                                                            <?= str_pad($timeDetails['hours'], 2, '0', STR_PAD_LEFT) ?>h 
+                                                        <?php endif; ?>
+                                                        <?php if ($timeDetails['days'] == 0): ?>
+                                                            <?= str_pad($timeDetails['minutes'], 2, '0', STR_PAD_LEFT) ?>m
+                                                        <?php endif; ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </div>
                                     </td>
                                     <td class="card-actions">
                                         <a href="<?= route('cards.edit', ['id' => $card->id]) ?>"

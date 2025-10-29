@@ -27,9 +27,9 @@
             </div>
 
             <div class="study-button-container">
-                <button class="btn-study-now" onclick="alert('Função de estudo será implementada em breve!')">
+                <a href="<?= route('study.start', ['id' => $deck->id]) ?>" class="btn-study-now">
                     <i class="bi bi-play-circle-fill"></i> Estudar Agora
-                </button>
+                </a>
             </div>
         <?php else: ?>
             <div class="congratulations-container">

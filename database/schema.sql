@@ -38,7 +38,7 @@ CREATE TABLE cards (
     ease_factor DECIMAL(3,2) DEFAULT 2.50,
     review_interval INT DEFAULT 0,
     repetitions INT DEFAULT 0,
-    next_review DATE NULL,
+    next_review DATETIME NULL,
     card_type ENUM('new', 'learning', 'review') DEFAULT 'new',
     last_reviewed TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

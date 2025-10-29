@@ -1,26 +1,23 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const imagePreviewInput = document.getElementById("image_preview_input");
-  const preview = document.getElementById("image_preview");
-  const imagePreviewSubmit = document.getElementById("image_preview_submit");
+// FlashWise - Application JavaScript
+// Minimal JavaScript for essential functionality
 
-  if (!(imagePreviewInput && preview)) return;
+console.log('FlashWise application loaded');
 
-  imagePreviewInput.style.display = "none";
-  imagePreviewSubmit.style.display = "none";
-
-  preview.addEventListener("click", function () {
-    imagePreviewInput.click();
-  });
-
-  imagePreviewInput.addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        document.getElementById("image_preview").src = e.target.result;
-        imagePreviewSubmit.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+// Prevent double submission on study answer forms
+document.addEventListener('DOMContentLoaded', function() {
+    const studyForms = document.querySelectorAll('.study-actions form');
+    
+    studyForms.forEach(form => {
+        form.addEventListener('submit', function() {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn && !submitBtn.disabled) {
+                submitBtn.disabled = true;
+                // Re-enable after 2 seconds as fallback
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                }, 1000);
+            }
+        });
+    });
 });
+

@@ -10,6 +10,7 @@
 
 html {
   background-color: var(--bg-primary) !important;
+  scroll-behavior: smooth;
 }
 
 body {

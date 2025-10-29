@@ -14,6 +14,11 @@ class FlashMessage
         self::message('danger', $value);
     }
 
+    public static function info(string $value): void
+    {
+        self::message('info', $value);
+    }
+
     public static function get(): array
     {
         $flash = $_SESSION['flash'] ?? [];

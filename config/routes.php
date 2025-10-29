@@ -6,6 +6,7 @@ use App\Controllers\DecksController;
 use App\Controllers\CardsController;
 use App\Controllers\AdminController;
 use App\Controllers\RegisterController;
+use App\Controllers\StudyController;
 use Core\Router\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -34,6 +35,13 @@ Route::middleware('auth')->group(function () {
     // view
     Route::get('/decks', [DecksController::class, 'index'])->name('decks.index');
     Route::get('/decks/{id}', [DecksController::class, 'show'])->name('decks.show');
+
+    // study
+    Route::get('/decks/{id}/study', [StudyController::class, 'start'])->name('study.start');
+    Route::get('/study/card', [StudyController::class, 'show'])->name('study.show');
+    Route::get('/study/flip', [StudyController::class, 'flip'])->name('study.flip');
+    Route::post('/study/answer', [StudyController::class, 'answer'])->name('study.answer');
+    Route::get('/study/finish', [StudyController::class, 'finish'])->name('study.finish');
 
     // create
     Route::get('/cards/new', [CardsController::class, 'new'])->name('cards.new');
