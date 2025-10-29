@@ -27,9 +27,9 @@
             </div>
 
             <div class="study-button-container">
-                <button class="btn-study-now" onclick="alert('Função de estudo será implementada em breve!')">
+                <a href="<?= route('study.start', ['id' => $deck->id]) ?>" class="btn-study-now">
                     <i class="bi bi-play-circle-fill"></i> Estudar Agora
-                </button>
+                </a>
             </div>
         <?php else: ?>
             <div class="congratulations-container">
@@ -39,7 +39,7 @@
                 <h3>Parabéns!</h3>
                 <p>Você terminou este deck por enquanto.</p>
                 <?php if ($totalCards === 0): ?>
-                    <p class="small-text">Este deck ainda não possui cards. <a href="/cards/create">Adicione alguns cards</a> para começar a estudar!</p>
+                    <p class="small-text">Este deck ainda não possui cards. <a href="/cards/new">Adicione alguns cards</a> para começar a estudar!</p>
                 <?php else: ?>
                     <p class="small-text">Volte mais tarde para revisar seus cards.</p>
                 <?php endif; ?>

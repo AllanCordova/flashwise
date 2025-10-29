@@ -343,20 +343,30 @@
   vertical-align: middle;
 }
 
-.card-content {
+.cards-table .card-content {
   max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.card-front .card-content {
+  background: transparent !important;
+  padding: 0;
   color: var(--text-primary);
-  font-weight: 500;
 }
 
-.card-back .card-content {
-  color: var(--text-secondary);
+.cards-table .card-front,
+.cards-table .card-back {
+  background: transparent !important;
+}
+
+.cards-table .card-front .card-content {
+  color: var(--text-primary) !important;
+  font-weight: 500;
+  background: transparent !important;
+}
+
+.cards-table .card-back .card-content {
+  color: var(--text-secondary) !important;
+  background: transparent !important;
 }
 
 /* Card Status */
@@ -789,4 +799,33 @@
   .empty-state p {
     font-size: 0.9rem;
   }
+}
+
+/* Status Container */
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Time Countdown Styling */
+.time-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Courier New', Consolas, monospace;
+  font-size: 0.80rem;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.time-countdown i {
+  font-size: 0.85rem;
+  opacity: 0.6;
 }

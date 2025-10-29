@@ -1,0 +1,122 @@
+<div class="study-container">
+    <div class="study-header">
+        <div class="study-header-content">
+            <a href="<?= route('decks.show', ['id' => $deck->id]) ?>" class="btn-back">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </a>
+            <h3 class="study-deck-name"><?= htmlspecialchars($deck->name) ?></h3>
+        </div>
+        <div class="study-progress-bar">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: <?= $progress ?>%"
+                    aria-valuenow="<?= $progress ?>" aria-valuemin="0" aria-valuemax="100">
+                </div>
+                <span><?= $currentIndex + 1 ?> / <?= $totalCards ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="study-card-container">
+        <div class="card-flip-wrapper">
+            <div class="playing-card <?= $showingAnswer ? 'flipped' : '' ?>">
+                <!-- FRONT (Question) - Always rendered -->
+                <div class="study-card-face study-card-front">
+                    <div class="card-suit top-left suit-<?= $suit['color'] ?>">
+                        <?= $number ?>
+                    </div>
+                    <div class="card-suit-symbol top-left suit-<?= $suit['color'] ?>">
+                        <?= $suit['symbol'] ?>
+                    </div>
+                    
+                    <div class="study-card-content">
+                        <div class="card-text">
+                            <?= nl2br(htmlspecialchars($card->front)) ?>
+                        </div>
+                    </div>
+                    
+                    <div class="card-suit bottom-right suit-<?= $suit['color'] ?>">
+                        <?= $number ?>
+                    </div>
+                    <div class="card-suit-symbol bottom-right suit-<?= $suit['color'] ?>">
+                        <?= $suit['symbol'] ?>
+                    </div>
+                </div>
+                
+                <!-- BACK (Answer) - Always rendered -->
+                <div class="study-card-face study-card-back">
+                    <div class="card-suit top-left suit-<?= $suit['color'] ?>">
+                        <?= $number ?>
+                    </div>
+                    <div class="card-suit-symbol top-left suit-<?= $suit['color'] ?>">
+                        <?= $suit['symbol'] ?>
+                    </div>
+                    
+                    <div class="study-card-content">
+                        <div class="card-text">
+                            <?= nl2br(htmlspecialchars($card->back)) ?>
+                        </div>
+                    </div>
+                    
+                    <div class="card-suit bottom-right suit-<?= $suit['color'] ?>">
+                        <?= $number ?>
+                    </div>
+                    <div class="card-suit-symbol bottom-right suit-<?= $suit['color'] ?>">
+                        <?= $suit['symbol'] ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="study-actions">
+        <?php if (!$showingAnswer): ?>
+            <!-- Button to flip card -->
+            <div class="flip-button-container">
+                <a href="<?= route('study.flip') ?>" class="btn-flip">
+                    <i class="bi bi-arrow-repeat"></i> Virar Card
+                </a>
+            </div>
+        <?php else: ?>
+            <!-- Response buttons -->
+            <div class="response-buttons-container">
+                <div class="response-buttons">
+                    <form action="<?= route('study.answer') ?>" method="POST" style="display: inline;">
+                        <input type="hidden" name="quality" value="0">
+                        <button type="submit" class="btn-response btn-again">
+                            <i class="bi bi-x-circle"></i>
+                            <span class="response-label">Errei</span>
+                            <span class="response-time"><?= $card->getNextIntervalText(0) ?></span>
+                        </button>
+                    </form>
+                    
+                    <form action="<?= route('study.answer') ?>" method="POST" style="display: inline;">
+                        <input type="hidden" name="quality" value="1">
+                        <button type="submit" class="btn-response btn-hard">
+                            <i class="bi bi-emoji-frown"></i>
+                            <span class="response-label">Difícil</span>
+                            <span class="response-time"><?= $card->getNextIntervalText(1) ?></span>
+                        </button>
+                    </form>
+                    
+                    <form action="<?= route('study.answer') ?>" method="POST" style="display: inline;">
+                        <input type="hidden" name="quality" value="2">
+                        <button type="submit" class="btn-response btn-good">
+                            <i class="bi bi-emoji-smile"></i>
+                            <span class="response-label">Bom</span>
+                            <span class="response-time"><?= $card->getNextIntervalText(2) ?></span>
+                        </button>
+                    </form>
+                    
+                    <form action="<?= route('study.answer') ?>" method="POST" style="display: inline;">
+                        <input type="hidden" name="quality" value="3">
+                        <button type="submit" class="btn-response btn-easy">
+                            <i class="bi bi-emoji-laughing"></i>
+                            <span class="response-label">Fácil</span>
+                            <span class="response-time"><?= $card->getNextIntervalText(3) ?></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
