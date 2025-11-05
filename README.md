@@ -54,15 +54,11 @@ ou
 ./run db:populate
 ```
 
-#### Setup upload permissions (opcional)
-
-Se necessário, você pode reconfigurar as permissões dos diretórios de upload manualmente:
+#### Setup upload permissions
 
 ```
 ./run setup:permissions
 ```
-
-> **Nota**: Este comando cria os diretórios necessários e configura permissões apenas em diretórios, preservando arquivos já enviados.
 
 #### Run the tests
 
