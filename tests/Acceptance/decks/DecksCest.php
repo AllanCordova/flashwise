@@ -85,7 +85,7 @@ class DecksCest extends BaseAcceptanceCest
         $I->submitForm('#deck_create', []);
 
         $I->see('Deck criado com sucesso');
-        $I->seeCurrentUrlEquals('/decks');
+        $I->seeCurrentUrlEquals('/decks?page=1&sort=created_desc');
     }
 
     public function tryToCreateWithNoDataValidation(AcceptanceTester $I): void
@@ -123,7 +123,7 @@ class DecksCest extends BaseAcceptanceCest
         $I->submitForm('#deck_update', []);
 
         $I->see('Deck atualizado com sucesso');
-        $I->seeCurrentUrlEquals('/decks');
+        $I->seeCurrentUrlEquals('/decks?page=1&sort=created_desc');
     }
 
     public function tryToUpdateWithNoDataValidation(AcceptanceTester $I): void
@@ -192,7 +192,7 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->wait(2);
         $I->see('Deck excluído com sucesso!');
-        $I->seeCurrentUrlEquals('/decks');
+        $I->seeCurrentUrlEquals('/decks?page=1&sort=created_desc');
 
         $I->wait(1);
         $I->seeNumberOfElements('.deck-row-clickable', 2);
