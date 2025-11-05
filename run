@@ -10,6 +10,10 @@ function ps {
 }
 
 function up {
+    # Ensure upload directories exist and have correct permissions
+    mkdir -p public/assets/uploads/materials public/assets/uploads/avatars
+    find public/assets/uploads -type d -exec chmod 777 {} \; 2>/dev/null || true
+    
     docker compose up "${@}"
 }
 
@@ -84,6 +88,16 @@ function db:reset {
 
 function db:populate {
     docker compose exec php php database/Populate/populate.php
+}
+
+function setup:permissions {
+    echo "Setting up upload directories and permissions..."
+    mkdir -p public/assets/uploads/materials public/assets/uploads/avatars
+    
+    # Only change permissions on directories, not files
+    find public/assets/uploads -type d -exec chmod 777 {} \; 2>/dev/null || true
+    
+    echo "✓ Permissions configured successfully!"
 }
 
 TIMEFORMAT=$'\nTask completed in %3lR'

@@ -6,17 +6,46 @@
                 <p class="text-secondary mb-0">Bem-vindo, <?= htmlspecialchars($this->currentUser()->name) ?>!</p>
             </div>
             <div class="decks-header-actions">
-                <a href="<?= route('cards.new') ?>" class="create-deck-btn">
+                <?php 
+                $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $currentSort = $_GET['sort'] ?? 'created_desc';
+                ?>
+                <a href="<?= route('cards.new') ?>?page=<?= $currentPage ?>&sort=<?= urlencode($currentSort) ?>" class="create-deck-btn">
                     <i class="bi bi-plus-circle"></i> <span>Adicionar Card</span>
                 </a>
-                <a href="<?= route('decks.new') ?>" class="create-deck-btn">
+                <a href="<?= route('decks.new') ?>?page=<?= $currentPage ?>&sort=<?= urlencode($currentSort) ?>" class="create-deck-btn">
                     <i class="bi bi-plus-circle"></i> <span>Criar Novo Deck</span>
                 </a>
             </div>
         </div>
 
-        <?php if ($paginator->totalOfRegisters() > 0):
-        ?>
+        <?php if ($paginator->totalOfRegisters() > 0): ?>
+            <!-- Filtro de Ordenação -->
+            <div class="decks-filters">
+                <div class="filter-group">
+                    <label for="sort-select">
+                        <i class="bi bi-funnel"></i> Ordenar por:
+                    </label>
+                    <select id="sort-select" class="filter-select" onchange="window.location.href='/decks?sort=' + this.value + '&page=1'">
+                        <option value="review_priority" <?= ($currentSort ?? '') === 'review_priority' ? 'selected' : '' ?>>
+                            Prioridade de Revisão
+                        </option>
+                        <option value="created_desc" <?= ($currentSort ?? 'created_desc') === 'created_desc' ? 'selected' : '' ?>>
+                            Mais Recentes
+                        </option>
+                        <option value="created_asc" <?= ($currentSort ?? '') === 'created_asc' ? 'selected' : '' ?>>
+                            Mais Antigos
+                        </option>
+                        <option value="name_asc" <?= ($currentSort ?? '') === 'name_asc' ? 'selected' : '' ?>>
+                            Nome (A-Z)
+                        </option>
+                        <option value="name_desc" <?= ($currentSort ?? '') === 'name_desc' ? 'selected' : '' ?>>
+                            Nome (Z-A)
+                        </option>
+                    </select>
+                </div>
+            </div>
+
             <table class="decks-table">
                 <thead>
                     <tr>
@@ -29,7 +58,11 @@
                 </thead>
                 <tbody>
                     <?php foreach ($paginator->registers() as $deck): ?>
-                        <tr class="deck-row-clickable" onclick="window.location.href='/decks/<?= $deck->id ?>';" style="cursor: pointer;">
+                        <?php 
+                        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                        $currentSort = $_GET['sort'] ?? 'created_desc';
+                        ?>
+                        <tr class="deck-row-clickable" onclick="window.location.href='/decks/<?= $deck->id ?>?page=<?= $currentPage ?>&sort=<?= urlencode($currentSort) ?>';" style="cursor: pointer;">
                             <td>
                                 <div class="deck-name"><?= htmlspecialchars($deck->name) ?></div>
                                 <div class="deck-description"><?= htmlspecialchars($deck->description) ?></div>
@@ -51,7 +84,10 @@
                             </td>
                             <td onclick="event.stopPropagation();">
                                 <div class="deck-actions">
-                                    <a class="action-btn btn-edit" href='<?= route('decks.edit', ['id' => $deck->id]) ?>' title="Editar deck">
+                                    <a class="action-btn btn-materials" href='<?= route('materials.index', ['deck_id' => $deck->id, 'page' => $currentPage, 'sort' => $currentSort]) ?>' title="Materiais de apoio">
+                                        <i class="bi bi-file-earmark-pdf"></i>
+                                    </a>
+                                    <a class="action-btn btn-edit" href='<?= route('decks.edit', ['id' => $deck->id, 'page' => $currentPage]) ?>?sort=<?= urlencode($currentSort) ?>' title="Editar deck">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                     <form
@@ -60,6 +96,8 @@
                                         style="display: inline;"
                                         onsubmit="return confirm('Tem certeza que deseja excluir este deck?');">
                                         <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="page" value="<?= $currentPage ?>">
+                                        <input type="hidden" name="sort" value="<?= htmlspecialchars($currentSort) ?>">
                                         <button type="submit" class="action-btn btn-delete" title="Excluir deck">
                                             <i class="bi bi-trash"></i>
                                         </button>
@@ -82,7 +120,11 @@
                 <i class="bi bi-inbox"></i>
                 <h3>Nenhum deck encontrado</h3>
                 <p>Comece criando seu primeiro deck de estudos!</p>
-                <a href="<?= route('decks.new') ?>" class="create-deck-btn" style="display: inline-block; margin-top: 1rem;">
+                <?php 
+                $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $currentSort = $_GET['sort'] ?? 'created_desc';
+                ?>
+                <a href="<?= route('decks.new') ?>?page=<?= $currentPage ?>&sort=<?= urlencode($currentSort) ?>" class="create-deck-btn" style="display: inline-block; margin-top: 1rem;">
                     <i class="bi bi-plus-circle"></i> Criar Primeiro Deck
                 </a>
             </div>

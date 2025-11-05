@@ -5,6 +5,11 @@
                 <i class="bi bi-arrow-left"></i> Voltar
             </a>
             <h3 class="study-deck-name"><?= htmlspecialchars($deck->name) ?></h3>
+            <?php if (!empty($materials)): ?>
+                <button type="button" class="btn btn-materials-study" data-bs-toggle="modal" data-bs-target="#materialsModal">
+                    <i class="bi bi-file-earmark-pdf"></i> Materiais (<?= count($materials) ?>)
+                </button>
+            <?php endif; ?>
         </div>
         <div class="study-progress-bar">
             <div class="progress">
@@ -120,3 +125,46 @@
         <?php endif; ?>
     </div>
 </div>
+
+<!-- Modal de Materiais -->
+<?php if (!empty($materials)): ?>
+<div class="modal fade" id="materialsModal" tabindex="-1" aria-labelledby="materialsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content materials-modal-content">
+            <div class="modal-header materials-modal-header">
+                <h5 class="modal-title" id="materialsModalLabel">
+                    <i class="bi bi-file-earmark-pdf"></i> Materiais de Apoio
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body materials-modal-body">
+                <div class="materials-list">
+                    <?php foreach ($materials as $material): ?>
+                        <div class="material-item-modal">
+                            <div class="material-info-modal">
+                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                                <div>
+                                    <h6><?= htmlspecialchars($material->title) ?></h6>
+                                    <small><?= $material->getFormattedSize() ?></small>
+                                </div>
+                            </div>
+                            <div class="material-actions-modal">
+                                <a href="<?= $material->getFileUrl() ?>"
+                                   target="_blank"
+                                   class="btn btn-sm btn-secondary">
+                                    <i class="bi bi-eye"></i> Ver
+                                </a>
+                                <a href="<?= $material->getFileUrl() ?>"
+                                   download
+                                   class="btn btn-sm btn-secondary">
+                                    <i class="bi bi-download"></i> Baixar
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

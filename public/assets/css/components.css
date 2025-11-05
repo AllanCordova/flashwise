@@ -45,7 +45,7 @@ input[type="button"] {
 input[type="submit"] {
   background: var(--gradient-accent);
   color: white !important;
-  border: none;
+  border: none !important;
   box-shadow: var(--shadow-lg);
 }
 
@@ -55,6 +55,18 @@ input[type="submit"]:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-xl);
   color: white !important;
+  border: none !important;
+}
+
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible,
+input[type="submit"]:focus,
+input[type="submit"]:active {
+  outline: none !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: none !important;
+  border-color: transparent !important;
 }
 
 /* Botão Secundário - Monocromático com borda */
@@ -790,4 +802,33 @@ input:checked + .toggle-slider:before {
   .divider {
     margin: 1.5rem 0;
   }
+}
+
+/* ========== OVERRIDE GLOBAL PARA BOOTSTRAP ========== */
+/* Força a remoção de bordas azuis em TODOS os botões primários */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle,
+.show > .btn-primary.dropdown-toggle:focus {
+  border: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+}
+
+.btn-primary:hover {
+  background: var(--gradient-accent-hover) !important;
+  box-shadow: var(--shadow-xl) !important;
+}
+
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible {
+  box-shadow: var(--shadow-lg) !important;
 }

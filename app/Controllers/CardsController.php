@@ -9,10 +9,21 @@ use Core\Http\Request;
 
 class CardsController extends Controller
 {
-    public function new(): void
+    public function new(Request $request): void
     {
         $decks = $this->current_user->decks()->all();
         $card = new Card();
+
+        // Pre-select deck if provided
+        $preselectedDeckId = $request->getParam('deck_id');
+        if ($preselectedDeckId) {
+            $card->deck_id = $preselectedDeckId;
+        }
+
+        // Store return page for navigation
+        $returnPage = $request->getParam('page') ?? 1;
+        $returnDeckId = $request->getParam('return_deck_id');
+        $returnSort = $request->getParam('sort') ?? 'created_desc';
 
         // Check if user has at least one deck
         if (empty($decks)) {
@@ -21,13 +32,16 @@ class CardsController extends Controller
             return;
         }
 
-        $this->render('cards/new', compact('decks', 'card'));
+        $this->render('cards/new', compact('decks', 'card', 'returnPage', 'returnDeckId', 'returnSort'));
     }
 
     public function create(Request $request): void
     {
         $params = $request->getParam('card');
         $decks = $this->current_user->decks()->all();
+        $returnPage = $request->getParam('page') ?? 1;
+        $returnDeckId = $request->getParam('return_deck_id');
+        $returnSort = $request->getParam('sort') ?? 'created_desc';
 
         // Verify deck belongs to user
         $deckId = $params['deck_id'] ?? null;
@@ -36,7 +50,7 @@ class CardsController extends Controller
         if (!$deck) {
             FlashMessage::danger('Deck inválido ou não pertence a você.');
             $card = new Card($params);
-            $this->render('cards/new', compact('card', 'decks'));
+            $this->render('cards/new', compact('card', 'decks', 'returnPage', 'returnDeckId', 'returnSort'));
             return;
         }
 
@@ -56,16 +70,25 @@ class CardsController extends Controller
 
         if ($card->save()) {
             FlashMessage::success('Card criado com sucesso');
-            $this->redirectTo('/decks');
+
+            // Redirect to the deck edit page if coming from there, otherwise to decks list
+            if ($returnDeckId) {
+                $this->redirectTo('/decks/' . $returnDeckId . '/edit?page=' . $returnPage . '&sort=' . urlencode($returnSort));
+            } else {
+                $this->redirectTo('/decks?page=' . $returnPage . '&sort=' . urlencode($returnSort));
+            }
         } else {
             FlashMessage::danger('Não foi possível criar o card. Preencha todos os campos!');
-            $this->render('cards/new', compact('card', 'decks'));
+            $this->render('cards/new', compact('card', 'decks', 'returnPage', 'returnDeckId', 'returnSort'));
         }
     }
 
     public function edit(Request $request): void
     {
         $id = $request->getParam('id');
+        $returnPage = $request->getParam('page') ?? 1;
+        $returnDeckId = $request->getParam('return_deck_id');
+        $returnSort = $request->getParam('sort') ?? 'created_desc';
 
         $card = Card::findById($id);
 
@@ -88,7 +111,10 @@ class CardsController extends Controller
 
         $this->render('cards/edit', [
             'card' => $card,
-            'decks' => $decks
+            'decks' => $decks,
+            'returnPage' => $returnPage,
+            'returnDeckId' => $returnDeckId ?? $card->deck_id,
+            'returnSort' => $returnSort
         ]);
     }
 
@@ -96,6 +122,9 @@ class CardsController extends Controller
     {
         $id = $request->getParam('id');
         $params = $request->getParam('card');
+        $returnPage = $request->getParam('page') ?? 1;
+        $returnDeckId = $request->getParam('return_deck_id');
+        $returnSort = $request->getParam('sort') ?? 'created_desc';
 
         $card = Card::findById($id);
 
@@ -123,7 +152,7 @@ class CardsController extends Controller
 
         if (!$newDeck) {
             FlashMessage::danger('Deck de destino inválido ou não pertence a você.');
-            $this->render('cards/edit', compact('card', 'decks'));
+            $this->render('cards/edit', compact('card', 'decks', 'returnPage', 'returnDeckId', 'returnSort'));
             return;
         }
 
@@ -133,16 +162,24 @@ class CardsController extends Controller
 
         if ($card->save()) {
             FlashMessage::success('Card atualizado com sucesso');
-            $this->redirectTo('/decks/' . $deckId . '/edit');
+
+            // Redirect back to the deck edit page if coming from there
+            if ($returnDeckId) {
+                $this->redirectTo('/decks/' . $returnDeckId . '/edit?page=' . $returnPage . '&sort=' . urlencode($returnSort));
+            } else {
+                $this->redirectTo('/decks/' . $deckId . '/edit?page=' . $returnPage . '&sort=' . urlencode($returnSort));
+            }
         } else {
             FlashMessage::danger('Não foi possível atualizar o card. Preencha todos os campos!');
-            $this->render('cards/edit', compact('card', 'decks'));
+            $this->render('cards/edit', compact('card', 'decks', 'returnPage', 'returnDeckId', 'returnSort'));
         }
     }
 
     public function destroy(Request $request): void
     {
         $id = $request->getParam('id');
+        $returnPage = $request->getParam('page') ?? 1;
+        $returnSort = $request->getParam('sort') ?? 'created_desc';
 
         $card = Card::findById($id);
 
@@ -169,6 +206,6 @@ class CardsController extends Controller
             FlashMessage::danger('Ocorreu um erro ao remover o card.');
         }
 
-        $this->redirectTo('/decks/' . $deckId . '/edit');
+        $this->redirectTo('/decks/' . $deckId . '/edit?page=' . $returnPage . '&sort=' . urlencode($returnSort));
     }
 }

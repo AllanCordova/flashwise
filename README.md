@@ -40,6 +40,8 @@ ou
 ./run up -d
 ```
 
+> **Nota**: O comando `./run up` configura automaticamente as permissões dos diretórios de upload. As permissões são aplicadas apenas aos diretórios, não aos arquivos já existentes.
+
 #### Create database and tables
 
 ```
@@ -52,11 +54,15 @@ ou
 ./run db:populate
 ```
 
-### Fixed uploads folder permission
+#### Setup upload permissions (opcional)
+
+Se necessário, você pode reconfigurar as permissões dos diretórios de upload manualmente:
 
 ```
-sudo chown www-data:www-data public/assets/uploads
+./run setup:permissions
 ```
+
+> **Nota**: Este comando cria os diretórios necessários e configura permissões apenas em diretórios, preservando arquivos já enviados.
 
 #### Run the tests
 

@@ -18,6 +18,8 @@ class RequestTest extends TestCase
 
     public function tearDown(): void
     {
+        $_GET = [];
+        $_POST = [];
         $_REQUEST = [];
         unset($_SERVER['REQUEST_METHOD']);
         unset($_SERVER['REQUEST_URI']);
@@ -38,7 +40,7 @@ class RequestTest extends TestCase
 
     public function test_should_return_params(): void
     {
-        $_REQUEST = ['name' => 'John Doe'];
+        $_GET = ['name' => 'John Doe'];
         $request = new Request();
         $this->assertEquals(['name' => 'John Doe'], $request->getParams());
     }
@@ -78,7 +80,7 @@ class RequestTest extends TestCase
 
     public function test_get_param_should_return_the_param(): void
     {
-        $_REQUEST = ['name' => 'John Doe'];
+        $_GET = ['name' => 'John Doe'];
         $request = new Request();
 
         $this->assertEquals('John Doe', $request->getParam('name'));
@@ -87,7 +89,7 @@ class RequestTest extends TestCase
 
     public function test_get_param_should_return_the_default_value_when_param_not_found(): void
     {
-        $_REQUEST = ['name' => 'John Doe'];
+        $_GET = ['name' => 'John Doe'];
         $request = new Request();
 
         $this->assertEquals('John Doe', $request->getParam('name', 'Jane Doe'));

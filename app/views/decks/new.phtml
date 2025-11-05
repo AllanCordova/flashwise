@@ -6,6 +6,9 @@
         </div>
 
         <form id="deck_create" action="/decks" method="POST" class="deck-form <?= $deck->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+            <input type="hidden" name="page" value="<?= $returnPage ?? 1 ?>">
+            <input type="hidden" name="sort" value="<?= htmlspecialchars($returnSort ?? 'created_desc') ?>">
+            
             <div class="form-group-deck">
                 <label for="deck_name">
                     <i class="bi bi-card-heading"></i> Nome do Deck
@@ -48,7 +51,7 @@
             </div>
 
             <div class="form-actions-deck">
-                <a href="/decks" class="btn-deck btn-deck-secondary">
+                <a href="/decks?page=<?= $returnPage ?? 1 ?>&sort=<?= urlencode($returnSort ?? 'created_desc') ?>" class="btn-deck btn-deck-secondary">
                     <i class="bi bi-arrow-left"></i> Cancelar
                 </a>
                 <button type="submit" class="btn-deck btn-deck-primary">

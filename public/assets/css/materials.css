@@ -1,0 +1,708 @@
+/* Materials Page Styling - FlashWise Theme */
+
+/* Botão Adicionar Material - Remove borda azul do Bootstrap em todos os estados */
+.materials-header-actions .btn-primary,
+.materials-header-actions .btn-primary:hover,
+.materials-header-actions .btn-primary:focus,
+.materials-header-actions .btn-primary:active,
+.materials-header-actions .btn-primary:focus-visible,
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible {
+    outline: none !important;
+    box-shadow: var(--shadow-lg) !important;
+    border: none !important;
+    border-color: transparent !important;
+}
+
+/* Hover do botão primário */
+.materials-header-actions .btn-primary:hover,
+.btn-primary:hover {
+    background: var(--gradient-accent-hover) !important;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl) !important;
+    border: none !important;
+    border-color: transparent !important;
+}
+
+/* Remove o estilo de foco do Bootstrap especificamente */
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: var(--shadow-lg) !important;
+    border: none !important;
+}
+
+.materials-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    width: 90%;
+}
+
+.materials-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-primary);
+}
+
+.materials-header h2 {
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.materials-header h2 i {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+}
+
+.materials-header p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.materials-header-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Materials Grid */
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.material-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    transition: all var(--transition-normal);
+}
+
+.material-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    border-color: var(--border-accent);
+}
+
+.material-icon {
+    font-size: 3rem;
+    color: var(--accent-color);
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+    margin-top: 0.25rem;
+}
+
+.material-card:hover .material-icon {
+    transform: scale(1.1);
+}
+
+.material-info {
+    flex: 1;
+    min-width: 0;
+    padding-right: 1rem;
+}
+
+.material-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+}
+
+.material-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.material-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.material-meta i {
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.material-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.material-actions .btn {
+    min-width: 42px;
+    height: 42px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.material-actions .btn i {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    color: var(--text-secondary);
+}
+
+.empty-state-icon {
+    font-size: 5rem;
+    color: var(--text-tertiary);
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.empty-state .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--btn-padding);
+    font-size: var(--btn-font-size);
+    text-decoration: none;
+}
+
+.empty-state .btn i {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* Form Page */
+.materials-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.materials-form-card {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.materials-form-header {
+    background: var(--gradient-accent);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+}
+
+.materials-form-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.materials-form-body {
+    padding: 2rem;
+}
+
+.form-deck-info {
+    background: var(--bg-tertiary);
+    border-left: 4px solid var(--accent-color);
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+}
+
+.form-deck-info p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.form-deck-info strong {
+    color: var(--text-primary);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-label .text-danger {
+    color: var(--accent-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(214, 58, 92, 0.1);
+}
+
+.form-control.is-invalid {
+    border-color: var(--accent-color);
+}
+
+/* Custom File Input */
+.form-control[type="file"] {
+    padding: 0 1rem 0 0;
+    cursor: pointer;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+}
+
+.form-control[type="file"]::file-selector-button {
+    padding: 0.875rem 1.5rem;
+    margin: 0;
+    margin-right: 1rem;
+    background: var(--gradient-accent);
+    color: white;
+    border: none;
+    border-right: 1px solid var(--border-primary);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-normal);
+    height: 100%;
+    white-space: nowrap;
+}
+
+.form-control[type="file"]::file-selector-button:hover {
+    background: var(--gradient-accent-hover);
+}
+
+/* Wrapper para o input file com melhor aparência */
+.file-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+}
+
+.file-input-wrapper input[type="file"] {
+    border: none;
+    padding: 0.875rem 1rem;
+    flex: 1;
+}
+
+.invalid-feedback {
+    display: block;
+    color: var(--accent-color);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.form-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.form-text i {
+    color: var(--text-tertiary);
+}
+
+/* Form Tip - Estilo de dica como nos outros CRUDs */
+.form-tip {
+    background-color: var(--bg-primary) !important;
+    border-left: 4px solid var(--accent-color);
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+}
+
+.form-tip p {
+    margin: 0;
+    color: var(--text-secondary) !important;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.form-tip i {
+    color: var(--accent-color) !important;
+    margin-right: 0.5rem;
+}
+
+.form-tip strong {
+    color: var(--text-primary) !important;
+}
+
+/* Alert Info - mantido para compatibilidade */
+.alert-info {
+    background-color: var(--bg-primary) !important;
+    border-left: 4px solid var(--accent-color);
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+    border: 1px solid var(--border-primary);
+    border-left: 4px solid var(--accent-color);
+}
+
+.alert-info p {
+    margin: 0;
+    color: var(--text-primary) !important;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.alert-info i {
+    color: var(--accent-color) !important;
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+.alert-info strong {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.form-actions .btn-primary {
+    order: 1;
+}
+
+.form-actions .btn-secondary {
+    order: 2;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .materials-container {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .materials-header {
+        gap: 1rem;
+    }
+
+    .materials-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .materials-container {
+        width: 100%;
+        padding: 1.25rem;
+        border-radius: 8px;
+    }
+
+    .materials-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+
+    .materials-header-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .materials-header-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .materials-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .material-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.25rem;
+    }
+
+    .material-title {
+        white-space: normal;
+    }
+
+    .material-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .empty-state {
+        padding: 3rem 1.5rem;
+    }
+
+    .empty-state-icon {
+        font-size: 4rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.3rem;
+    }
+
+    .materials-form-container {
+        padding: 1rem;
+    }
+
+    .materials-form-header {
+        padding: 1.5rem;
+    }
+
+    .materials-form-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .materials-form-body {
+        padding: 1.5rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .materials-container {
+        padding: 1rem;
+    }
+
+    .materials-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .material-card {
+        padding: 1rem;
+    }
+
+    .material-icon {
+        font-size: 2.5rem;
+    }
+
+    .material-title {
+        font-size: 1rem;
+    }
+
+    .material-meta {
+        font-size: 0.8rem;
+    }
+
+    .material-actions .btn {
+        min-width: 36px;
+        height: 36px;
+    }
+
+    .empty-state {
+        padding: 2.5rem 1.25rem;
+    }
+
+    .empty-state-icon {
+        font-size: 3.5rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.2rem;
+    }
+
+    .empty-state p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Materials Modal in Study Page */
+.btn-materials-study {
+    background: rgba(214, 58, 92, 0.15);
+    color: var(--accent-color);
+    border: 1px solid rgba(214, 58, 92, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-materials-study:hover {
+    background: rgba(214, 58, 92, 0.25);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.materials-modal-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+}
+
+.materials-modal-header {
+    background: var(--gradient-accent);
+    color: white;
+    padding: 1.5rem;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+}
+
+.materials-modal-header .modal-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.materials-modal-body {
+    padding: 1.5rem;
+}
+
+.materials-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.material-item-modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    border: 1px solid var(--border-primary);
+    transition: all var(--transition-fast);
+}
+
+.material-item-modal:hover {
+    border-color: var(--accent-color);
+    transform: translateX(5px);
+}
+
+.material-info-modal {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.material-info-modal i {
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+.material-info-modal h6 {
+    margin: 0 0 0.25rem 0;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.material-info-modal small {
+    color: var(--text-secondary);
+}
+
+.material-actions-modal {
+    display: flex;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .study-header-content {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .btn-materials-study {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .material-item-modal {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .material-actions-modal {
+        width: 100%;
+    }
+
+    .material-actions-modal .btn {
+        flex: 1;
+    }
+}

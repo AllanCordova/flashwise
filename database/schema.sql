@@ -1,5 +1,6 @@
 SET foreign_key_checks = 0;
 
+DROP TABLE IF EXISTS materials;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS cards;
 DROP TABLE IF EXISTS decks;
@@ -48,6 +49,18 @@ CREATE TABLE cards (
     INDEX idx_deck_id (deck_id),
     INDEX idx_card_type (card_type),
     INDEX idx_next_review (next_review)
+);
+
+CREATE TABLE materials (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    deck_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    file_size INT NOT NULL,
+    mime_type VARCHAR(100) NOT NULL,
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (deck_id) REFERENCES decks(id) ON DELETE CASCADE,
+    INDEX idx_deck_id (deck_id)
 );
 
 SET foreign_key_checks = 1;
