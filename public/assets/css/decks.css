@@ -58,6 +58,69 @@
   margin-right: 0;
 }
 
+/* Filtro de Ordenação */
+.decks-filters {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-group label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-group label i {
+  font-size: 1rem;
+  color: var(--accent-color);
+}
+
+.filter-select {
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 200px;
+}
+
+.filter-select:hover {
+  border-color: var(--accent-color);
+  background-color: var(--bg-tertiary);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(214, 58, 92, 0.1);
+}
+
+.filter-select option {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 0.5rem;
+}
+
 /* Decks Table */
 .decks-table {
   width: 100%;
@@ -205,11 +268,24 @@
 }
 
 /* Botões de ação quadrados - apenas ícones */
+.action-btn.btn-materials,
 .action-btn.btn-edit,
 .action-btn.btn-delete {
   width: 36px;
   height: 36px;
   padding: 0;
+}
+
+.action-btn.btn-materials {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.action-btn.btn-materials:hover {
+  background: rgba(220, 53, 69, 0.2);
+  border-color: #dc3545;
+  transform: translateY(-2px);
 }
 
 .action-btn.btn-edit {
@@ -334,6 +410,26 @@
     justify-content: center;
     padding: 0.8rem 1.5rem;
     font-size: 0.95rem;
+  }
+
+  /* Filtros em mobile */
+  .decks-filters {
+    padding: 1rem;
+  }
+
+  .filter-group {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .filter-group label {
+    font-size: 0.85rem;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: auto;
   }
 
   /* Transformar tabela em cards em mobile */

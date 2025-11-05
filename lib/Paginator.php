@@ -22,7 +22,9 @@ class Paginator
         private string $table,
         private array $attributes,
         private array $conditions = [],
-        private ?string $route = null
+        private ?string $route = null,
+        private ?string $orderBy = null,
+        private string $orderDirection = 'ASC'
     ) {
         $this->loadTotals();
         $this->loadRegisters();
@@ -111,7 +113,7 @@ class Paginator
         $stmt->execute();
 
         $this->totalOfRegisters = $stmt->fetchColumn();
-        $this->totalOfPages = ceil($this->totalOfRegisters / $this->per_page);
+        $this->totalOfPages = (int) ceil($this->totalOfRegisters / $this->per_page);
     }
 
     private function loadRegisters(): void
@@ -124,6 +126,7 @@ class Paginator
         $sql = <<<SQL
             SELECT id, {$attributes} FROM {$this->table}
             {$this->buildConditions()}
+            {$this->buildOrderBy()}
             LIMIT :limit OFFSET :offset
         SQL;
 
@@ -166,5 +169,20 @@ class Paginator
         foreach ($this->conditions as $column => $value) {
             $stmt->bindValue($column, $value);
         }
+    }
+
+    private function buildOrderBy(): string
+    {
+        if ($this->orderBy === null) {
+            return '';
+        }
+
+        // Validate order direction to prevent SQL injection
+        $direction = strtoupper($this->orderDirection);
+        if (!in_array($direction, ['ASC', 'DESC'])) {
+            $direction = 'ASC';
+        }
+
+        return "ORDER BY {$this->orderBy} {$direction}";
     }
 }

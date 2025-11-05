@@ -7,6 +7,10 @@
 
         <form id="card_update" action="<?= route('cards.update', ['id' => $card->id]) ?>" method="post" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
             <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="page" value="<?= $returnPage ?? 1 ?>">
+            <input type="hidden" name="return_deck_id" value="<?= $returnDeckId ?? $card->deck_id ?>">
+            <input type="hidden" name="sort" value="<?= htmlspecialchars($returnSort ?? 'created_desc') ?>">
+            
             <div class="form-group-card">
                 <label for="deck_id">
                     <i class="bi bi-collection"></i> Deck
@@ -68,7 +72,7 @@
             </div>
 
             <div class="form-actions-card">
-                <a href="<?= route('decks.edit', ['id' => $card->deck_id]) ?>" class="btn-card btn-card-secondary">
+                <a href="<?= route('decks.edit', ['id' => $returnDeckId ?? $card->deck_id]) ?>?page=<?= $returnPage ?? 1 ?>&sort=<?= urlencode($returnSort ?? 'created_desc') ?>" class="btn-card btn-card-secondary">
                     <i class="bi bi-x-circle"></i> Cancelar
                 </a>
                 <button type="submit" class="btn-card btn-card-primary">

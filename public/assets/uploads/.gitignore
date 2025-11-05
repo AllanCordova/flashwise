@@ -1,0 +1,12 @@
+# Ignore all uploaded files
+*
+!.gitignore
+!.gitkeep
+
+# Keep directory structure
+!avatars/
+!materials/
+avatars/*
+materials/*
+!avatars/.gitkeep
+!materials/.gitkeep

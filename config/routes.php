@@ -7,6 +7,7 @@ use App\Controllers\CardsController;
 use App\Controllers\AdminController;
 use App\Controllers\RegisterController;
 use App\Controllers\StudyController;
+use App\Controllers\MaterialsController;
 use Core\Router\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -53,6 +54,17 @@ Route::middleware('auth')->group(function () {
 
     // delete
     Route::delete('/cards/{id}', [CardsController::class, 'destroy'])->name('cards.destroy');
+
+    // materials
+    // view
+    Route::get('/materials', [MaterialsController::class, 'index'])->name('materials.index');
+
+    // create
+    Route::get('/materials/new', [MaterialsController::class, 'new'])->name('materials.new');
+    Route::post('/materials', [MaterialsController::class, 'create'])->name('materials.create');
+
+    // delete
+    Route::delete('/materials/{id}', [MaterialsController::class, 'destroy'])->name('materials.destroy');
 
     // view
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');

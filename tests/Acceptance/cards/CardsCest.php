@@ -100,7 +100,7 @@ class CardsCest extends BaseAcceptanceCest
 
         $I->wait(1);
         $I->see('Card criado com sucesso');
-        $I->seeCurrentUrlEquals('/decks');
+        $I->seeCurrentUrlEquals('/decks?page=1&sort=created_desc');
     }
 
     public function tryToCreateWithNoDataValidation(AcceptanceTester $I): void
@@ -149,7 +149,7 @@ class CardsCest extends BaseAcceptanceCest
 
         $I->wait(1);
         $I->see('Card atualizado com sucesso');
-        $I->seeCurrentUrlEquals('/decks/' . $this->currentDeck->id . '/edit');
+        $I->seeCurrentUrlMatches('~^/decks/' . $this->currentDeck->id . '/edit(\?.*)?$~');
     }
 
     public function tryToUpdateWithNoDataValidation(AcceptanceTester $I): void
@@ -201,7 +201,7 @@ class CardsCest extends BaseAcceptanceCest
 
         $I->wait(2);
         $I->see('Card removido com sucesso!');
-        $I->seeCurrentUrlEquals('/decks/' . $this->currentDeck->id . '/edit');
+        $I->seeCurrentUrlMatches('~^/decks/' . $this->currentDeck->id . '/edit(\?.*)?$~');
 
         $I->wait(0.5);
         $I->seeNumberOfElements('.cards-table tbody tr', 2);
@@ -238,6 +238,6 @@ class CardsCest extends BaseAcceptanceCest
 
         $I->wait(1);
         $I->see('Card atualizado com sucesso');
-        $I->seeCurrentUrlEquals('/decks/' . $this->currentDeck->id . '/edit');
+        $I->seeCurrentUrlMatches('~^/decks/' . $this->currentDeck->id . '/edit(\?.*)?$~');
     }
 }

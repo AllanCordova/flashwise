@@ -17,6 +17,7 @@ use Core\Database\ActiveRecord\BelongsTo;
  * @property string $created_at
  * @property string $updated_at
  * @property Card[] $cards
+ * @property Material[] $materials
  * @property User $user
  */
 class Deck extends Model
@@ -42,6 +43,11 @@ class Deck extends Model
     public function cards(): HasMany
     {
         return $this->hasMany(Card::class, 'deck_id');
+    }
+
+    public function materials(): HasMany
+    {
+        return $this->hasMany(Material::class, 'deck_id');
     }
 
     public function user(): BelongsTo
@@ -121,5 +127,47 @@ class Deck extends Model
     public function hasCardsToStudy(): bool
     {
         return $this->countNewCards() > 0 || $this->countDueCards() > 0;
+    }
+
+    /**
+     * Delete all materials (including physical files) associated with this deck
+     */
+    public function deleteMaterials(): void
+    {
+        $materials = $this->materials;
+
+        foreach ($materials as $material) {
+            // Delete physical file
+            $material->deleteFile();
+            // Delete database record
+            $material->destroy();
+        }
+    }
+
+    /**
+     * Delete all cards associated with this deck
+     */
+    public function deleteCards(): void
+    {
+        $cards = $this->cards;
+
+        foreach ($cards as $card) {
+            $card->destroy();
+        }
+    }
+
+    /**
+     * Override destroy method to delete associated materials and cards
+     */
+    public function destroy(): bool
+    {
+        // Delete all materials (including files)
+        $this->deleteMaterials();
+
+        // Delete all cards
+        $this->deleteCards();
+
+        // Delete the deck itself
+        return parent::destroy();
     }
 }

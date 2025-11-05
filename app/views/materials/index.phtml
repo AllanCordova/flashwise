@@ -1,0 +1,75 @@
+<div class="container py-4">
+    <div class="materials-container">
+        <div class="materials-header">
+            <div>
+                <h2><i class="bi bi-file-earmark-pdf"></i> Materiais de Apoio</h2>
+                <p class="text-secondary mb-0">Deck: <strong><?= htmlspecialchars($deck->name) ?></strong></p>
+            </div>
+            <div class="materials-header-actions">
+                <a href="<?= route('decks.index', ['page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <a href="<?= route('materials.new', ['deck_id' => $deck->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Adicionar Material
+                </a>
+            </div>
+        </div>
+
+        <?php if (!empty($materials)): ?>
+            <div class="materials-grid">
+                <?php foreach ($materials as $material): ?>
+                    <div class="material-card">
+                        <div class="material-icon">
+                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                        </div>
+                        <div class="material-info">
+                            <h3 class="material-title"><?= htmlspecialchars($material->title) ?></h3>
+                            <div class="material-meta">
+                                <span class="material-size">
+                                    <i class="bi bi-hdd"></i> <?= $material->getFormattedSize() ?>
+                                </span>
+                                <span class="material-date">
+                                    <i class="bi bi-calendar"></i>
+                                    <?= date('d/m/Y H:i', strtotime($material->uploaded_at)) ?>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="material-actions">
+                            <a href="<?= $material->getFileUrl() ?>"
+                               target="_blank"
+                               class="btn btn-sm btn-secondary"
+                               title="Visualizar PDF">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="<?= $material->getFileUrl() ?>"
+                               download
+                               class="btn btn-sm btn-secondary"
+                               title="Baixar PDF">
+                                <i class="bi bi-download"></i>
+                            </a>
+                            <form action="<?= route('materials.destroy', ['id' => $material->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>"
+                                  method="POST"
+                                  style="display: inline;"
+                                  onsubmit="return confirm('Tem certeza que deseja excluir este material?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <div class="empty-state">
+                <i class="bi bi-inbox empty-state-icon"></i>
+                <h3>Nenhum material encontrado</h3>
+                <p>Adicione materiais de apoio em PDF para complementar seus estudos!</p>
+                <a href="<?= route('materials.new', ['deck_id' => $deck->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>"
+                   class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Adicionar Primeiro Material
+                </a>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

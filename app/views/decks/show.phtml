@@ -1,7 +1,7 @@
 <div class="container py-4">
     <div class="deck-details-container">
         <div class="deck-details-header">
-            <a href="<?= route('decks.index') ?>" class="back-arrow">
+            <a href="<?= route('decks.index') ?>?page=<?= $returnPage ?? 1 ?>&sort=<?= urlencode($returnSort ?? 'created_desc') ?>" class="back-arrow">
                 <i class="bi bi-arrow-left"></i>
             </a>
             <div class="deck-details-title">
@@ -39,7 +39,7 @@
                 <h3>Parabéns!</h3>
                 <p>Você terminou este deck por enquanto.</p>
                 <?php if ($totalCards === 0): ?>
-                    <p class="small-text">Este deck ainda não possui cards. <a href="/cards/new">Adicione alguns cards</a> para começar a estudar!</p>
+                    <p class="small-text">Este deck ainda não possui cards. <a href="/cards/new?deck_id=<?= $deck->id ?>&return_deck_id=<?= $deck->id ?>&page=<?= $returnPage ?? 1 ?>">Adicione alguns cards</a> para começar a estudar!</p>
                 <?php else: ?>
                     <p class="small-text">Volte mais tarde para revisar seus cards.</p>
                 <?php endif; ?>

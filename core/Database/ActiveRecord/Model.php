@@ -86,6 +86,19 @@ abstract class Model
         throw new \Exception("Property {$property} not found in " . static::class);
     }
 
+    public function __isset(string $property): bool
+    {
+        if (property_exists($this, $property)) {
+            return isset($this->$property);
+        }
+
+        if (array_key_exists($property, $this->attributes)) {
+            return $this->attributes[$property] !== null;
+        }
+
+        return false;
+    }
+
     public static function table(): string
     {
         return static::$table;
@@ -284,7 +297,7 @@ abstract class Model
     /**
      * @param array<string, mixed> $conditions
      */
-    public static function paginate(int $page = 1, int $per_page = 10, string $route = null, array $conditions = []): Paginator
+    public static function paginate(int $page = 1, int $per_page = 10, string $route = null, array $conditions = [], ?string $orderBy = null, string $orderDirection = 'ASC'): Paginator
     {
         return new Paginator(
             class: static::class,
@@ -294,6 +307,8 @@ abstract class Model
             attributes: static::$columns,
             conditions: $conditions,
             route: $route,
+            orderBy: $orderBy,
+            orderDirection: $orderDirection
         );
     }
 

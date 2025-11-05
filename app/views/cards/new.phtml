@@ -6,6 +6,10 @@
         </div>
 
         <form id="card_create" action="<?= route('cards.create') ?>" method="POST" class="card-form <?= $card->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+            <input type="hidden" name="page" value="<?= $returnPage ?? 1 ?>">
+            <input type="hidden" name="return_deck_id" value="<?= $returnDeckId ?? '' ?>">
+            <input type="hidden" name="sort" value="<?= htmlspecialchars($returnSort ?? 'created_desc') ?>">
+            
             <div class="form-group-card">
                 <label for="deck_id">
                     <i class="bi bi-collection"></i> Deck
@@ -16,7 +20,7 @@
                     name="card[deck_id]"
                     required>
                     <?php foreach ($decks as $deck): ?>
-                        <option value="<?= $deck->id ?>"><?= htmlspecialchars($deck->name) ?></option>
+                        <option value="<?= $deck->id ?>" <?= (isset($card->deck_id) && $card->deck_id == $deck->id) ? 'selected' : '' ?>><?= htmlspecialchars($deck->name) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -65,7 +69,7 @@
             </div>
 
             <div class="form-actions-card">
-                <a href="/decks" class="btn-card btn-card-secondary">
+                <a href="<?= ($returnDeckId ?? null) ? '/decks/' . $returnDeckId . '/edit?page=' . ($returnPage ?? 1) . '&sort=' . urlencode($returnSort ?? 'created_desc') : '/decks?page=' . ($returnPage ?? 1) . '&sort=' . urlencode($returnSort ?? 'created_desc') ?>" class="btn-card btn-card-secondary">
                     <i class="bi bi-x-circle"></i> Cancelar
                 </a>
                 <button type="submit" class="btn-card btn-card-primary">

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Deck;
 use App\Models\Card;
+use App\Models\Material;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
 use Lib\FlashMessage;
@@ -117,6 +118,9 @@ class StudyController extends Controller
         $randomSuit = $suits[array_rand($suits)];
         $randomNumber = $numbers[array_rand($numbers)];
 
+        // Get materials for this deck
+        $materials = Material::findByDeck($deckId);
+
         $this->render('study/study', [
             'deck' => $deck,
             'card' => $card,
@@ -125,7 +129,8 @@ class StudyController extends Controller
             'progress' => round($progress, 1),
             'showingAnswer' => $showingAnswer,
             'suit' => $randomSuit,
-            'number' => $randomNumber
+            'number' => $randomNumber,
+            'materials' => $materials
         ]);
     }
 

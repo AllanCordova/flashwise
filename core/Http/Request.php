@@ -17,7 +17,8 @@ class Request
     {
         $this->method = $_REQUEST['_method'] ?? $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
-        $this->params = $_REQUEST;
+        // Merge GET, POST, and COOKIE parameters (GET has priority for query string params)
+        $this->params = array_merge($_POST, $_GET);
         $this->headers = function_exists('getallheaders') ? getallheaders() : [];
     }
 

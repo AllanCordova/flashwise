@@ -133,12 +133,15 @@
   align-items: center;
   gap: 0.75rem;
   box-shadow: var(--shadow-lg);
+  text-decoration: none;
 }
 
 .btn-study-now:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-xl);
   background: var(--gradient-accent-hover);
+  color: white;
+  text-decoration: none;
 }
 
 .btn-study-now:active {
