@@ -9,46 +9,33 @@
                     <p><strong>Deck:</strong> <?= htmlspecialchars($deck->name) ?></p>
                 </div>
 
-                <form action="<?= route('materials.create', ['deck_id' => $deck->id]) ?>"
-                      method="POST"
-                      enctype="multipart/form-data">
+                <form action="<?= route('materials.create', ['deck_id' => $deck->id]) ?> <?= $material->hasErrors() ? 'was-validated' : '' ?>" novalidate
+                    method="POST"
+                    enctype="multipart/form-data">
                     <input type="hidden" name="page" value="<?= $returnPage ?? 1 ?>">
                     <input type="hidden" name="sort" value="<?= htmlspecialchars($returnSort ?? 'created_desc') ?>">
-
-                    <div class="form-group">
-                        <label for="material_title" class="form-label">
-                            Título do Material <span class="text-danger">*</span>
-                        </label>
-                        <input type="text"
-                               class="form-control <?= $material->errors['title'] ?? false ? 'is-invalid' : '' ?>"
-                               id="material_title"
-                               name="material[title]"
-                               value="<?= htmlspecialchars($material->title ?? '') ?>"
-                               placeholder="Ex: Resumo de Matemática - Funções">
-                        <?php if (isset($material->errors['title'])): ?>
-                            <div class="invalid-feedback">
-                                <?= $material->errors['title'] ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
 
                     <div class="form-group">
                         <label for="material_file" class="form-label">
                             Arquivo PDF <span class="text-danger">*</span>
                         </label>
                         <input type="file"
-                               class="form-control <?= $material->errors('file') ? 'is-invalid' : '' ?>"
-                               id="material_file"
-                               name="material_file"
-                               accept="application/pdf">
-                        <?php if ($material->errors('file')): ?>
-                            <div class="invalid-feedback">
-                                <?= $material->errors('file') ?>
-                            </div>
-                        <?php endif; ?>
+                            class="form-control <?= ($material->hasErrors() && ($material->errors('mime_type') || $material->errors('file_size') || $material->errors('file_path'))) ? 'is-invalid' : '' ?>"
+                            id="material_file"
+                            name="deck_material"
+                            accept=".pdf,application/pdf">
                         <small class="form-text">
                             <i class="bi bi-info-circle"></i> Apenas arquivos PDF são aceitos. Tamanho máximo: 20MB
                         </small>
+                        <?php if ($material->errors('mime_type')): ?>
+                            <div class="invalid-feedback" style="display: block !important;"><?= $material->errors('mime_type') ?></div>
+                        <?php endif; ?>
+                        <?php if ($material->errors('file_size')): ?>
+                            <div class="invalid-feedback" style="display: block !important;"><?= $material->errors('file_size') ?></div>
+                        <?php endif; ?>
+                        <?php if ($material->errors('file_path')): ?>
+                            <div class="invalid-feedback" style="display: block !important;"><?= $material->errors('file_path') ?></div>
+                        <?php endif; ?>
                     </div>
 
                     <div class="form-tip">
@@ -64,7 +51,7 @@
                             <i class="bi bi-upload"></i> Adicionar Material
                         </button>
                         <a href="<?= route('materials.index', ['deck_id' => $deck->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>"
-                           class="btn btn-secondary">
+                            class="btn btn-secondary">
                             <i class="bi bi-x-circle"></i> Cancelar
                         </a>
                     </div>

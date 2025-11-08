@@ -3,7 +3,10 @@
 namespace Tests\Acceptance\decks;
 
 use App\Models\Deck;
+use App\Models\Material;
 use App\Models\User;
+use Core\Constants\Constants;
+use PHPUnit\Framework\Assert;
 use Tests\Acceptance\BaseAcceptanceCest;
 use Tests\Support\AcceptanceTester;
 
@@ -40,6 +43,42 @@ class DecksCest extends BaseAcceptanceCest
         }
 
         return $decks;
+    }
+
+    /**
+     * @return Material[]
+     */
+    private function createMaterialsForDeck(Deck $deck, int $count): array
+    {
+        $materials = [];
+        for ($i = 1; $i <= $count; $i++) {
+            $material = new Material([
+                'deck_id' => $deck->id,
+                'title' => "material_$i",
+                'file_path' => '/assets/uploads/materials/' . $deck->id . '/material_' . $i . '.pdf',
+                'file_size' => 1024,
+                'mime_type' => 'application/pdf',
+            ]);
+            $material->save();
+
+            $absolutePath = Constants::rootPath()->join('public' . $material->file_path);
+            $dir = dirname($absolutePath);
+            if (!is_dir($dir)) {
+                // Criar diretório com permissões corretas
+                $oldUmask = umask(0);
+                mkdir($dir, 0777, true);
+                umask($oldUmask);
+            }
+            // Criar arquivo com permissões corretas (mesmo comportamento do move_uploaded_file)
+            $oldUmask = umask(0);
+            file_put_contents($absolutePath, '%PDF-1.4 test content ' . $i);
+            chmod($absolutePath, 0666);
+            umask($oldUmask);
+
+            $materials[] = $material;
+        }
+
+        return $materials;
     }
 
     // auxiliar functions
@@ -197,6 +236,67 @@ class DecksCest extends BaseAcceptanceCest
         $I->wait(1);
         $I->seeNumberOfElements('.deck-row-clickable', 2);
         $I->dontSee('deck 1', '.deck-name');
+    }
+
+    public function tryToDeleteDeckAndItsMaterialsSuccessfully(AcceptanceTester $I): void
+    {
+        $this->currentUser = $this->createUser();
+        $this->loginHelper->login($this->currentUser->email, 'password123');
+        $I->wait(2);
+
+        $deck = new Deck([
+            'name'        => 'Deck Com Materiais',
+            'description' => 'Este deck será deletado',
+            'user_id'     => $this->currentUser->id,
+        ]);
+        $deck->save();
+        $deckId = $deck->id;
+
+        $materials = $this->createMaterialsForDeck($deck, 3);
+
+        $materialPaths = [];
+        $materialIds = [];
+        foreach ($materials as $material) {
+            $materialIds[] = $material->id;
+            $materialPaths[] = Constants::rootPath()->join('public' . $material->file_path);
+        }
+        $materialsDir = Constants::rootPath()->join("public/assets/uploads/materials/{$deckId}");
+
+        Assert::assertNotNull(Deck::findById($deckId), "Falha no setup: Deck não foi criado.");
+
+        Assert::assertNotEmpty(Material::where(['deck_id' => $deckId]), "Falha no setup: Materiais não foram criados.");
+        foreach ($materialPaths as $path) {
+            Assert::assertTrue(file_exists($path), "Falha no setup: Arquivo $path não foi criado.");
+        }
+        Assert::assertTrue(is_dir($materialsDir), "Falha no setup: Diretório $materialsDir não foi criado.");
+
+
+        $I->amOnPage('/decks');
+        $I->wait(1);
+
+        $rowXPath = sprintf('//tr[contains(., "%s")]', $deck->name);
+        $deleteButtonXPath = $rowXPath . '//button[contains(@class, "btn-delete")]';
+
+        $I->see($deck->name, '.deck-name');
+        $I->click($deleteButtonXPath);
+
+        $I->acceptPopup();
+
+        $I->wait(2);
+
+        $I->see('Deck excluído com sucesso!');
+        $I->seeCurrentUrlEquals('/decks?page=1&sort=created_desc');
+        $I->dontSee($deck->name, '.deck-name');
+
+        $deletedDeck = Deck::findById($deckId);
+        /** @phpstan-ignore-next-line */
+        Assert::assertNull($deletedDeck, "O Deck (ID: $deckId) não foi deletado do banco de dados.");
+
+        $remainingMaterials = Material::where(['deck_id' => $deckId]);
+        Assert::assertEmpty($remainingMaterials, "Os Materiais do Deck (ID: $deckId) não foram deletados do banco.");
+
+        clearstatcache();
+        Assert::assertFalse(is_dir($materialsDir), "O diretório $materialsDir não foi deletado do sistema.");
     }
 
     // ------------ paginate ------------

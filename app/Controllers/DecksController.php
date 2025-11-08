@@ -280,7 +280,7 @@ class DecksController extends Controller
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');
-            $this->redirectTo('/decks');
+            $this->redirectTo('/decks?page=' . $returnPage . '&sort=' . urlencode($returnSort));
             return;
         }
 
