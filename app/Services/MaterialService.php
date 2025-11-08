@@ -41,9 +41,8 @@ class MaterialService
         }
 
         if (move_uploaded_file($tmpFilePath, $absolutePath)) {
-            // Garantir permissões corretas no arquivo movido (importante para ambientes CI)
             $oldUmask = umask(0);
-            chmod($absolutePath, 0666);
+            chmod($absolutePath, 0644);
             umask($oldUmask);
         }
         
@@ -89,34 +88,7 @@ class MaterialService
     {
         $path = Constants::rootPath()->join('public' . $this->baseDir());
         if (!is_dir($path)) {
-            // Usar @mkdir para suprimir warnings e criar diretório recursivamente
-            // Os diretórios base devem ser criados no setup dos testes,
-            // mas mantemos criação defensiva aqui para produção
-            $oldUmask = umask(0);
-            $created = @mkdir($path, 0777, true);
-            umask($oldUmask);
-            
-            // Se não foi criado e ainda não existe, tentar criar diretórios pais primeiro
-            if (!$created && !is_dir($path)) {
-                $baseUploadDir = Constants::rootPath()->join('public/assets/uploads');
-                if (!is_dir($baseUploadDir)) {
-                    $oldUmask = umask(0);
-                    @mkdir($baseUploadDir, 0777, true);
-                    umask($oldUmask);
-                }
-                
-                $materialsDir = Constants::rootPath()->join('public/assets/uploads/materials');
-                if (!is_dir($materialsDir)) {
-                    $oldUmask = umask(0);
-                    @mkdir($materialsDir, 0777, true);
-                    umask($oldUmask);
-                }
-                
-                // Tentar criar novamente
-                $oldUmask = umask(0);
-                @mkdir($path, 0777, true);
-                umask($oldUmask);
-            }
+            mkdir(directory: $path, permissions: 0755, recursive: true);
         }
 
         return $path;
