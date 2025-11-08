@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Services\DeckMaterial;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 use Core\Database\ActiveRecord\HasMany;
 use Core\Database\ActiveRecord\BelongsTo;
+use Core\Constants\Constants;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $description
+ * @property string $material
  * @property string $path_img
  * @property int $category_id
  * @property int $user_id
@@ -26,6 +29,7 @@ class Deck extends Model
     protected static array $columns = [
         'name',
         'description',
+        'material',
         'path_img',
         'category_id',
         'user_id',
@@ -129,45 +133,38 @@ class Deck extends Model
         return $this->countNewCards() > 0 || $this->countDueCards() > 0;
     }
 
-    /**
-     * Delete all materials (including physical files) associated with this deck
-     */
-    public function deleteMaterials(): void
-    {
-        $materials = $this->materials;
 
-        foreach ($materials as $material) {
-            // Delete physical file
-            $material->deleteFile();
-            // Delete database record
-            $material->destroy();
-        }
-    }
-
-    /**
-     * Delete all cards associated with this deck
-     */
-    public function deleteCards(): void
-    {
-        $cards = $this->cards;
-
-        foreach ($cards as $card) {
-            $card->destroy();
-        }
-    }
-
-    /**
-     * Override destroy method to delete associated materials and cards
-     */
     public function destroy(): bool
     {
-        // Delete all materials (including files)
-        $this->deleteMaterials();
+        // 1. Definir o caminho do diretório a ser excluído
+        $materialsDir = Constants::rootPath()->join("public/assets/uploads/materials/{$this->id}");
 
-        // Delete all cards
-        $this->deleteCards();
+        // 2. Chamar a exclusão recursiva
+        // Esta função irá apagar o diretório e TUDO dentro dele.
+        $this->deleteDirectoryRecursive($materialsDir);
 
-        // Delete the deck itself
+        // (Não precisamos mais daquele código de loop de arquivos)
+
+        // 3. Chamar o parent::destroy() para apagar o deck do banco
+        // O ON DELETE CASCADE cuidará de apagar os registros de materiais.
         return parent::destroy();
+    }
+
+    private function deleteDirectoryRecursive(string $dir): void
+    {
+        if (!is_dir($dir)) {
+            return;
+        }
+
+        $files = array_diff(scandir($dir), ['.', '..']);
+        foreach ($files as $file) {
+            $filePath = $dir . DIRECTORY_SEPARATOR . $file;
+            if (is_dir($filePath)) {
+                $this->deleteDirectoryRecursive($filePath); // Chama a si mesma para subdiretórios
+            } else {
+                unlink($filePath); // Deleta o arquivo
+            }
+        }
+        rmdir($dir); // Deleta o diretório agora vazio
     }
 }

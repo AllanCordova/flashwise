@@ -195,7 +195,6 @@ class DecksPopulate
             // Cria e salva o novo deck
             $deck = new Deck($deckData);
             if ($deck->save()) {
-                echo "✓ Deck '{$deckData['name']}' criado com sucesso para o usuário {$user->name}!\n";
                 $successCount++;
             } else {
                 echo "✗ Falha ao criar o deck '{$deckData['name']}'.\n";

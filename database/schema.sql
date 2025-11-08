@@ -21,6 +21,7 @@ CREATE TABLE decks (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     path_img VARCHAR(255),
+    material VARCHAR(255),
     category_id INT NULL,
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

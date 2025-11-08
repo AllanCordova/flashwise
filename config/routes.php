@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
 
     // materials
     // view
-    Route::get('/materials', [MaterialsController::class, 'index'])->name('materials.index');
+    Route::get('/materials', [MaterialsController::class, 'show'])->name('materials.index');
 
     // create
     Route::get('/materials/new', [MaterialsController::class, 'new'])->name('materials.new');

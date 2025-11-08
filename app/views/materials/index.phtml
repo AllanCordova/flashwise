@@ -30,7 +30,7 @@
                                 </span>
                                 <span class="material-date">
                                     <i class="bi bi-calendar"></i>
-                                    <?= date('d/m/Y H:i', strtotime($material->uploaded_at)) ?>
+                                    <?= $material->uploaded_at ? date('d/m/Y H:i', strtotime($material->uploaded_at)) : 'N/A' ?>
                                 </span>
                             </div>
                         </div>

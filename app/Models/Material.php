@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
+use Core\Database\ActiveRecord\BelongsTo;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
-use Core\Database\ActiveRecord\BelongsTo;
-use App\Services\MaterialFileUpload;
 
 /**
  * @property int $id
@@ -26,106 +25,51 @@ class Material extends Model
         'file_path',
         'file_size',
         'mime_type',
+        'uploaded_at'
     ];
-
-    // Property to store uploaded_at from database
-    public ?string $uploaded_at = null;
-
-    /**
-     * Property to store file validation errors (deprecated - use errors('file') instead)
-     * @var array<string, string>|null
-     */
-    public ?array $fileErrors = null;
-
-    /**
-     * Get the file upload service instance
-     */
-    public function fileUpload(): MaterialFileUpload
-    {
-        return new MaterialFileUpload($this, [
-            'extension' => ['pdf'],
-            'mime_types' => ['application/pdf'],
-            'size' => 20971520 // 20MB
-        ]);
-    }
-
-    public function validates(): void
-    {
-        Validations::notEmpty('deck_id', $this);
-        Validations::notEmpty('title', $this);
-
-        // Validate title length
-        if (!empty($this->title) && strlen($this->title) > 255) {
-            $this->addError('title', 'deve ter no máximo 255 caracteres');
-        }
-    }
 
     public function deck(): BelongsTo
     {
         return $this->belongsTo(Deck::class, 'deck_id');
     }
 
-    /**
-     * Get all materials for a specific deck
-     * @param int $deckId
-     * @return Material[]
-     */
-    public static function findByDeck(int $deckId): array
+
+    public function validates(): void
     {
-        $pdo = \Core\Database\Database::getDatabaseConn();
-        $stmt = $pdo->prepare("SELECT * FROM materials WHERE deck_id = ? ORDER BY uploaded_at DESC");
-        $stmt->execute([$deckId]);
+        Validations::notEmpty('deck_id', $this);
+        Validations::notEmpty('title', $this);
+        Validations::notEmpty('file_path', $this);
+        Validations::notEmpty('file_size', $this);
+        Validations::notEmpty('mime_type', $this);
 
-        $materials = [];
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $material = new self($row);
-            // Set uploaded_at separately since it's not in $columns
-            if (isset($row['uploaded_at'])) {
-                $material->uploaded_at = $row['uploaded_at'];
-            }
-            $materials[] = $material;
-        }
+        Validations::maxFileSize('file_size', $this, 20971520);
 
-        return $materials;
+        Validations::allowedMimeTypes('mime_type', $this, [
+            'application/pdf',
+        ]);
     }
 
-    /**
-     * Get the full URL for the material file
-     */
     public function getFileUrl(): string
     {
-        return $this->fileUpload()->path();
+        if ($this->file_path) {
+            return $this->file_path;
+        }
+
+        return '';
     }
 
-    /**
-     * Get the absolute file path
-     */
-    public function getAbsoluteFilePath(): string
-    {
-        return __DIR__ . '/../../public/assets/uploads/materials/' . $this->file_path;
-    }
-
-    /**
-     * Get human-readable file size
-     */
     public function getFormattedSize(): string
     {
-        return $this->fileUpload()->getFormattedSize();
-    }
+        if (!$this->file_size) {
+            return '0 Bytes';
+        }
 
-    /**
-     * Delete the physical file
-     */
-    public function deleteFile(): bool
-    {
-        return $this->fileUpload()->delete();
-    }
+        $bytes = $this->file_size;
+        $units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        $pow = floor(log($bytes) / log(1024));
+        $pow = min($pow, count($units) - 1);
+        $bytes /= pow(1024, $pow);
 
-    /**
-     * Check if file exists on filesystem
-     */
-    public function fileExists(): bool
-    {
-        return $this->fileUpload()->exists();
+        return round($bytes, 2) . ' ' . $units[$pow];
     }
 }

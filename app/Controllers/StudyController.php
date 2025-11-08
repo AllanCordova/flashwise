@@ -119,7 +119,7 @@ class StudyController extends Controller
         $randomNumber = $numbers[array_rand($numbers)];
 
         // Get materials for this deck
-        $materials = Material::findByDeck($deckId);
+        $materials = $deck->materials;
 
         $this->render('study/study', [
             'deck' => $deck,

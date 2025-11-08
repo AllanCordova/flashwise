@@ -7,8 +7,8 @@ RUN apt-get update -y && apt-get install -y libzip-dev zip
 RUN docker-php-ext-install zip
 
 # Configure PHP upload limits
-RUN echo "upload_max_filesize = 20M" > /usr/local/etc/php/conf.d/uploads.ini \
-    && echo "post_max_size = 20M" >> /usr/local/etc/php/conf.d/uploads.ini \
+RUN echo "upload_max_filesize = 25M" > /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "post_max_size = 25M" >> /usr/local/etc/php/conf.d/uploads.ini \
     && echo "max_execution_time = 300" >> /usr/local/etc/php/conf.d/uploads.ini \
     && echo "max_input_time = 300" >> /usr/local/etc/php/conf.d/uploads.ini
 
