@@ -20,6 +20,9 @@ class BaseAcceptanceCest
         Database::create();
         Database::migrate();
 
+        // Garantir que os diretórios de upload existam com permissões corretas
+        $this->ensureUploadDirectoriesExist();
+
         $page->wait(0.5);
 
         $this->loginHelper = $loginHelper;
@@ -59,5 +62,22 @@ class BaseAcceptanceCest
         }
 
         @rmdir($dir);
+    }
+
+    private function ensureUploadDirectoriesExist(): void
+    {
+        $baseUploadDir = Constants::rootPath()->join('public/assets/uploads');
+        $materialsDir = Constants::rootPath()->join('public/assets/uploads/materials');
+        $avatarsDir = Constants::rootPath()->join('public/assets/uploads/avatars');
+
+        $directories = [$baseUploadDir, $materialsDir, $avatarsDir];
+
+        foreach ($directories as $dir) {
+            if (!is_dir($dir)) {
+                $oldUmask = umask(0);
+                @mkdir($dir, 0777, true);
+                umask($oldUmask);
+            }
+        }
     }
 }
