@@ -40,7 +40,13 @@ class MaterialService
             return $this->material;
         }
 
-        move_uploaded_file($tmpFilePath, $absolutePath);
+        if (move_uploaded_file($tmpFilePath, $absolutePath)) {
+            // Garantir permissões corretas no arquivo movido (importante para ambientes CI)
+            $oldUmask = umask(0);
+            chmod($absolutePath, 0666);
+            umask($oldUmask);
+        }
+        
         return $this->material;
     }
 
@@ -83,7 +89,10 @@ class MaterialService
     {
         $path = Constants::rootPath()->join('public' . $this->baseDir());
         if (!is_dir($path)) {
-            mkdir(directory: $path, recursive: true);
+            // Usar umask para garantir permissões corretas em ambientes CI
+            $oldUmask = umask(0);
+            mkdir($path, 0777, true);
+            umask($oldUmask);
         }
 
         return $path;

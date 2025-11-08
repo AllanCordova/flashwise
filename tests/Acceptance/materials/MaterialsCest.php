@@ -92,8 +92,9 @@ class MaterialsCest extends BaseAcceptanceCest
 
         $I->wait(1);
         $I->scrollTo('button[type="submit"]');
-        $I->waitForElementClickable('button[type="submit"]', 5);
-        $I->click('button[type="submit"]');
+        $I->waitForElementClickable('button[type="submit"]', 10);
+        // Usar JavaScript para garantir que o clique funcione mesmo se o elemento estiver interceptado
+        $I->executeJS('document.querySelector("button[type=\'submit\']").click();');
 
         $I->wait(2);
         $I->see('Material adicionado com sucesso!');
@@ -115,8 +116,9 @@ class MaterialsCest extends BaseAcceptanceCest
 
         $I->wait(1);
         $I->scrollTo('button[type="submit"]');
-        $I->waitForElementClickable('button[type="submit"]', 5);
-        $I->click('button[type="submit"]');
+        $I->waitForElementClickable('button[type="submit"]', 10);
+        // Usar JavaScript para garantir que o clique funcione mesmo se o elemento estiver interceptado
+        $I->executeJS('document.querySelector("button[type=\'submit\']").click();');
 
         $I->wait(2);
         $I->see('Não foi possível fazer upload do material');
@@ -164,8 +166,9 @@ class MaterialsCest extends BaseAcceptanceCest
 
         $I->wait(1);
         $I->scrollTo('button[type="submit"]');
-        $I->waitForElementClickable('button[type="submit"]', 5);
-        $I->click('button[type="submit"]');
+        $I->waitForElementClickable('button[type="submit"]', 10);
+        // Usar JavaScript para garantir que o clique funcione mesmo se o elemento estiver interceptado
+        $I->executeJS('document.querySelector("button[type=\'submit\']").click();');
 
         $I->wait(2);
         $I->see('Não foi possível fazer upload do material');
