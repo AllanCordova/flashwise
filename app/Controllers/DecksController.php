@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Deck;
 use Core\Http\Controllers\Controller;
 use Lib\FlashMessage;
+use Lib\CustomPaginator;
 use Core\Http\Request;
 
 class DecksController extends Controller
@@ -37,98 +38,13 @@ class DecksController extends Controller
                 return $priorityB - $priorityA; // Descending order
             });
 
-            // Manual pagination
-            $totalDecks = count($allDecks);
-            $totalPages = (int)ceil($totalDecks / $perPage);
-            $offset = ($currentPage - 1) * $perPage;
-            $decks = array_slice($allDecks, $offset, $perPage);
-
-            // Create a custom paginator-like object
-            $paginator = new class ($decks, $currentPage, $perPage, $totalDecks, $totalPages) {
-                /**
-                 * @param array<\App\Models\Deck> $decks
-                 */
-                public function __construct(
-                    private array $decks,
-                    private int $page,
-                    private int $perPage,
-                    private int $totalRegisters,
-                    private int $totalPages
-                ) {
-                }
-
-                /**
-                 * @return array<\App\Models\Deck>
-                 */
-                public function registers(): array
-                {
-                    return $this->decks;
-                }
-
-                public function getPage(): int
-                {
-                    return $this->page;
-                }
-
-                public function totalOfPages(): int
-                {
-                    return $this->totalPages;
-                }
-
-                public function totalOfRegisters(): int
-                {
-                    return $this->totalRegisters;
-                }
-
-                public function totalOfRegistersOfPage(): int
-                {
-                    return count($this->decks);
-                }
-
-                public function previousPage(): int
-                {
-                    return $this->page - 1;
-                }
-
-                public function nextPage(): int
-                {
-                    return $this->page + 1;
-                }
-
-                public function hasPreviousPage(): bool
-                {
-                    return $this->previousPage() >= 1;
-                }
-
-                public function hasNextPage(): bool
-                {
-                    return $this->nextPage() <= $this->totalPages;
-                }
-
-                public function isPage(int $page): bool
-                {
-                    return $this->page === $page;
-                }
-
-                public function entriesInfo(): string
-                {
-                    $offset = ($this->page - 1) * $this->perPage;
-                    $totalVisualizedBegin = $offset + 1;
-                    $totalVisualizedEnd = $offset + count($this->decks);
-                    return "Mostrando {$totalVisualizedBegin} - {$totalVisualizedEnd} de {$this->totalRegisters}";
-                }
-
-                public function renderPagesNavigation(): void
-                {
-                    $paginator = $this;
-                    require __DIR__ . '/../../app/views/paginator/_pages.phtml';
-                }
-
-                public function getRouteName(): string
-                {
-                    return 'decks.index';
-                }
-            };
+            // Use CustomPaginator for in-memory pagination
+            $paginator = CustomPaginator::fromArray(
+                allData: $allDecks,
+                currentPage: $currentPage,
+                perPage: $perPage,
+                routeName: 'decks.index'
+            );
         } else {
             // Default sorting with database
             $orderBy = 'created_at';

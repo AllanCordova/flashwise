@@ -334,4 +334,50 @@ class DecksControllerTest extends ControllerTestCase
         $this->assertArrayHasKey('danger', $messages);
         $this->assertStringContainsString('Deck não encontrado', $messages['danger']);
     }
+
+    // ------------ index with sorting ------------
+    public function test_index_should_use_custom_paginator_for_review_priority_sort(): void
+    {
+        Auth::login($this->user);
+
+        // Create decks for sorting
+        $deck1 = new Deck(['name' => 'Deck 1', 'description' => 'Test', 'user_id' => $this->user->id]);
+        $deck1->save();
+
+        $deck2 = new Deck(['name' => 'Deck 2', 'description' => 'Test', 'user_id' => $this->user->id]);
+        $deck2->save();
+
+        // Set sort parameter
+        $_GET['sort'] = 'review_priority';
+
+        $output = $this->get('index', DecksController::class);
+
+        $this->assertStringNotContainsString('Location:', $output);
+        $this->assertEmpty(FlashMessage::get());
+    }
+
+    public function test_index_should_handle_name_asc_sort(): void
+    {
+        Auth::login($this->user);
+
+        $_GET['sort'] = 'name_asc';
+
+        $output = $this->get('index', DecksController::class);
+
+        $this->assertStringNotContainsString('Location:', $output);
+        $this->assertEmpty(FlashMessage::get());
+    }
+
+    public function test_index_should_handle_pagination(): void
+    {
+        Auth::login($this->user);
+
+        $_GET['page'] = '2';
+        $_GET['sort'] = 'created_desc';
+
+        $output = $this->get('index', DecksController::class);
+
+        $this->assertStringNotContainsString('Location:', $output);
+        $this->assertEmpty(FlashMessage::get());
+    }
 }

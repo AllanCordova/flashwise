@@ -45,7 +45,7 @@ class MaterialService
             chmod($absolutePath, 0644);
             umask($oldUmask);
         }
-        
+
         return $this->material;
     }
 
