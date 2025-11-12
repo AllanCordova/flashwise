@@ -217,6 +217,22 @@ class MaterialTest extends TestCase
 
     public function test_get_file_url_returns_file_path(): void
     {
+        $filePath = 'assets/uploads/materials/1/test.pdf';
+        $material = new Material([
+            'deck_id' => $this->testDeck->id,
+            'title' => 'Test Material',
+            'file_path' => $filePath,
+            'file_size' => 1024,
+            'mime_type' => 'application/pdf',
+        ]);
+        $material->save();
+
+        // Deve retornar o file_path com barra inicial (URL absoluta)
+        $this->assertEquals('/' . $filePath, $material->getFileUrl());
+    }
+
+    public function test_get_file_url_handles_path_with_leading_slash(): void
+    {
         $filePath = '/assets/uploads/materials/1/test.pdf';
         $material = new Material([
             'deck_id' => $this->testDeck->id,
@@ -227,6 +243,7 @@ class MaterialTest extends TestCase
         ]);
         $material->save();
 
+        // Deve retornar o file_path sem duplicar a barra inicial
         $this->assertEquals($filePath, $material->getFileUrl());
     }
 

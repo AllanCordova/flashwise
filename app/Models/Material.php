@@ -52,7 +52,8 @@ class Material extends Model
     public function getFileUrl(): string
     {
         if ($this->file_path) {
-            return $this->file_path;
+            // Garante que a URL seja absoluta a partir da raiz
+            return '/' . ltrim($this->file_path, '/');
         }
 
         return '';
