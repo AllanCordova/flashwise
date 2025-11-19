@@ -1,0 +1,88 @@
+<div class="container py-4">
+    <div class="decks-container">
+        <div class="decks-header">
+            <div>
+                <h2><i class="bi bi-share"></i> Decks Compartilhados</h2>
+                <p class="text-secondary mb-0">Decks que foram compartilhados com você</p>
+            </div>
+        </div>
+
+        <?php if ($paginator->totalOfRegisters() > 0): ?>
+            <table class="decks-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Deck</th>
+                        <th>Proprietário</th>
+                        <th style="text-align: center;">Novas</th>
+                        <th style="text-align: center;">Revisar</th>
+                        <th style="text-align: center;">Total</th>
+                        <th style="text-align: right;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($paginator->registers() as $deck): ?>
+                        <?php 
+                        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                        ?>
+                        <tr class="deck-row-clickable" onclick="window.location.href='/decks/<?= $deck->id ?>?page=<?= $currentPage ?>&from=shared';" style="cursor: pointer;">
+                            <td>
+                                <div class="deck-name">
+                                    <i class="bi bi-share-fill text-primary me-2"></i>
+                                    <?= htmlspecialchars($deck->name) ?>
+                                </div>
+                                <div class="deck-description"><?= htmlspecialchars($deck->description) ?></div>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary"><?= htmlspecialchars($deck->user->name) ?></span>
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="stat-item">
+                                    <span class="stat-number stat-new"><?= $deck->countNewCards($this->currentUser()->id) ?></span>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="stat-item">
+                                    <span class="stat-number stat-due"><?= $deck->countDueCards($this->currentUser()->id) ?></span>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                <div class="stat-item">
+                                    <span class="stat-number stat-total"><?= $deck->countTotalCards() ?></span>
+                                </div>
+                            </td>
+                            <td onclick="event.stopPropagation();">
+                                <div class="deck-actions">
+                                    <a class="action-btn btn-materials" href='<?= route('materials.index', ['deck_id' => $deck->id, 'page' => $currentPage, 'from' => 'shared']) ?>' title="Materiais de apoio">
+                                        <i class="bi bi-file-earmark-pdf"></i>
+                                    </a>
+                                    <form
+                                        action="<?= route('shared.decks.remove', ['id' => $deck->id]) ?>"
+                                        method="POST"
+                                        style="display: inline;"
+                                        onsubmit="return confirm('Tem certeza que deseja remover o compartilhamento deste deck?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="page" value="<?= $currentPage ?>">
+                                        <button type="submit" class="action-btn btn-delete" title="Remover compartilhamento">
+                                            <i class="bi bi-x-circle"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <div class="pagination-links">
+                <?php $paginator->renderPagesNavigation(); ?>
+            </div>
+
+        <?php else: ?>
+            <div class="no-decks">
+                <i class="bi bi-inbox"></i>
+                <h3>Nenhum deck compartilhado</h3>
+                <p>Quando alguém compartilhar um deck com você, ele aparecerá aqui!</p>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

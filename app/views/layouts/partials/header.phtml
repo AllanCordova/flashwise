@@ -18,7 +18,10 @@
                     </li>
                     <?php if ($currentUser): ?>
                         <li class="nav-item">
-                            <a class="nav-link <?= str_starts_with($currentPath, '/decks') ? 'active' : '' ?>" href="/decks">Meus Decks</a>
+                            <a class="nav-link <?= str_starts_with($currentPath, '/decks') && !str_starts_with($currentPath, '/decks/') ? 'active' : '' ?>" href="/decks">Meus Decks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= str_starts_with($currentPath, '/shared-decks') ? 'active' : '' ?>" href="/shared-decks">Decks Compartilhados</a>
                         </li>
                         <?php if ($currentUser->isAdmin()): ?>
                             <li class="nav-item">

@@ -1,5 +1,7 @@
 SET foreign_key_checks = 0;
 
+DROP TABLE IF EXISTS card_user_progress;
+DROP TABLE IF EXISTS deck_user_shared;
 DROP TABLE IF EXISTS materials;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS cards;
@@ -62,6 +64,45 @@ CREATE TABLE materials (
     uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (deck_id) REFERENCES decks(id) ON DELETE CASCADE,
     INDEX idx_deck_id (deck_id)
+);
+
+CREATE TABLE deck_user_shared (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    deck_id INT NOT NULL,
+    user_id INT NOT NULL,
+    shared_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (deck_id) REFERENCES decks(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    
+    UNIQUE KEY unique_deck_user (deck_id, user_id),
+    
+    INDEX idx_deck_id (deck_id),
+    INDEX idx_user_id (user_id)
+);
+
+CREATE TABLE card_user_progress (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    card_id INT NOT NULL,
+    user_id INT NOT NULL,
+    ease_factor DECIMAL(3,2) DEFAULT 2.50,
+    review_interval INT DEFAULT 0,
+    repetitions INT DEFAULT 0,
+    next_review DATETIME NULL,
+    card_type ENUM('new', 'learning', 'review') DEFAULT 'new',
+    last_reviewed TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    
+    UNIQUE KEY unique_card_user (card_id, user_id),
+    
+    INDEX idx_card_id (card_id),
+    INDEX idx_user_id (user_id),
+    INDEX idx_card_type (card_type),
+    INDEX idx_next_review (next_review)
 );
 
 SET foreign_key_checks = 1;

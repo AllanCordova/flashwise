@@ -6,12 +6,18 @@
                 <p class="text-secondary mb-0">Deck: <strong><?= htmlspecialchars($deck->name) ?></strong></p>
             </div>
             <div class="materials-header-actions">
-                <a href="<?= route('decks.index', ['page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>" class="btn btn-secondary">
+                <?php 
+                $from = $_GET['from'] ?? '';
+                $backUrl = $from === 'shared' ? route('shared.decks.index', ['page' => $returnPage ?? 1]) : route('decks.index', ['page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']);
+                ?>
+                <a href="<?= $backUrl ?>" class="btn btn-secondary">
                     <i class="bi bi-arrow-left"></i> Voltar
                 </a>
-                <a href="<?= route('materials.new', ['deck_id' => $deck->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Adicionar Material
-                </a>
+                <?php if ($deck->user_id === $this->currentUser()->id): ?>
+                    <a href="<?= route('materials.new', ['deck_id' => $deck->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Adicionar Material
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -47,15 +53,17 @@
                                title="Baixar PDF">
                                 <i class="bi bi-download"></i>
                             </a>
-                            <form action="<?= route('materials.destroy', ['id' => $material->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>"
-                                  method="POST"
-                                  style="display: inline;"
-                                  onsubmit="return confirm('Tem certeza que deseja excluir este material?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            <?php if ($deck->user_id === $this->currentUser()->id): ?>
+                                <form action="<?= route('materials.destroy', ['id' => $material->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>"
+                                      method="POST"
+                                      style="display: inline;"
+                                      onsubmit="return confirm('Tem certeza que deseja excluir este material?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -64,11 +72,19 @@
             <div class="empty-state">
                 <i class="bi bi-inbox empty-state-icon"></i>
                 <h3>Nenhum material encontrado</h3>
-                <p>Adicione materiais de apoio em PDF para complementar seus estudos!</p>
-                <a href="<?= route('materials.new', ['deck_id' => $deck->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>"
-                   class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Adicionar Primeiro Material
-                </a>
+                <p>
+                    <?php if ($deck->user_id === $this->currentUser()->id): ?>
+                        Adicione materiais de apoio em PDF para complementar seus estudos!
+                    <?php else: ?>
+                        Este deck ainda não possui materiais de apoio.
+                    <?php endif; ?>
+                </p>
+                <?php if ($deck->user_id === $this->currentUser()->id): ?>
+                    <a href="<?= route('materials.new', ['deck_id' => $deck->id, 'page' => $returnPage ?? 1, 'sort' => $returnSort ?? 'created_desc']) ?>"
+                       class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Adicionar Primeiro Material
+                    </a>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>

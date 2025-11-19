@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Services\DeckMaterial;
+use App\Services\FileSystemService;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 use Core\Database\ActiveRecord\HasMany;
 use Core\Database\ActiveRecord\BelongsTo;
+use Core\Database\ActiveRecord\BelongsToMany;
 use Core\Constants\Constants;
 
 /**
@@ -22,6 +24,7 @@ use Core\Constants\Constants;
  * @property Card[] $cards
  * @property Material[] $materials
  * @property User $user
+ * @property User[] $shared_with_users
  */
 class Deck extends Model
 {
@@ -59,22 +62,62 @@ class Deck extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Count new cards (never studied)
-     */
-    public function countNewCards(): int
+    public function sharedWithUsers(): BelongsToMany
     {
-        $cards = $this->cards;
-        return count(array_filter($cards, fn($card) => $card->isNew()));
+        return $this->belongsToMany(User::class, 'deck_user_shared', 'deck_id', 'user_id');
+    }
+
+    public function isSharedWithUser(User $user): bool
+    {
+        return DeckUserShared::exists(['deck_id' => $this->id, 'user_id' => $user->id]);
     }
 
     /**
-     * Count cards due for review
+     * Count new cards (never studied) for a specific user
      */
-    public function countDueCards(): int
+    public function countNewCards(?int $userId = null): int
     {
+        if ($userId === null) {
+            // Fallback to old behavior for backward compatibility
+            $cards = $this->cards;
+            return count(array_filter($cards, fn($card) => $card->isNew()));
+        }
+
         $cards = $this->cards;
-        return count(array_filter($cards, fn($card) => $card->isDue()));
+        $count = 0;
+
+        foreach ($cards as $card) {
+            $progress = CardUserProgress::findBy(['card_id' => $card->id, 'user_id' => $userId]);
+            if ($progress === null || $progress->isNew()) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * Count cards due for review for a specific user
+     */
+    public function countDueCards(?int $userId = null): int
+    {
+        if ($userId === null) {
+            // Fallback to old behavior for backward compatibility
+            $cards = $this->cards;
+            return count(array_filter($cards, fn($card) => $card->isDue()));
+        }
+
+        $cards = $this->cards;
+        $count = 0;
+
+        foreach ($cards as $card) {
+            $progress = CardUserProgress::findBy(['card_id' => $card->id, 'user_id' => $userId]);
+            if ($progress && $progress->isDue()) {
+                $count++;
+            }
+        }
+
+        return $count;
     }
 
     /**
@@ -86,85 +129,69 @@ class Deck extends Model
     }
 
     /**
-     * Get cards ready for study (new cards + due cards)
+     * Get cards ready for study (new cards + due cards) for a specific user
      * @return Card[]
      */
-    public function getCardsForStudy(): array
+    public function getCardsForStudy(int $userId): array
     {
         $cards = $this->cards;
         $studyCards = [];
 
-        // Collect new cards and due cards
+        // Collect new cards and due cards based on user progress
         foreach ($cards as $card) {
-            if ($card->card_type === 'new' || $card->isDue()) {
+            $progress = CardUserProgress::findBy(['card_id' => $card->id, 'user_id' => $userId]);
+
+            // If no progress exists, it's a new card
+            if ($progress === null || $progress->isNew() || $progress->isDue()) {
                 $studyCards[] = $card;
             }
         }
 
         // Sort: new cards first, then due cards by next_review date
-        usort($studyCards, function ($a, $b) {
+        usort($studyCards, function ($a, $b) use ($userId) {
+            $progressA = CardUserProgress::findBy(['card_id' => $a->id, 'user_id' => $userId]);
+            $progressB = CardUserProgress::findBy(['card_id' => $b->id, 'user_id' => $userId]);
+
+            $isNewA = $progressA === null || $progressA->isNew();
+            $isNewB = $progressB === null || $progressB->isNew();
+
             // New cards come first
-            if ($a->card_type === 'new' && $b->card_type !== 'new') {
+            if ($isNewA && !$isNewB) {
                 return -1;
             }
-            if ($a->card_type !== 'new' && $b->card_type === 'new') {
+            if (!$isNewA && $isNewB) {
                 return 1;
             }
 
             // Both new or both due - sort by next_review
-            if ($a->next_review === null) {
+            if ($progressA === null || $progressA->next_review === null) {
                 return -1;
             }
-            if ($b->next_review === null) {
+            if ($progressB === null || $progressB->next_review === null) {
                 return 1;
             }
 
-            return strcmp($a->next_review, $b->next_review);
+            return strcmp($progressA->next_review, $progressB->next_review);
         });
 
         return $studyCards;
     }
 
     /**
-     * Check if deck has cards available for study
+     * Check if deck has cards available for study for a specific user
      */
-    public function hasCardsToStudy(): bool
+    public function hasCardsToStudy(int $userId): bool
     {
-        return $this->countNewCards() > 0 || $this->countDueCards() > 0;
+        return $this->countNewCards($userId) > 0 || $this->countDueCards($userId) > 0;
     }
 
 
     public function destroy(): bool
     {
-        // 1. Definir o caminho do diretório a ser excluído
         $materialsDir = Constants::rootPath()->join("public/assets/uploads/materials/{$this->id}");
 
-        // 2. Chamar a exclusão recursiva
-        // Esta função irá apagar o diretório e TUDO dentro dele.
-        $this->deleteDirectoryRecursive($materialsDir);
+        FileSystemService::deleteDirectoryRecursive($materialsDir);
 
-        // (Não precisamos mais daquele código de loop de arquivos)
-
-        // 3. Chamar o parent::destroy() para apagar o deck do banco
-        // O ON DELETE CASCADE cuidará de apagar os registros de materiais.
         return parent::destroy();
-    }
-
-    private function deleteDirectoryRecursive(string $dir): void
-    {
-        if (!is_dir($dir)) {
-            return;
-        }
-
-        $files = array_diff(scandir($dir), ['.', '..']);
-        foreach ($files as $file) {
-            $filePath = $dir . DIRECTORY_SEPARATOR . $file;
-            if (is_dir($filePath)) {
-                $this->deleteDirectoryRecursive($filePath); // Chama a si mesma para subdiretórios
-            } else {
-                unlink($filePath); // Deleta o arquivo
-            }
-        }
-        rmdir($dir); // Deleta o diretório agora vazio
     }
 }

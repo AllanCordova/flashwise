@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Models\Deck;
 use App\Models\Card;
+use App\Models\CardUserProgress;
 use App\Models\Material;
+use App\Services\DeckAccessService;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
 use Lib\FlashMessage;
@@ -15,8 +17,7 @@ class StudyController extends Controller
     {
         $deckId = $request->getParam('id');
 
-        /** @var \App\Models\Deck|null $deck */
-        $deck = $this->current_user->decks()->findById($deckId);
+        $deck = DeckAccessService::getAccessibleDeck($this->current_user, $deckId);
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');
@@ -24,8 +25,8 @@ class StudyController extends Controller
             return;
         }
 
-        // Get cards for study
-        $studyCards = $deck->getCardsForStudy();
+        // Get cards for study based on user's progress
+        $studyCards = $deck->getCardsForStudy($this->current_user->id);
 
         if (empty($studyCards)) {
             FlashMessage::info('Não há cards para estudar neste momento');
@@ -35,6 +36,7 @@ class StudyController extends Controller
 
         // Store card IDs in session
         $_SESSION['study_deck_id'] = $deckId;
+        $_SESSION['study_user_id'] = $this->current_user->id;
         $_SESSION['study_cards'] = array_values(array_unique(array_map(fn($card) => $card->id, $studyCards)));
         $_SESSION['study_total_cards'] = count($_SESSION['study_cards']);
         $_SESSION['study_completed_cards'] = [];
@@ -76,8 +78,7 @@ class StudyController extends Controller
             return;
         }
 
-        /** @var \App\Models\Deck|null $deck */
-        $deck = $this->current_user->decks()->findById($deckId);
+        $deck = DeckAccessService::getAccessibleDeck($this->current_user, $deckId);
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');
@@ -148,7 +149,7 @@ class StudyController extends Controller
 
     public function answer(Request $request): void
     {
-        if (!isset($_SESSION['study_deck_id']) || !isset($_SESSION['study_cards'])) {
+        if (!isset($_SESSION['study_deck_id']) || !isset($_SESSION['study_cards']) || !isset($_SESSION['study_user_id'])) {
             FlashMessage::danger('Sessão de estudo não encontrada');
             $this->redirectTo('/decks');
             return;
@@ -171,6 +172,7 @@ class StudyController extends Controller
         }
 
         $cardIds = $_SESSION['study_cards'];
+        $userId = $_SESSION['study_user_id'];
         $currentIndex = 0; // Always use index 0 since we remove cards from the front
 
         if (count($cardIds) === 0) {
@@ -194,8 +196,23 @@ class StudyController extends Controller
         $isFirstTime = !in_array($cardId, $completedCards);
 
         try {
-            $card->processResponse($quality);
-            $card->save();
+            // Get or create user progress for this card
+            $progress = CardUserProgress::getOrCreate($cardId, $userId);
+
+            // Map quality (0-3) to SM-2 quality (0-5)
+            // 0 (Again) -> 0
+            // 1 (Hard) -> 3
+            // 2 (Good) -> 4
+            // 3 (Easy) -> 5
+            $sm2Quality = match ($quality) {
+                0 => 0,
+                1 => 3,
+                2 => 4,
+                default => 5  // 3 or higher
+            };
+
+            $progress->updateProgress($sm2Quality);
+            $progress->save();
         } catch (\Exception $e) {
             FlashMessage::danger('Erro ao processar resposta: ' . $e->getMessage());
             $this->redirectTo('/study/card');

@@ -5,6 +5,7 @@ namespace App\Models;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 use Core\Database\ActiveRecord\HasMany;
+use Core\Database\ActiveRecord\BelongsToMany;
 
 /**
  * @property int $id
@@ -16,6 +17,7 @@ use Core\Database\ActiveRecord\HasMany;
  * @property string $created_at
  * @property string $updated_at
  * @property Deck[] $decks
+ * @property Deck[] $shared_decks
  */
 class User extends Model
 {
@@ -36,6 +38,11 @@ class User extends Model
     public function decks(): HasMany
     {
         return $this->hasMany(Deck::class, 'user_id');
+    }
+
+    public function sharedDecks(): BelongsToMany
+    {
+        return $this->belongsToMany(Deck::class, 'deck_user_shared', 'user_id', 'deck_id');
     }
 
     public function validates(): void
