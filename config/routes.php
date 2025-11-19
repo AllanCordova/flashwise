@@ -8,6 +8,7 @@ use App\Controllers\AdminController;
 use App\Controllers\RegisterController;
 use App\Controllers\StudyController;
 use App\Controllers\MaterialsController;
+use App\Controllers\SharedDecksController;
 use Core\Router\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -36,6 +37,12 @@ Route::middleware('auth')->group(function () {
     // view
     Route::get('/decks', [DecksController::class, 'index'])->name('decks.index');
     Route::get('/decks/{id}', [DecksController::class, 'show'])->name('decks.show');
+
+    // shared decks
+    Route::get('/shared-decks', [SharedDecksController::class, 'index'])->name('shared.decks.index');
+    Route::post('/decks/{id}/share', [SharedDecksController::class, 'share'])->name('decks.share');
+    Route::get('/shared-decks/accept/{token}', [SharedDecksController::class, 'accept'])->name('shared.decks.accept');
+    Route::delete('/shared-decks/{id}', [SharedDecksController::class, 'remove'])->name('shared.decks.remove');
 
     // study
     Route::get('/decks/{id}/study', [StudyController::class, 'start'])->name('study.start');

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Deck;
+use App\Services\DeckAccessService;
 use Core\Http\Controllers\Controller;
 use Lib\FlashMessage;
 use Lib\CustomPaginator;
@@ -32,9 +33,9 @@ class DecksController extends Controller
             $allDecks = Deck::where(['user_id' => $userId]);
 
             // Sort by review priority (new cards + due cards descending)
-            usort($allDecks, function ($a, $b) {
-                $priorityA = $a->countNewCards() + $a->countDueCards();
-                $priorityB = $b->countNewCards() + $b->countDueCards();
+            usort($allDecks, function ($a, $b) use ($userId) {
+                $priorityA = $a->countNewCards($userId) + $a->countDueCards($userId);
+                $priorityB = $b->countNewCards($userId) + $b->countDueCards($userId);
                 return $priorityB - $priorityA; // Descending order
             });
 
@@ -77,8 +78,7 @@ class DecksController extends Controller
         $returnPage = $request->getParam('page') ?? 1;
         $returnSort = $request->getParam('sort') ?? 'created_desc';
 
-        /** @var \App\Models\Deck|null $deck */
-        $deck = $this->current_user->decks()->findById($id);
+        $deck = DeckAccessService::getAccessibleDeck($this->current_user, $id);
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');
@@ -86,8 +86,8 @@ class DecksController extends Controller
             return;
         }
 
-        $newCards = $deck->countNewCards();
-        $dueCards = $deck->countDueCards();
+        $newCards = $deck->countNewCards($this->current_user->id);
+        $dueCards = $deck->countDueCards($this->current_user->id);
         $totalCards = $deck->countTotalCards();
 
         $this->render('decks/show', [

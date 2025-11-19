@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Material;
+use App\Models\Deck;
+use App\Services\DeckAccessService;
 use App\Services\MaterialService;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
@@ -13,8 +15,7 @@ class MaterialsController extends Controller
     public function show(Request $request): void
     {
         $deck_id = (int) $request->getParam('deck_id');
-        /** @var \App\Models\Deck|null $deck */
-        $deck = $this->current_user->decks()->findById($deck_id);
+        $deck = DeckAccessService::getAccessibleDeck($this->current_user, $deck_id);
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');

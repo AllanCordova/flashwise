@@ -169,11 +169,11 @@
                     </div>
                     <div class="summary-item">
                         <i class="bi bi-star"></i>
-                        <span><strong><?= $deck->countNewCards() ?></strong> novo(s)</span>
+                        <span><strong><?= $deck->countNewCards($this->currentUser()->id) ?></strong> novo(s)</span>
                     </div>
                     <div class="summary-item">
                         <i class="bi bi-clock"></i>
-                        <span><strong><?= $deck->countDueCards() ?></strong> para revisar</span>
+                        <span><strong><?= $deck->countDueCards($this->currentUser()->id) ?></strong> para revisar</span>
                     </div>
                 </div>
             <?php endif; ?>
