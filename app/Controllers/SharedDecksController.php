@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\Deck;
 use App\Models\DeckUserShared;
 use App\Services\ShareTokenService;
 use Core\Http\Controllers\Controller;
@@ -12,18 +11,12 @@ use Lib\CustomPaginator;
 
 class SharedDecksController extends Controller
 {
-    /**
-     * Display a list of decks shared with the current user
-     */
     public function index(): void
     {
         $perPage = 10;
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
-        // Get all shared decks for the current user
         $allSharedDecks = $this->current_user->shared_decks;
 
-        // Use CustomPaginator for in-memory pagination
         $paginator = CustomPaginator::fromArray(
             allData: $allSharedDecks,
             currentPage: $currentPage,
@@ -32,24 +25,53 @@ class SharedDecksController extends Controller
         );
 
         $this->render('shared_decks/index', [
-            'paginator' => $paginator,
+            'paginator' => $paginator
         ]);
     }
 
-    /**
-     * Generate a share link for a deck (token-based)
-     */
-    public function share(Request $request): void
+    public function new(Request $request): void
     {
-        $deckId = $request->getParam('id');
+        $token = $request->getParam('token');
 
-        $deck = $this->current_user->decks()->findById($deckId);
-
-        if (!$deck) {
-            FlashMessage::danger('Deck não encontrado');
+        if (ShareTokenService::isTokenExpired($token)) {
+            FlashMessage::danger('Link de compartilhamento expirado. Por favor, solicite um novo link.');
             $this->redirectTo('/decks');
             return;
         }
+
+        $sharedDeck = ShareTokenService::decode($token);
+
+        if ($sharedDeck === null) {
+            FlashMessage::danger('Link de compartilhamento inválido ou expirado.');
+            $this->redirectTo('/decks');
+            return;
+        }
+
+        $deckUserShared = new DeckUserShared([
+            'deck_id' => $sharedDeck,
+            'user_id' => $this->current_user->id
+        ]);
+
+        $owner = $deckUserShared->deck->user_id;
+
+        if ($owner === $deckUserShared->user_id) {
+            FlashMessage::danger('Você não pode compartilhar o deck com você mesmo!');
+            $this->redirectTo('/decks');
+            return;
+        }
+
+        if ($deckUserShared->save()) {
+            FlashMessage::success('Deck compartilhado com sucesso!');
+        } else {
+            FlashMessage::danger('Erro ao compartilhar deck: ' . $deckUserShared->errors('deck_id'));
+        }
+
+        $this->redirectTo('/shared-decks');
+    }
+
+    public function create(Request $request): void
+    {
+        $deckId = $request->getParam('id');
 
         $shareUrl = ShareTokenService::generateShareUrl($deckId);
 
@@ -59,61 +81,9 @@ class SharedDecksController extends Controller
             'shareUrl' => $shareUrl,
             'message' => 'Link de compartilhamento gerado com sucesso!'
         ]);
-        exit;
     }
 
-    /**
-     * Accept a shared deck via token
-     */
-    public function accept(Request $request): void
-    {
-        $token = $request->getParam('token');
-        $deckId = ShareTokenService::decode($token);
-
-        if (!$deckId) {
-            FlashMessage::danger('Link de compartilhamento inválido ou expirado');
-            $this->redirectTo('/decks');
-            return;
-        }
-
-        $deck = Deck::findById($deckId);
-
-        if (!$deck) {
-            FlashMessage::danger('Deck não encontrado');
-            $this->redirectTo('/decks');
-            return;
-        }
-
-        if ($deck->isSharedWithUser($this->current_user)) {
-            FlashMessage::info('Este deck já está compartilhado com você');
-            $this->redirectTo('/shared-decks');
-            return;
-        }
-
-        if ($deck->user_id === $this->current_user->id) {
-            FlashMessage::info('Você não pode compartilhar um deck com você mesmo');
-            $this->redirectTo('/decks');
-            return;
-        }
-
-        $deckUserShared = new DeckUserShared([
-            'deck_id' => $deckId,
-            'user_id' => $this->current_user->id
-        ]);
-
-        if ($deckUserShared->save()) {
-            FlashMessage::success('Deck compartilhado com sucesso! Você pode acessá-lo em "Decks Compartilhados"');
-        } else {
-            FlashMessage::danger('Erro ao compartilhar deck: ' . $deckUserShared->errors('deck_id'));
-        }
-
-        $this->redirectTo('/shared-decks');
-    }
-
-    /**
-     * Remove a shared deck (unshare)
-     */
-    public function remove(Request $request): void
+    public function destroy(Request $request): void
     {
         $deckId = $request->getParam('id');
         $returnPage = $request->getParam('page') ?? 1;

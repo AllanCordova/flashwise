@@ -4,57 +4,64 @@ namespace App\Services;
 
 class ShareTokenService
 {
-    private const SECRET_KEY = 'flashwise_secret_key'; // TODO: Move to .env
+    // Tempo de expiração padrão: 7 dias (604800 segundos)
+    private const DEFAULT_EXPIRATION_SECONDS = 604800;
 
-    /**
-     * Generate a share token for a deck
-     */
-    public static function generate(int $deckId): string
+    private static function getSecretKey(): string
     {
-        $timestamp = time();
-        $hash = hash_hmac('sha256', $deckId . ':' . $timestamp, self::SECRET_KEY);
-
-        $data = $deckId . ':' . $timestamp . ':' . $hash;
-        return base64_encode($data);
+        return $_ENV['FLASHWISE_SECRET_KEY'] ?? 'default-secret-key-for-development';
     }
 
-    /**
-     * Decode a share token to get deck_id
-     */
-    public static function decode(string $token): ?int
+    public static function decode(string $token, int $expirationSeconds = self::DEFAULT_EXPIRATION_SECONDS): ?int
     {
-        try {
-            $data = base64_decode($token);
-            $parts = explode(':', $data);
-
-            if (count($parts) !== 3) {
-                return null;
-            }
-
-            [$deckId, $timestamp, $hash] = $parts;
-
-            // Verify hash
-            $expectedHash = hash_hmac('sha256', $deckId . ':' . $timestamp, self::SECRET_KEY);
-
-            if (!hash_equals($expectedHash, $hash)) {
-                return null;
-            }
-
-            // Optional: Check if token is expired (e.g., 7 days)
-            // $maxAge = 7 * 24 * 60 * 60; // 7 days
-            // if (time() - $timestamp > $maxAge) {
-            //     return null;
-            // }
-
-            return (int)$deckId;
-        } catch (\Exception $e) {
+        $data = base64_decode($token, true);
+        if ($data === false) {
             return null;
         }
+
+        $parts = explode(':', $data);
+
+        if (count($parts) !== 3) {
+            return null;
+        }
+
+        [$deckId, $timestamp, $hash] = $parts;
+
+        $currentTime = time();
+        $tokenAge = $currentTime - (int)$timestamp;
+
+        if ($tokenAge > $expirationSeconds) {
+            return null;
+        }
+
+        $expectedHash = hash_hmac('sha256', $deckId . ':' . $timestamp, self::getSecretKey());
+
+        if (!hash_equals($expectedHash, $hash)) {
+            return null;
+        }
+
+        return (int)$deckId;
     }
 
-    /**
-     * Generate the full share URL
-     */
+    public static function isTokenExpired(string $token, int $expirationSeconds = self::DEFAULT_EXPIRATION_SECONDS): bool
+    {
+        $data = base64_decode($token, true);
+        if ($data === false) {
+            return true;
+        }
+
+        $parts = explode(':', $data);
+        if (count($parts) !== 3) {
+            return true;
+        }
+
+        [, $timestamp, ] = $parts;
+        $currentTime = time();
+        $tokenAge = $currentTime - (int)$timestamp;
+
+        return $tokenAge > $expirationSeconds;
+    }
+
     public static function generateShareUrl(int $deckId): string
     {
         $token = self::generate($deckId);
@@ -63,9 +70,15 @@ class ShareTokenService
         return $baseUrl . '/shared-decks/accept/' . $token;
     }
 
-    /**
-     * Get the base URL of the application
-     */
+    public static function generate(int $deckId): string
+    {
+        $timestamp = time();
+        $hash = hash_hmac('sha256', $deckId . ':' . $timestamp, self::getSecretKey());
+
+        $data = $deckId . ':' . $timestamp . ':' . $hash;
+        return base64_encode($data);
+    }
+
     private static function getBaseUrl(): string
     {
         $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';

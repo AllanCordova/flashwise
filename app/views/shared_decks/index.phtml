@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ($paginator->registers() as $deck): ?>
-                        <?php 
+                        <?php
                         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                         ?>
                         <tr class="deck-row-clickable" onclick="window.location.href='/decks/<?= $deck->id ?>?page=<?= $currentPage ?>&from=shared';" style="cursor: pointer;">
@@ -56,7 +56,7 @@
                                         <i class="bi bi-file-earmark-pdf"></i>
                                     </a>
                                     <form
-                                        action="<?= route('shared.decks.remove', ['id' => $deck->id]) ?>"
+                                        action="<?= route('shared.decks.destroy', ['id' => $deck->id]) ?>"
                                         method="POST"
                                         style="display: inline;"
                                         onsubmit="return confirm('Tem certeza que deseja remover o compartilhamento deste deck?');">

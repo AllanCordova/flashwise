@@ -26,6 +26,11 @@ class Auth
         return isset($_SESSION['user']['id']) && self::user() !== null;
     }
 
+    public static function admin(): bool
+    {
+        return isset($_SESSION['user']['id']) && self::user() !== null;
+    }
+
     public static function logout(): void
     {
         unset($_SESSION['user']['id']);
