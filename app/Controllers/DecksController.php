@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Deck;
-use App\Services\DeckAccessService;
+use App\Models\DeckUserShared;
 use Core\Http\Controllers\Controller;
 use Lib\FlashMessage;
 use Lib\CustomPaginator;
@@ -74,11 +74,24 @@ class DecksController extends Controller
 
     public function show(Request $request): void
     {
-        $id = $request->getParam('id');
+        $deck_id = $request->getParam('id');
         $returnPage = $request->getParam('page') ?? 1;
         $returnSort = $request->getParam('sort') ?? 'created_desc';
 
-        $deck = DeckAccessService::getAccessibleDeck($this->current_user, $id);
+        /** @var \App\Models\Deck|null $deck */
+        $deck = $this->current_user->decks()->findById($deck_id);
+
+        if (!$deck) {
+            /** @var \App\Models\DeckUserShared|null $deckUserShared */
+            $deckUserShared = DeckUserShared::findBy([
+                'deck_id' => $deck_id,
+                'user_id' => $this->current_user->id
+            ]);
+
+            if ($deckUserShared) {
+                $deck = $deckUserShared->deck;
+            }
+        }
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');

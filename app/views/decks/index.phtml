@@ -6,7 +6,7 @@
                 <p class="text-secondary mb-0">Bem-vindo, <?= htmlspecialchars($this->currentUser()->name) ?>!</p>
             </div>
             <div class="decks-header-actions">
-                <?php 
+                <?php
                 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                 $currentSort = $_GET['sort'] ?? 'created_desc';
                 ?>
@@ -58,7 +58,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ($paginator->registers() as $deck): ?>
-                        <?php 
+                        <?php
                         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                         $currentSort = $_GET['sort'] ?? 'created_desc';
                         ?>
@@ -123,7 +123,7 @@
                 <i class="bi bi-inbox"></i>
                 <h3>Nenhum deck encontrado</h3>
                 <p>Comece criando seu primeiro deck de estudos!</p>
-                <?php 
+                <?php
                 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                 $currentSort = $_GET['sort'] ?? 'created_desc';
                 ?>
@@ -134,30 +134,3 @@
         <?php endif; ?>
     </div>
 </div>
-<script>
-async function shareDeck(deckId) {
-    try {
-        const response = await fetch(`/decks/${deckId}/share`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            // Copy the share URL to clipboard
-            await navigator.clipboard.writeText(data.shareUrl);
-            
-            // Show success message
-            alert('Link de compartilhamento copiado para a área de transferência!\n\n' + data.shareUrl);
-        } else {
-            alert('Erro ao gerar link de compartilhamento: ' + (data.message || 'Erro desconhecido'));
-        }
-    } catch (error) {
-        console.error('Erro:', error);
-        alert('Erro ao gerar link de compartilhamento. Tente novamente.');
-    }
-}
-</script>

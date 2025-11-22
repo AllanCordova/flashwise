@@ -40,9 +40,9 @@ Route::middleware('auth')->group(function () {
 
     // shared decks
     Route::get('/shared-decks', [SharedDecksController::class, 'index'])->name('shared.decks.index');
-    Route::post('/decks/{id}/share', [SharedDecksController::class, 'share'])->name('decks.share');
-    Route::get('/shared-decks/accept/{token}', [SharedDecksController::class, 'accept'])->name('shared.decks.accept');
-    Route::delete('/shared-decks/{id}', [SharedDecksController::class, 'remove'])->name('shared.decks.remove');
+    Route::get('/shared-decks/accept/{token}', [SharedDecksController::class, 'new'])->name('shared.decks.new');
+    Route::post('/decks/{id}/share', [SharedDecksController::class, 'create'])->name('decks.create');
+    Route::delete('/shared-decks/{id}', [SharedDecksController::class, 'destroy'])->name('shared.decks.destroy');
 
     // study
     Route::get('/decks/{id}/study', [StudyController::class, 'start'])->name('study.start');

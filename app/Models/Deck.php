@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Services\DeckMaterial;
-use App\Services\FileSystemService;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 use Core\Database\ActiveRecord\HasMany;
@@ -65,11 +64,6 @@ class Deck extends Model
     public function sharedWithUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'deck_user_shared', 'deck_id', 'user_id');
-    }
-
-    public function isSharedWithUser(User $user): bool
-    {
-        return DeckUserShared::exists(['deck_id' => $this->id, 'user_id' => $user->id]);
     }
 
     /**
@@ -190,8 +184,29 @@ class Deck extends Model
     {
         $materialsDir = Constants::rootPath()->join("public/assets/uploads/materials/{$this->id}");
 
-        FileSystemService::deleteDirectoryRecursive($materialsDir);
+        $this->deleteDirectoryRecursive($materialsDir);
 
         return parent::destroy();
+    }
+
+    private function deleteDirectoryRecursive(string $dir): void
+    {
+        if (!is_dir($dir)) {
+            return;
+        }
+
+        $files = array_diff(scandir($dir), ['.', '..']);
+
+        foreach ($files as $file) {
+            $path = $dir . '/' . $file;
+
+            if (is_dir($path)) {
+                $this->deleteDirectoryRecursive($path);
+            } else {
+                @unlink($path);
+            }
+        }
+
+        @rmdir($dir);
     }
 }

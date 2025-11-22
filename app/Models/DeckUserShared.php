@@ -31,6 +31,8 @@ class DeckUserShared extends Model
 
     public function validates(): void
     {
+        Validations::notEmpty('deck_id', $this);
+        Validations::notEmpty('user_id', $this);
         Validations::uniqueness(['deck_id', 'user_id'], $this);
     }
 }

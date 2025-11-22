@@ -3,10 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\Deck;
+use App\Models\DeckUserShared;
 use App\Models\Card;
 use App\Models\CardUserProgress;
-use App\Models\Material;
-use App\Services\DeckAccessService;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
 use Lib\FlashMessage;
@@ -17,7 +16,20 @@ class StudyController extends Controller
     {
         $deckId = $request->getParam('id');
 
-        $deck = DeckAccessService::getAccessibleDeck($this->current_user, $deckId);
+        /** @var \App\Models\Deck|null $deck */
+        $deck = $this->current_user->decks()->findById($deckId);
+
+        if (!$deck) {
+            /** @var \App\Models\DeckUserShared|null $deckUserShared */
+            $deckUserShared = DeckUserShared::findBy([
+                'deck_id' => $deckId,
+                'user_id' => $this->current_user->id
+            ]);
+
+            if ($deckUserShared) {
+                $deck = $deckUserShared->deck;
+            }
+        }
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');
@@ -78,7 +90,20 @@ class StudyController extends Controller
             return;
         }
 
-        $deck = DeckAccessService::getAccessibleDeck($this->current_user, $deckId);
+        /** @var \App\Models\Deck|null $deck */
+        $deck = $this->current_user->decks()->findById($deckId);
+
+        if (!$deck) {
+            /** @var \App\Models\DeckUserShared|null $deckUserShared */
+            $deckUserShared = DeckUserShared::findBy([
+                'deck_id' => $deckId,
+                'user_id' => $this->current_user->id
+            ]);
+
+            if ($deckUserShared) {
+                $deck = $deckUserShared->deck;
+            }
+        }
 
         if (!$deck) {
             FlashMessage::danger('Deck não encontrado');

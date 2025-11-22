@@ -225,9 +225,14 @@ class DecksCest extends BaseAcceptanceCest
         $I->wait(1);
 
         $I->seeNumberOfElements('.deck-row-clickable', 3);
+        // Verificar que "deck 1" está presente antes da exclusão
+        $I->see('deck 1', '.deck-name');
 
+        // Encontrar e clicar no botão de delete do "deck 1" especificamente
         $I->executeJS("window.confirm = function(){ return true; }");
-        $I->click('.deck-actions .btn-delete');
+        $rowXPath = sprintf('//tr[contains(., "%s")]', 'deck 1');
+        $deleteButtonXPath = $rowXPath . '//button[contains(@class, "btn-delete")]';
+        $I->click($deleteButtonXPath);
 
         $I->wait(2);
         $I->see('Deck excluído com sucesso!');
@@ -235,7 +240,12 @@ class DecksCest extends BaseAcceptanceCest
 
         $I->wait(1);
         $I->seeNumberOfElements('.deck-row-clickable', 2);
-        $I->dontSee('deck 1', '.deck-name');
+        // Verificar que "deck 1" não aparece mais (usar executeJS para evitar match parcial)
+        $hasDeck1 = $I->executeJS("
+            const deckNames = Array.from(document.querySelectorAll('.deck-name'));
+            return deckNames.some(el => el.textContent.trim() === 'deck 1');
+        ");
+        Assert::assertFalse($hasDeck1, 'Deck 1 não deve aparecer após exclusão');
     }
 
     public function tryToDeleteDeckAndItsMaterialsSuccessfully(AcceptanceTester $I): void
