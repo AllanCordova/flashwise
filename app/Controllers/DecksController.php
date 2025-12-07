@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Deck;
 use App\Models\DeckUserShared;
+use App\Services\AchievementService;
 use Core\Http\Controllers\Controller;
 use Lib\FlashMessage;
 use Lib\CustomPaginator;
@@ -184,12 +185,20 @@ class DecksController extends Controller
         $returnPage = $request->getParam('page') ?? 1;
         $returnSort = $request->getParam('sort') ?? 'created_desc';
 
+        // Verifica se é o primeiro deck ANTES de salvar
+        $isFirstDeck = count($this->current_user->decks()->all()) === 0;
+
         $deck = $this->current_user->decks()->new([
             'name' => $params['name'] ?? '',
             'description' => $params['description'] ?? '',
         ]);
 
         if ($deck->save()) {
+            // Se era o primeiro deck, cria a conquista
+            if ($isFirstDeck) {
+                AchievementService::checkFirstDeckAchievement($this->current_user);
+            }
+
             FlashMessage::success('Deck criado com sucesso');
             $this->redirectTo('/decks?page=' . $returnPage . '&sort=' . urlencode($returnSort));
         } else {
