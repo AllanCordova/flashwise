@@ -47,29 +47,46 @@ class AchievementService {
         const data = await this.loadAchievements();
 
         if (!data.success) {
-            container.innerHTML = `<p class="text-danger">Erro ao carregar conquistas: ${data.error || 'Erro desconhecido'}</p>`;
+            container.innerHTML = `
+                <div class="achievements-error">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <p>Erro ao carregar conquistas: ${data.error || 'Erro desconhecido'}</p>
+                </div>
+            `;
             return;
         }
 
         if (!data.achievements || data.achievements.length === 0) {
-            container.innerHTML = '<p class="text-muted">Você ainda não possui conquistas. Continue estudando para desbloquear!</p>';
+            container.innerHTML = `
+                <div class="achievements-empty">
+                    <i class="bi bi-trophy"></i>
+                    <h3>Nenhuma conquista ainda</h3>
+                    <p>Continue estudando para desbloquear suas primeiras conquistas!</p>
+                </div>
+            `;
             return;
         }
 
-        let html = '<div class="row g-3">';
+        let html = `
+            <div class="achievements-stats">
+                <div class="stats-item">
+                    <i class="bi bi-trophy-fill"></i>
+                    <span>Total: <strong>${data.achievements.length}</strong> conquista${data.achievements.length !== 1 ? 's' : ''}</span>
+                </div>
+            </div>
+            <div class="achievements-grid">
+        `;
         
         data.achievements.forEach(achievement => {
             html += `
-                <div class="col-md-4 col-sm-6">
-                    <div class="achievement-card">
-                        <div class="card-body text-center">
-                            <img src="${achievement.file_path}" 
-                                 alt="${this.escapeHtml(achievement.title)}" 
-                                 class="achievement-image"
-                                 onerror="this.src='/assets/images/defaults/avatar.png'">
-                            <h5 class="card-title">${this.escapeHtml(achievement.title)}</h5>
-                            <small class="text-muted">${this.formatDate(achievement.uploaded_at)}</small>
-                        </div>
+                <div class="achievement-card">
+                    <img src="${achievement.file_path}" 
+                         alt="${this.escapeHtml(achievement.title)}" 
+                         class="achievement-image"
+                         onerror="this.src='/assets/images/defaults/avatar.png'">
+                    <div class="card-body">
+                        <h5 class="card-title">${this.escapeHtml(achievement.title)}</h5>
+                        <small class="text-muted">${this.formatDate(achievement.uploaded_at)}</small>
                     </div>
                 </div>
             `;
