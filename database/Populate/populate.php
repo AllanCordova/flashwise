@@ -7,6 +7,7 @@ use Database\Populate\UserPopulate;
 use Database\Populate\DecksPopulate;
 use Database\Populate\CardsPopulate;
 use Database\Populate\MaterialsPopulate;
+use Database\Populate\AchievementsPopulate;
 
 echo "\n";
 echo str_repeat('=', 60) . "\n";
@@ -32,6 +33,10 @@ CardsPopulate::populate();
 // Populando materiais
 echo "\n" . str_repeat('-', 60) . "\n";
 MaterialsPopulate::populate();
+
+// Populando conquistas
+echo "\n" . str_repeat('-', 60) . "\n";
+AchievementsPopulate::populate();
 
 echo "\n" . str_repeat('=', 60) . "\n";
 echo "   POPULATE CONCLUÍDO COM SUCESSO!\n";

@@ -40,6 +40,11 @@ class User extends Model
         return $this->hasMany(Deck::class, 'user_id');
     }
 
+    public function achievements(): HasMany
+    {
+        return $this->hasMany(Achievement::class, 'user_id');
+    }
+
     public function sharedDecks(): BelongsToMany
     {
         return $this->belongsToMany(Deck::class, 'deck_user_shared', 'user_id', 'deck_id');

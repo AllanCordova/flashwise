@@ -374,4 +374,10 @@ class PrivatedCest extends BaseAcceptanceCest
         $I->amOnPage('/materials');
         $I->seeCurrentUrlEquals('/login');
     }
+
+    public function unauthenticatedUserCannotAccessProtectedRouteAchievementsIndex(AcceptanceTester $I): void
+    {
+        $I->amOnPage('/achievements');
+        $I->seeCurrentUrlEquals('/login');
+    }
 }

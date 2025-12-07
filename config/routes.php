@@ -9,6 +9,7 @@ use App\Controllers\RegisterController;
 use App\Controllers\StudyController;
 use App\Controllers\MaterialsController;
 use App\Controllers\SharedDecksController;
+use App\Controllers\AchievementsController;
 use Core\Router\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -75,4 +76,7 @@ Route::middleware('auth')->group(function () {
 
     // view
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
+    // achievements
+    Route::get('/achievements', [AchievementsController::class, 'index'])->name('achievements.index');
 });

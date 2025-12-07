@@ -46,6 +46,7 @@ class Material extends Model
 
         Validations::allowedMimeTypes('mime_type', $this, [
             'application/pdf',
+            'image/png'
         ]);
     }
 

@@ -1,0 +1,149 @@
+/* Achievements Page Styles */
+
+.achievements-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.achievements-container h1 {
+    text-align: center;
+    color: var(--accent-dark) !important;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.achievements-grid {
+    width: 100%;
+}
+
+.achievements-grid .row {
+    justify-content: center;
+}
+
+.achievement-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 1rem;
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+}
+
+.achievement-image {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    transition: transform var(--transition-normal);
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+.achievement-card:hover .achievement-image {
+    transform: scale(1.05);
+}
+
+.achievement-card .card-title {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.achievement-card .text-muted {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.achievement-card .card-body {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .achievements-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .achievements-container h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        letter-spacing: 1px;
+    }
+
+    .achievement-card {
+        padding: 0.75rem;
+    }
+
+    .achievement-image {
+        width: 144px;
+        height: 144px;
+    }
+
+    .achievement-card .card-title {
+        font-size: 1rem;
+    }
+
+    .achievement-card .text-muted {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .achievements-container h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .achievement-card {
+        padding: 0.5rem;
+    }
+
+    .achievement-image {
+        width: 126px;
+        height: 126px;
+    }
+
+    .achievement-card .card-title {
+        font-size: 0.95rem;
+    }
+
+    .achievement-card .text-muted {
+        font-size: 0.8rem;
+    }
+}
+
+/* Empty State */
+.achievements-grid .text-muted {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    padding: 3rem 1rem;
+}
+
+.achievements-grid .text-danger {
+    text-align: center;
+    color: var(--danger-color);
+    font-size: 1rem;
+    padding: 2rem 1rem;
+}
+
