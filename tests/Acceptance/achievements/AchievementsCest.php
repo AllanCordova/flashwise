@@ -166,7 +166,7 @@ class AchievementsCest extends BaseAcceptanceCest
         $I->wait(3); // Aguardar JavaScript carregar os dados
 
         // Verificar se a página HTML foi carregada
-        $I->see('Conquistas', 'h1');
+        $I->see('Minhas Conquistas', 'h2');
         $I->seeElement('#achievements-list');
 
         // Verificar se os dados foram renderizados pelo JavaScript
@@ -188,11 +188,11 @@ class AchievementsCest extends BaseAcceptanceCest
         $I->wait(3); // Aguardar JavaScript carregar os dados
 
         // Verificar se a página HTML foi carregada
-        $I->see('Conquistas', 'h1');
+        $I->see('Minhas Conquistas', 'h2');
         $I->seeElement('#achievements-list');
 
-        // Verificar mensagem de estado vazio
-        $I->see('Você ainda não possui conquistas. Continue estudando para desbloquear!', '#achievements-list');
+        // Verificar mensagem de estado vazio (renderizado pelo JavaScript)
+        $I->see('Nenhuma conquista ainda', '#achievements-list');
         $I->dontSeeElement('.achievement-card');
     }
 
