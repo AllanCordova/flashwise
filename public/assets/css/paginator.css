@@ -42,3 +42,42 @@
   margin-top: 0.5rem;
   font-size: 0.875em;
 }
+
+/* Pagination Responsive */
+@media (max-width: 768px) {
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .pagination .page-link {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.85rem;
+    margin: 0 2px;
+  }
+
+  .pagination-info {
+    text-align: center;
+    width: 100%;
+  }
+
+  .pagination-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination .page-link {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.8rem;
+    margin: 0 1px;
+  }
+
+  .pagination-info {
+    font-size: 0.75rem;
+  }
+}

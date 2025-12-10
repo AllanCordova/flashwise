@@ -690,7 +690,9 @@
 
     .btn-materials-study {
         font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
+        padding: 0.5rem 0.75rem;
+        width: 100%;
+        justify-content: center;
     }
 
     .material-item-modal {
