@@ -4,7 +4,6 @@ namespace Tests\Acceptance\achievements;
 
 use App\Models\Achievement;
 use App\Models\User;
-use Core\Constants\Constants;
 use PHPUnit\Framework\Assert;
 use Tests\Acceptance\BaseAcceptanceCest;
 use Tests\Support\AcceptanceTester;
@@ -35,34 +34,18 @@ class AchievementsCest extends BaseAcceptanceCest
     private function createAchievementsForUser(User $user, int $count, string $prefix = 'Conquista'): array
     {
         $achievements = [];
-        $imagePath = '/assets/images/defaults/avatar.png';
-
-        // Garantir que a imagem padrão existe
-        $absoluteImagePath = Constants::rootPath()->join('public' . $imagePath);
-        if (!file_exists($absoluteImagePath)) {
-            $dir = dirname($absoluteImagePath);
-            if (!is_dir($dir)) {
-                $oldUmask = umask(0);
-                mkdir($dir, 0777, true);
-                umask($oldUmask);
-            }
-            // Criar uma imagem PNG simples para teste
-            $oldUmask = umask(0);
-            file_put_contents(
-                $absoluteImagePath,
-                base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==')
-            );
-            chmod($absoluteImagePath, 0666);
-            umask($oldUmask);
-        }
+        
+        // Lista de ícones para variar nas conquistas de teste
+        $icons = ['bi-trophy-fill', 'bi-star-fill', 'bi-award-fill', 'bi-medal', 'bi-gem'];
+        $colorClasses = ['achievement-primary', 'achievement-success', 'achievement-warning', 'achievement-info', 'achievement-danger'];
 
         for ($i = 1; $i <= $count; $i++) {
             $achievement = new Achievement([
                 'user_id' => $user->id,
                 'title' => "$prefix $i",
-                'file_path' => $imagePath,
-                'file_size' => 1024,
-                'mime_type' => 'image/png',
+                'icon' => $icons[($i - 1) % count($icons)],
+                'description' => "Descrição da conquista $i",
+                'color_class' => $colorClasses[($i - 1) % count($colorClasses)],
             ]);
             $achievement->save();
             $achievements[] = $achievement;
@@ -174,8 +157,8 @@ class AchievementsCest extends BaseAcceptanceCest
         $I->see($achievements[1]->title, '.achievement-card');
         $I->see($achievements[2]->title, '.achievement-card');
 
-        // Verificar se as imagens estão presentes
-        $I->seeElement('img.achievement-image');
+        // Verificar se os ícones estão presentes (sistema atualizado para usar ícones Bootstrap)
+        $I->seeElement('.achievement-icon');
     }
 
     public function tryToViewEmptyStateWhenNoAchievements(AcceptanceTester $I): void

@@ -10,11 +10,14 @@ use Core\Database\ActiveRecord\Model;
  * @property int $id
  * @property int $user_id
  * @property string $title
- * @property string $file_path
- * @property int $file_size
- * @property string $mime_type
+ * @property string|null $icon
+ * @property string|null $description
+ * @property string $color_class
+ * @property string|null $file_path
+ * @property int|null $file_size
+ * @property string|null $mime_type
  * @property string $uploaded_at
- * @property Deck $deck
+ * @property User $user
  */
 class Achievement extends Model
 {
@@ -22,6 +25,9 @@ class Achievement extends Model
     protected static array $columns = [
         'user_id',
         'title',
+        'icon',
+        'description',
+        'color_class',
         'file_path',
         'file_size',
         'mime_type',
@@ -38,15 +44,16 @@ class Achievement extends Model
     {
         Validations::notEmpty('user_id', $this);
         Validations::notEmpty('title', $this);
-        Validations::notEmpty('file_path', $this);
-        Validations::notEmpty('file_size', $this);
-        Validations::notEmpty('mime_type', $this);
 
-        Validations::maxFileSize('file_size', $this, 20971520);
-
-        Validations::allowedMimeTypes('mime_type', $this, [
-            'image/png',
-            'image/jpeg',
-        ]);
+        // file_path, file_size e mime_type agora são opcionais (usamos ícones)
+        if (!empty($this->file_path)) {
+            Validations::notEmpty('file_size', $this);
+            Validations::notEmpty('mime_type', $this);
+            Validations::maxFileSize('file_size', $this, 20971520);
+            Validations::allowedMimeTypes('mime_type', $this, [
+                'image/png',
+                'image/jpeg',
+            ]);
+        }
     }
 }

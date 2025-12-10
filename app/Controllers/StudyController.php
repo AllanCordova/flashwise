@@ -6,6 +6,7 @@ use App\Models\Deck;
 use App\Models\DeckUserShared;
 use App\Models\Card;
 use App\Models\CardUserProgress;
+use App\Services\AchievementService;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
 use Lib\FlashMessage;
@@ -271,6 +272,10 @@ class StudyController extends Controller
     public function finish(): void
     {
         $deckId = $_SESSION['study_deck_id'] ?? null;
+
+        // Verifica e concede conquistas de estudo antes de limpar a sessão
+        AchievementService::checkStudyAchievements($this->current_user);
+        AchievementService::checkTimeAchievements($this->current_user);
 
         unset($_SESSION['study_deck_id']);
         unset($_SESSION['study_cards']);

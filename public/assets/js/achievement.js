@@ -78,15 +78,20 @@ class AchievementService {
         `;
         
         data.achievements.forEach(achievement => {
+            // Usa ícone se disponível, senão usa imagem como fallback
+            const iconClass = achievement.icon || 'bi-trophy';
+            const colorClass = achievement.color_class || 'achievement-primary';
+            const description = achievement.description || '';
+            
             html += `
-                <div class="achievement-card">
-                    <img src="${achievement.file_path}" 
-                         alt="${this.escapeHtml(achievement.title)}" 
-                         class="achievement-image"
-                         onerror="this.src='/assets/images/defaults/avatar.png'">
-                    <div class="card-body">
-                        <h5 class="card-title">${this.escapeHtml(achievement.title)}</h5>
-                        <small class="text-muted">${this.formatDate(achievement.uploaded_at)}</small>
+                <div class="achievement-card ${colorClass}">
+                    <div class="achievement-icon-wrapper">
+                        <i class="bi ${iconClass} achievement-icon"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h5 class="achievement-title">${this.escapeHtml(achievement.title)}</h5>
+                        ${description ? `<p class="achievement-description">${this.escapeHtml(description)}</p>` : ''}
+                        <small class="achievement-date">${this.formatDate(achievement.uploaded_at)}</small>
                     </div>
                 </div>
             `;

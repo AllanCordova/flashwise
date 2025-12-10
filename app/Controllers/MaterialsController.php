@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Material;
+use App\Services\AchievementService;
 use App\Services\MaterialService;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
@@ -85,6 +86,9 @@ class MaterialsController extends Controller
             FlashMessage::danger('Não foi possível fazer upload do material. Verifique os erros abaixo.');
             $this->render('materials/new', compact('material', 'deck', 'returnPage', 'returnSort'));
         } else {
+            // Verifica e concede conquistas de materiais
+            AchievementService::checkMaterialAchievements($this->current_user);
+            
             FlashMessage::success('Material adicionado com sucesso!');
             $this->redirectTo(route('materials.index', [
                 'deck_id' => $deck_id,

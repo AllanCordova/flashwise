@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Card;
+use App\Services\AchievementService;
 use Core\Http\Controllers\Controller;
 use Lib\FlashMessage;
 use Core\Http\Request;
@@ -69,6 +70,9 @@ class CardsController extends Controller
         $card = new Card($cardData);
 
         if ($card->save()) {
+            // Verifica e concede conquistas relacionadas a cards
+            AchievementService::checkCardAchievements($this->current_user);
+            
             FlashMessage::success('Card criado com sucesso');
 
             // Redirect to the deck edit page if coming from there, otherwise to decks list
